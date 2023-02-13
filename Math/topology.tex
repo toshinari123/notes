@@ -1,0 +1,592 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[a4paper, total={6in, 10in}]{geometry}
+\usepackage{tcolorbox}
+\usepackage{mdframed}
+\usepackage[hidelinks]{hyperref}
+\usepackage{amsfonts}
+\usepackage{mathrsfs}
+\usepackage{centernot}
+\usepackage[percent]{overpic}
+
+\setlength{\jot}{10pt}
+
+\DeclareMathOperator{\ima}{Im}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\ab}{ab}
+\DeclareMathOperator{\rel}{rel}
+\DeclareMathOperator{\abs}{abs}
+\DeclareMathOperator{\pr}{pr}
+\DeclareMathOperator{\fact}{fact}
+\DeclareMathOperator{\zer}{zer}
+\DeclareMathOperator{\inn}{in}
+\DeclareMathOperator{\Int}{Int}
+\DeclareMathOperator{\Cl}{Cl}
+\DeclareMathOperator{\Fr}{Fr}
+\DeclareMathOperator{\dist}{dist}
+
+\title{Preliminary Topology\\(Springer Series in Soviet Mathematics) Beginner's course in topology}
+\author{toshinari tong}
+
+\begin{document}
+
+\maketitle
+
+\section{Definitions}
+\subsection{Preliminary preliminaries}
+\begin{itemize}
+\item \textbf{Function/Map} \(f:X\to Y\) s.t. \(x\mapsto y\)
+\item \textbf{Image} \(\ima f\)
+\item \textbf{Restriction} \(f|_{A}:A\to Y\)
+\item \textbf{Identity map} \(\id X\)
+\item \textbf{Family} \(\{X_{\mu}\}_{\mu\in M}\) is a map from index set \(M\) to set of objects \((X_{\mu},...)\) with \(\mu\in M\) and \(\mu\mapsto X_{\mu}\)
+\item \textbf{Sequence} a family where the index set is \(\mathbb{N}\)
+\item \textbf{Inclusion} \(\text{in}:A\to X\) s.t. \(x\mapsto x\)
+\item \textbf{Abridgement / Compression} If \(A\subseteq X,B\subseteq Y\) and \(f:X\to Y\) s.t. \(f(A)\subseteq B\), abridgement is \(\ab f:A\to B\), \(x\mapsto f(x)\)
+\item \textbf{Sequence map} If sets of sets \((X,A_{1},...,A_{n})\) and \((Y,B_{1},...,B_{n})\) s.t. \(A_{1},...,A_{n}\subseteq X\) and \(B_{1},...,B_{n}\subseteq Y\),
+    a sequence of maps is \((\varphi: X\to Y,\varphi_{1}: A_{1}\to B_{1},...,\varphi_{n}:A_{n}\to B_{n})\) s.t. \(\varphi_{i}=\ab \varphi\), denoted \(f=(\varphi,\varphi_{1},...,\varphi_{n}):(X,A_{1},...,A_{n})\to(Y,B_{1},...,B_{n})\)
+\item \textbf{Relation} \(f=(\varphi,\varphi_{1},...,\varphi_{n})\) and \(\varphi\) are usually not distinguished; to emphasize this relationship we write \(f=\rel\varphi,\varphi=\abs f\)
+\item \textbf{Quotient / Factor} If \(X=(a_{1},...,a_{n},b_{1},...,b_{m},...)\) and \(p\) is a partition the quotient set \(X/p\) is \(((a_{1},...),(b_{1},...),...)\) \color{red}quotient set = partition?\color{black}
+\item \textbf{Projection} \(\pr X:X\to X/p\) s.t. \(x\mapsto s\) where \(x\in s\)
+\item \textbf{Saturated} A subset of \(X\) which is the union of elements of the partition is saturated.
+\item \textbf{Saturation} The smallest saturated set containing \(A\subseteq X\) which is \(\pr^{-1}(\pr(A))\)
+\item \textbf{Factor map} If \(p,q\) are partitions of \(X,Y\) and \(f:X\to Y\) \(\fact f:X/p\to Y/q\) takes each element \(A\in p\) into the element of \(q\) that contains \(f(A)\).
+\item \textbf{Injective factor} Given \(f:X\to Y\), the paritition of \(X\) into preimages of points of \(Y\) is denoted \(\zer(f)\). The injective facter of \(f\) is \(\fact f:X/\zer(f)\to Y\)
+\item \textbf{Sum of family of sets} Denoted \(\bigsqcup_{\mu\in M}X_{\mu}\), it is the set of pairs \(((x,\mu),...)\) s.t. \(x_{\mu}\in X_{\mu}\), or \(((x_{1},\mu),(x_{2},\mu),...,(y_{1},\nu),(y_{2},\nu),...)\).
+\item \textbf{In map} The map of a set \(X_{\nu}\) for a \(\nu\in M\) to \(\bigsqcup_{\mu\in M}X_{\mu}\) defined by \(x\mapsto (x,\nu)\) is denoted \(\inn_{\nu}\). 
+    The maps \((\inn_{\nu},...)\) are injective and their images are pairwise disjoint and cover \(\bigsqcup_{\mu\in M}X_{\mu}\).
+\item \textbf{Sum of maps} For families of sets \(\{X_{\mu}\}_{\mu\in M}, \{Y_{\mu}\}_{\mu\in M}\), it is the unique map \(f:\bigsqcup_{\mu\in M}X_{\mu}\to\bigsqcup_{\mu\in M}Y_{\mu}\).
+    It satifies relations \(f\circ \inn_{\nu}=\inn_{\nu}\circ f\). \color{red}\((\bigsqcup_{\mu\in M}X_{\mu}\to\bigsqcup_{\mu\in M}Y_{\mu})\circ (Y_{\nu}\to\bigsqcup_{\mu\in M}Y_{\mu})\)?\color{black}
+\item \textbf{i-th projection} \(\pr_{i}:X_{1}\times...\times X_{n}\to X_{i}\) s.t. \((x_{1},...,x_{n})\mapsto x_{i}\)
+\item \textbf{Product of maps} \(f_{1}\times ...\times f_{n}:X_{1}\times ...\times X_{n}\to Y_{1}\times ...\times Y_{n}\) s.t. \((x_{1},...,x_{n})\mapsto(f_{1}(x_{1}),...,f_{n}(x_{n}))\)
+\item \textbf{Product of partitions} \(p\times q\) is the partition of \(X\times Y\) into sets \(A\times B\) where \(A\in p\) and \(B\in q\)
+\item \textbf{Diagonal map} map of \(X\) to \(X\times X\) given by \(x\mapsto (x,x)\); its image is called the diagonal of \(X\times X\)
+\end{itemize}
+\subsection{Topologies}
+\begin{itemize}
+\item \textbf{Topological structure / Topology} \(T\), a class of subsets of \(X\) which contains the union of any collection in the class and the intersection of any finite collection in the class.
+\item \textbf{Topological space} \((X,T)\)
+\item \textbf{Points} \(x\in X\)
+\item \textbf{Open sets} \(s\in T\)
+\item \textbf{Empty collection} union and intersection of the empty collection is \(\varnothing\) and \(X\).
+\item \textbf{Closed sets} a set \(S\) whose complement \(X\\S\) is open.
+\item \textbf{Neighbourhood} any open set containing the given point or subset in a topological space.
+\item \textbf{Interior} \(\Int_{X} A\) the largest open set / the union of all open sets contained in a given subset \(A\) of a topological space \(X\);
+A point is an interior point if it has a neighbourhood entirely contained in \(A\).
+\item \textbf{Closure} \(\Cl_{X} A\) the smallest closed set / the intersection of all closed sets that contain a given subset \(A\) of a topological space \(X\);
+A point is an adherent point if each of its neighbourhoods intersects \(A\).
+\item \textbf{Frontier / boundary / limit} \(\Fr_{X} A=\Cl A\backslash\Int A\); 
+A point is a boundary point if each of its neighbourhoods intersects both \(A\) and \(X\backslash A\).
+\item \textbf{Exterior} \(X\backslash \Cl A\); A point is exterior if it has a neighbourhood which does not intersect \(A\).
+\item \textbf{Dense} A subset \(A\) is dense in topological space \(X\) if \(\Cl A=X\) i.e. \(A\) intersects any nonempty open set in \(X\).
+\item \textbf{Nowhere dense} A subset \(A\) is nowhere dense in topological space \(X\) if \(X\backslash \Cl A\) is dense.
+\end{itemize}
+\subsection{Bases and prebases}
+\begin{itemize}
+\item \textbf{Base} A base of a topological space is a collection \(\Gamma\) of open sets such that any open set is a union of sets from the collection.
+For any open set \(U\) and any \(x\in U\) there is \(V\in\Gamma\) s.t. \(x\in V\subseteq U\).
+\item \textbf{Prebase / Subbase} A collection of subsets of a topological space s.t. the intersections of finite subcollections of sets from the given collection form a base
+\item \textbf{Base at a point} Base at the point \(x\) of a topological space \(X\) is a collection of neighbourhoods of \(x\) s.t. any neighbourhood of \(x\) contains a neighbourhood from this collection.
+\item \textbf{Prebase at a point} Prebase at the point \(x\) of a topological space \(X\) is a collection of sets s.t. the intersections of finite subcollections form a base at \(x\).
+\end{itemize}
+\subsection{Covers}
+\begin{itemize}
+\item \textbf{Cover of a set} For a subset \(A\) in \(X\), a cover of the set \(A\) in \(X\) is a collection of subsets of \(X\) such that its union contains \(A\).
+\item \textbf{Subcover} a subset of a cover that still covers
+\item \textbf{Refinement} A cover \(\Gamma\) is a refinement of a cover \(\Delta\) if any element of \(\Gamma\) is contained in an element of \(\Delta\).
+\item \textbf{Locally finite} if any point of the space has a neighbourhood which intersects only a finite number of elements of the cover
+\item \textbf{Point finite} if every point of \(X\) is contained in only finitely many sets in the cover
+\item \textbf{Open cover} A cover is open / closed if all its elements are open / closed.
+\item \textbf{Star refinement} The star \(\text{st}(S,U)\) of a subset \(S\) with respect to a cover \(U\) is the set of all sets in \(U\) that intersects with \(S\);
+\end{itemize}
+\subsection{Metrics}
+\begin{itemize}
+\item \textbf{Metric} A nonnegative real function \(\rho: X\times X\to \mathbb{R^{\ge {0}}}\) is a metric if \(\rho(x,y)=0\) \(\Longleftrightarrow\) \(x=y\); \(\forall x,y\in X\;(\rho(x,y)=\rho(y,x))\) and \(\forall x,y,z\in X\;(\rho(x,z)\le\rho(x,y)+\rho(y,z))\) (triangle inequality).
+\item \textbf{Metric space} a set equipped with a metric denoted \(\dist\)
+\item \textbf{Ball} The ball with center \(x_{0}\in X\) and radius \(r>0\) in metric space \(X\) is the set of points \(x\in X\) s.t. \(\dist(x_{0},x)\le r\).
+\item \textbf{Open ball} like ball but \(\dist(x_{0},x)<r\)
+\item \textbf{Sphere} like ball but \(\dist(x_{0},x)=r\)
+\item \textbf{Unit ball and sphere} The ball and sphere centered at the origin and radius \(1\) are called the \(n\)-dimensional ball \(D^{n}\) and the \((n-1)\)-dimensional sphere \(S^{n-1}\).
+\item \textbf{Distance between two sets} \(\inf_{x\in A,y\in B}\dist(x,y)\) or the greatest number \(\le\) all \(\dist(x,y)\)
+\item \textbf{Diameter} \(\sup_{x,y\in A}\dist(x,y)\)
+\item \textbf{Bounded set} a set is bounded if its diameter is finite.
+\item \textbf{Metrizable} if a topology is the metric topology relative to some metric
+\item \textbf{Metric neighbourhood} If \(A\) is a subset, its metric neighbourhood of radius \(r>0\) is the set of all points \(x\in X\) s.t. \(\dist(A,x)< r\).
+\end{itemize}
+\subsection{Subspaces}
+\begin{itemize}
+\item \textbf{Relative / subspace topology} the open sets are defined to be \(A\cap B\) where \(A\) is a given subset and \(B\) is any open subset of \(X\)
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{subspace_1.PNG}
+    \caption{an open set in \(A\) that is neither open or closed in \(X\)}
+\end{figure}
+\item \textbf{Topological pair} \((X,A)\) where \(A\) is a subspace of \(X\)
+\item \textbf{Topological triple} \((X,A,B)\) where \(A,B\) is a subspace of \(X\) and \(B\subseteq A\)
+\end{itemize}
+\subsection{Fundamental Covers}
+\begin{itemize}
+\item \textbf{Fundamental cover} a cover \(\Gamma\) of a topological space \(X\) is fundamental if each subset \(A\) of \(X\) s.t. \(A\cap B\) is open in \(B\) for all \(B\in \Gamma\) is itself open.
+    
+\(\forall B\in\Gamma\) and \(\forall A\subseteq X\), \(A\cap B\) is open in \(B\) \(\Longleftrightarrow\) \(A\) is open in \(X\).
+\begin{figure}
+    \centering
+    \begin{overpic}[width=0.5\textwidth]{fundamental_1.PNG}
+        \put (97, 3) {\(X\)}
+        \put (15, 60) {\(C_{1}\)}
+        \put (80, 60) {\(C_{2}\)}
+        \put (70, 45) {\(A\)}
+        \put (14, 8) {\(A\cap C_{1}\)}
+        \put (71, 8) {\(A\cap C_{2}\)}
+        \put (85, 70) {\(X\backslash A\)}
+    \end{overpic}
+    \caption{Visualization of a fundamental cover (only those that intersects \(A\))}
+\end{figure}
+\item \textbf{Triad} a triple \((X,A,B)\) where \(X\) is a topological space and \(A,B\subseteq X\) constitutes a fundamental cover. 
+A triple forms a triad if \(\Int A\cup\Int B=X\) or if \(A\cup B=X\) and A and B are closed.
+\end{itemize}
+\subsection{Continuous maps}
+\begin{itemize}
+\item \textbf{Continuous map} A map \(f\) of a topological space \(X\) into a topological space \(Y\) is continuous if the preimage of each open subset of \(Y\) is open in \(X\).
+
+A map \(f:(X,A_{1},...,A_{n})\to(Y,B_{1},...,B_{n})\) where \(A_{1},...,A_{n}\subseteq X\) and \(B_{1},...,B_{n}\subseteq Y\) is continuous if \(\abs f:X\to Y\) is continuous.
+\item \textbf{Open / closed maps} a (continuous) map is open / closed if the images of open / closed sets are open / closed.
+\end{itemize}
+\subsection{Continuity at a point}
+\begin{itemize}
+\item \textbf{Continuous at a point} A map \(f:X\to Y\) is continuous at the point \(x\in X\) if for any neighbourhood \(V\) of point \(f(x)\) there is a neighbourhood \(U\) of \(x\) s.t. \(f(U)\subseteq V\).
+
+Assume we are given an arbitrary prebase at the point \(x\), \(\Delta\), and an arbitrary prebase at the point \(f(x)\), \(\text{E}\).
+\(f\) is continuous at \(x\) \(\Longleftrightarrow\) each neighbourhood \(V\in\text{E}\) contains the image of some \(U\in\Delta\).
+\end{itemize}
+\subsection{Homeomorphisms and embeddings}
+\begin{itemize}
+\item \textbf{Homeomorphism} An invertible map \(f\) s.t. both \(f\) and \(f^{-1}\) are continuous; if there is a homeomorphism \(X\to Y\), then \(X\) is said to be homeomorphic to \(Y\). 
+The homeomorphism of spaces is an equivalence relation.
+\item \textbf{Embedding} A map \(f:X\to Y\) is an embedding if \(\ab f:X\to f(X)\) is a homeomorphism.
+\end{itemize}
+\subsection{Retractions}
+\begin{itemize}
+\item \textbf{Retraction} A retraction is a continuous map of a space \(X\) onto a subspace \(A\) is one which its restriction to \(A\) is the identity map.
+\item \textbf{Retract} A subset onto which a space can be retracted.
+\end{itemize}
+\subsection{Numerical functions}
+\begin{itemize}
+\item \textbf{Distinguishable} A subset \(A\) of a topological space \(X\) is said to be distinguishable if there is a continuous function \(f:X\to I\) s.t. \(f(x)=0\) for \(x\in A\) and \(f(x)>0\) for \(x\in X\backslash A\).
+\end{itemize}
+\subsection{Separation Axioms}
+\begin{itemize}
+\item \textbf{\(\mathbf{T_{1}}\)} Given 2 arbitrary distinct points \(a\) and \(b\), there is a neighbourhood of \(a\) which does not contain \(b\).
+\item \textbf{\(\mathbf{T_{2}}\)} 2 arbitrary distinct points have disjoint neighbourhoods.
+\item \textbf{\(\mathbf{T_{3}}\)} Any point and any closed set not containing this point have disjoint neighbourhoods.
+\item \textbf{\(\mathbf{T_{4}}\)} Any 2 disjoint closed sets have disjoint neighbourhoods.
+\item \textbf{Hausdorff} spaces that satisfy \(\mathbf{T_{1}}\)
+\item \textbf{Regular} spaces that satisfy \(\mathbf{T_{1}}\) and \(\mathbf{T_{3}}\)
+\item \textbf{Normal} spaces that satisfy \(\mathbf{T_{1}}\) and \(\mathbf{T_{4}}\)
+\item \textbf{Urysohn functions} A continuous function \(f:X\to\mathbb{I}\) s.t. \(f(x)=0\) for \(x\in A\subseteq X\) and \(f(x)=1\) for \(x\in B\subseteq X\) (\(A\) and \(B\) are disjoint) is referred to as a Urysohn function for the pair \(A,B\).
+\end{itemize}
+\subsection{Countability axioms}
+\begin{itemize}
+\item \textbf{Second countable space} A topological space satisfies the second axiom of countability if it has a countable base.
+\item \textbf{First countable space} A topological space satisfies the first axiom of countability if it has a countable base at each point.
+\item \textbf{Separable space} A topological space is separable if it has a countable dense subset.
+\end{itemize}
+\subsection{Compactness}
+\begin{itemize}
+\item \textbf{Compact} A topological space is compact if every open cover contains a finite cover.
+\item \textbf{Locally compact} A topological space is locally compact if each of its point has a neighbourhood with compact closure.
+\item \textbf{Paracompact} A Hausdorff space is paracompact if each of its open covers has a locally finite refinement.
+\end{itemize}
+\section{Results}
+\subsection{Topologies}
+\begin{enumerate}
+\item\(\forall\) topologies \((X,T)\): \(\varnothing,X\in T\)
+\item Infinite unions are allowed because it mean there exists some set where an element is in that set (no limit involved)
+\item The class of closed sets contains the intersection of any collection of sets from the class and the union of any finite collection of sets from the class.
+\item \(A\) is open \(\Longleftrightarrow\) \(X\backslash A\) is closed
+\item \(\Fr A\) is closed.
+\(\Fr_{X} A=\Cl A\backslash\Int A=\Cl A\cap(X\backslash\Int A)\) and \(\Cl A,X\backslash\Int A\) are closed
+\item \(X\backslash\Int A=\Cl(X\backslash A)\) and \(X\backslash \Cl A=\Int (X\backslash A)\)
+
+\(X\backslash\Int A=X\backslash\bigcup_{a\subseteq A}^{a \text{ open}}a=\bigcap_{a\subseteq A}^{a \text{ open}}X\backslash a=\bigcap_{X\backslash a\supseteq X\backslash A}^{X\backslash a \text{ closed}}X\backslash a=\Cl(X\backslash A)\) Similarly \(X\backslash \Cl A=\Int (X\backslash A)\)
+\item \(\Fr A=\Fr(X\backslash A)\)
+
+\(\Fr A=\Cl A\backslash\Int A=(X\backslash\Int A)\backslash(X\backslash\Cl A)=\Cl(X\backslash A)\backslash\Int(X\backslash A)=\Fr(X\backslash A)\)
+\item A set \(A\) is open (closed) \(\Longleftrightarrow\) \(A=\Int A\) (\(A=\Cl A\supseteq \Fr A\))
+\item If \(H\) is a non-empty family of topologies on \(S\) then \(\bigcap H\) is a topology on \(S\).
+
+\(\forall G\in\bigcap H\;(\forall T\in H\;(G\subseteq T))\) \(\Longrightarrow\) \(\forall T\in H\;(\text{any }\bigcup G\in T)\) \(\Longrightarrow\) any \(\bigcup G\in\bigcap_{T\in H}T=\bigcap H\). Similarly any \(\bigcap G\in\bigcap H\)
+\end{enumerate}
+\subsection{Bases and prebases}
+\begin{enumerate}
+\item It is not necessary for a base to contain \(\varnothing\)
+\item Let \(\Gamma\) be a collection of subsets of a set \(X\). A topology on \(X\) with base \(\Gamma\) exists \(\Longleftrightarrow\) 
+the intersection of finite subcollection of sets from \(\Gamma\) can be expressed as a union of sets from \(\Gamma\).
+
+Necessity (forward) follows from the fact that \(\Gamma\) consists of open sets; Sufficiency follows from the fact that the class of subsets of \(X\) representable as unions of sets from \(\Gamma\) satisfies the definition of topology.
+\item There is a topology on \(X\) with base \(\Gamma\) \(\Longleftrightarrow\) \(\Gamma\) cover \(X\) and \(\forall U,V\in\Gamma\) and \(\forall x\in U\cap V\) there exists \(W\in\Gamma\) s.t. \(x\in W\subseteq U\cap V\).
+\item \(\Gamma\) covers \(X\) and the intersection of any two sets in \(\Gamma\) is itself in \(\Gamma\) or is empty \(\Longrightarrow\) \(\Gamma\) is a base
+\item Any collection \(\Gamma\) of subsets of a set \(X\) is the prebase of a unique topology on \(X\).
+\item A base for a topology does not have to be closed under finite intersections
+\item \(\Gamma\) is a base for a topological \(X\) \(\Longleftrightarrow\) \(\forall x\in X\) the subcollection of \(\Gamma\) which contains \(x\) forms a base at \(x\). \color{red}how to prove?\color{black}
+\item If a base \(S\subseteq(\varnothing,X)\), the topology generated is the indiscrete / trivial topology.
+\item The usual topology on \(\mathbb{R}\) has a prebase containing all intervals of the form \((-\infty,a)\) or \((b,\infty)\).
+\item If \(\Gamma_{1},..,\Gamma_{n}\) are bases for \(T_{1},...,T_{n}\), then \(\Gamma_{1}\times...\times\Gamma_{n}\) is a base for \(T_{1}\times...\times T_{n}\). This still applies in an infinite product, except all elements in the final topology must be the union of finitely many bases.
+\end{enumerate}
+\subsection{Covers}
+\begin{enumerate}
+\item Every open cover of a topological space has a refinement whose sets belong to a given base of \(X\).
+\end{enumerate}
+\subsection{Metrics}
+\begin{enumerate}
+\item \(D^{0}\) is a point and \(S^{0}\) is a pair of points
+\item Every metric space is a topology.
+
+Triangle inequality \(\Longrightarrow\) if open ball with center \(x_{0}\) and radius \(r\) contains \(x_{1}\), it also contains open ball with center \(x_{1}\) and radius \(r-\dist(x_{0},x_{1})\) \(\Longrightarrow\) 
+the intersection of 2 open balls contains some open ball centered at a point for every point in the intersection. \(\Longrightarrow\) the open balls cover the space so by \color{gray}Bases and prebases 3 \color{black} they constitute the base of a topology.
+\item Open balls centered at a given point of the metric space constitute a base at that point.
+\item Open balls centered at a point with radii \(1/n\) for \(n\in\mathbb{N}\) is also a base at that point.
+\item the metric neighbourhood of \(A\) of radius \(r\) is open
+
+It is the union of all open balls of radius \(r\) centered at points of \(A\)
+\end{enumerate}
+\subsection{Subspaces}
+\begin{enumerate}
+\item If \(A\) is a subspace, the closed sets of \(A\) are exactly \(A\cap B\) where \(B\) is a closed subset of \(X\).
+\item If \(A\) is open, \(S\) is open in \(A\) \(\Longleftrightarrow\) \(S\) is open in \(X\); if \(A\) is closed, \(S\) is closed in \(A\) \(\Longleftrightarrow\) \(S\) if closed in \(X\).
+\item If \(B\subseteq A\subseteq X\), \(\Cl_{A}B=(\Cl_{X}B)\cap A\)
+\item If \(\Gamma\) is a base (prebase) of \(X\), then sets \(A\cap B\) with \(B\in\Gamma\) yields a base (prebase) of \(A\).
+\item the subspace topology is transitive: If \(B\) is a subset of subspace \(A\) of \(X\), the topology induced on \(B\) by \(B\subseteq A\) and that induced on \(B\) by \(B\subseteq X\) coincide.
+\item If \(X\) is a metric space and \(A\subseteq X\), The restriction of \(\dist\) to \(A\times A\) is clearly a metric; any subset of a metric space is a metric space and its metric topology 
+coincides with the relative topology induced on \(A\) by the metric topology of the ambient space.
+\end{enumerate}
+\subsection{Fundamental covers}
+\begin{enumerate}
+\item A cover which admits a fundamental refinement is itself fundamental.
+
+If \(\Delta\) is a fundamental refinment of \(\Gamma\), for all \(C\in\Gamma\) there is \(D\in\Delta\) s.t. \(D\subseteq C\).
+If \(A\cap C\) is open in \(C\), by definition of subspace topology \(A\cap C\cap D=A\cap D\) is open in \(D\), which implies \(A\) is open because \(\Delta\) is fundamental.
+\item Equivalent definition for fundamental covers is that \(A\cap B\) is closed in \(B\) for all \(B\in \Gamma\) and \(A\subseteq X\) \(\Longleftrightarrow\) \(A\) is closed.
+
+For \(A\) in the original definition, \(X\backslash A\) satisfies this definition
+\item All open covers and all finite or locally finite closed covers are fundamental. 
+
+For open covers, \(A\cap C\) open in \(C\) and \(C\) open \(\Longrightarrow\) \color{gray}Subspaces.2 \color{black} \(A\cap C\) open \(\Longrightarrow\) \(\bigcap A\cap C=A\) open;
+
+For finite closed covers, \(A\cap C\) closed in \(C\) and \(C\) closed \(\Longrightarrow\) \color{gray}Subspaces.2 \color{black} \(A\cap C\) closed \(\Longrightarrow\) \(\bigcap^{<\infty}A\cap C=A\) closed \color{gray}(Topologies.3)\color{black};
+
+For locally finite closed covers \(\Gamma\), consider an open cover \(\Delta\) where each \(D\in\Delta\) intersects finite number of sets in \(\Gamma\). (exists because of definitiom of \color{gray}locally finite\color{black})
+For any \(S\subseteq X\), if \(S\cap C\) is open in \(C\), \(S\cap (D\cap C)\) is open in \(C\) because \(C\cap D\) is open in \(C\), which implies \(S\cap (D\cap C)\) open in \(D\cap C\).
+A cover of \(D\in\Delta\) by sets \(D\cap C\) is fundamental because it is finite and closed.
+For any \(S\subseteq X\), \(S\cap (D\cap C)\) open in \(D\cap C\) \(\Longrightarrow\) \(D\cap S\) open in \(D\).
+Since open covers are fundamental, \(D\cap S\) open in \(D\) \(\Longrightarrow\) \(S\) open.
+\item If \(\Gamma\) is a set of sets s.t. \(\bigcup \Int C=X\), it is fundamental.
+
+For any \(S\subseteq X\), if \(S\cap C\) is open in \(C\), then \((S\cap C)\cap \Int C=S\cap \Int C\) is open in \(\Int C\). 
+By \color{gray}Subspaces.2\color{black}, \(S\cap\Int C\) is open in \(X\), so \(\bigcup S\cap\Int C=S\) is open.
+\end{enumerate}
+\subsection{Continuous maps}
+\begin{enumerate}
+\item If the preimages of the sets of some prebase of \(Y\) is open, then the map is continuous.
+\item If \(f:X\to Y\) and \(g:Y\to Z\) are continuous, then composition \(g\circ f:X\to Z\) is continuous.
+\item \(\id X:X\to X\) is continuous.
+\item If \(f:X\to Y\) continuous and \(A\subseteq X,B\subseteq Y,f(A)\subseteq B\), then the map \(\ab f:A\to B\) is continuous.
+\item Given \(f:X\to Y\) and fundamental cover of \(X\) \(\Gamma\), all \(f|_{A}\) where \(A\in\Gamma\) is continuous \(\Longleftrightarrow\) \(f\) continuous
+
+For an open set \(T\) in \(Y\), consider \(A\in \Gamma\) s.t. \(f(A)\) intersects \(T\). (no need to consider if no \(f(A)\) intersects)
+\(f(A)\cap T\) is open in \(f(A)\) so with continuous \(f|_{A}\) \(A\cap f^{-1}(T)\) is open in \(A\). Since \(\Gamma\ni A\) is a fundamental cover \(f^{-1}(T)\) is open.
+
+\item Equivalently, if for each \(A\in \Gamma\) there is a continuous map \(f_{A}:A\to Y\) s.t. \(f_{A}(x)=f_{B}(x)\) for all \(x\in A\cap B\), then the map \(f:X \to Y\) with \(f(x)=f_{A}(x)\) for \(x\in A\) is continuous.
+\item If for each \(x\in X\) there is a continuous map \(g_{x}\) from \(U\), a neighbourhood of \(f(x)\), to \(f^{-1}(U)\), then \(f\) is open.
+
+For an open set \(A\), \(f(A)=\bigcup_{x\in X}g_{x}^{-1}(A)\); since open set in image of \(g_{x}\) implies its preimage is open, any open set in domain of \(g_{x}^{-1}\) implies its image is open, and union of open sets is open.
+\end{enumerate}
+\subsection{Continuity at a point}
+\begin{enumerate}
+\item A map \(f:X\to Y\) is continuous \(\Longleftrightarrow\) it is continuous at each point of \(X\).
+
+If \(f\) is continuous at each point and \(V\) is open in \(Y\), then each point of the set \(f^{-1}(V)\) is an interior point because it has a neighbourhood \(U\) whose image \(f(U)\subseteq f(f^{-1}(V))\subseteq V\).
+\end{enumerate}
+\subsection{Retractions}
+\begin{enumerate}
+\item A subspace \(A\) of a topological space \(X\) is a retract of \(X\) \(\Longleftrightarrow\) every continuous map \(A\to Y\) can be extended to a continuous map \(X\to Y\) for any topological space \(Y\).
+
+If \(\rho: X\to A\) is a retraction and \(f:A\to Y\) is continuous, the composition \(f\circ\rho\) extends \(f\) to \(X\).
+
+If every continuous map \(A\to Y\) extends to a continuous map \(X\to Y\), extending \(A\to A\) to \(X\to A\) yields a retraction.
+\end{enumerate}
+\subsection{Numerical functions}
+\begin{enumerate}
+\item Uniform limit theorem: let \(X\) be a topological space and \(Y\) be a metric space, and let \(f_{n}:X\to Y\) be a sequence of functions converging uniformly to a function \(f:X\to Y\). If each of \(f_{n}\) is continuous, \(f\) must be continuous as well.
+
+We need to show that for every \(\epsilon>0\), \(\exists\)neighbourhood \(U\) of any point \(x\) of \(X\) s.t. \((\forall y\in U)\;\dist_{Y}(f(x),f(y))<\epsilon\).
+
+Since \(f_{n}\) converges uniformly, \(\exists N\) s.t. \((\forall t\in X)\;\dist_{Y}(f_{N}(t),f(t))<\epsilon/3\).
+
+Since \(f_{n}\) is continuous, \(\forall x\) \(\exists\)neighbourhood \(U\) s.t. \((\forall y\in U)\;\dist_{Y}(f_{N}(x),f_{N}(y))<\epsilon/3\).
+
+Applying the triangle inequality, \((\forall y\in U)\;\dist_{Y}(f(x),f(y))\le\dist_{Y}(f(x),f_{N}(x))+\dist_{Y}(f_{N}(x),f_{N}(y))+\dist_{Y}(f_{N}(y),f(y))=\epsilon\).
+\item If \(X\) is a metric space and \(A\subseteq X\), then the function \(X\to \mathbb{R}\), \(x\mapsto \dist(x,A)\), is continuous.
+
+Let \(x,y\in X\) and \(z\in A\). Then \(\dist(x,A)\le\dist(x,z)\le\dist(x,y)+\dist(y,z)\) \(\Longrightarrow\) \((\forall x,y\in X)\;\dist(x,A)\le\dist(x,y)+\dist(y,A)\).
+
+Since \(x\) and \(y\) appear symmetrically, \(|\dist(x,A)-\dist(y,A)|\le\dist(x,y)\).
+\item A distinguishable set is closed.
+
+At the limit point, \(f(x)=0\).
+\item Any closed subset of a metric space is distinguishable.
+
+The function \(x\mapsto \min(1,\dist(x,A))\) distinguishes the closed subset \(A\).
+\end{enumerate}
+\subsection{Separation Axioms}
+\begin{enumerate}
+\item Equivalent formulation for \(\mathbf{T_{1}}\): each point is a closed set.
+
+Fixing \(a\), \(\forall b\in X\;\exists\)neighbourhood \(U\) s.t. \(b\in U\) and \(a\notin U\); therefore \(\bigcup U=X\backslash (a)\) is open so \((a)\) is closed.
+
+If each point \((a)\) is a closed set, \(X\backslash (a)\) is open, and is a neighbourhood not containing \(a\) for every other point \(b\).
+\item Equivalent formulation for \(\mathbf{T_{1}}\): every finite sets are closed.
+
+If each point is closed, the finite union of them are closed; If every finite sets are closed, each point is also closed because it is a finite set.
+\item Equivalent formulation for \(\mathbf{T_{3}}\): every neighbourhood of an arbitrary point contains the closure of a neighbourhood of this point.
+
+Consider an open set \(U\): For a point \(a\in U\) and closed set \(X\backslash U\), there exists disjoint open sets \(V,W\) s.t. \(a\in V\) and \(W\subseteq X\backslash U\) \(\Longrightarrow\) \(X\backslash W\subseteq U\) 
+so \(U\) contains closed set \(X\backslash W\), which both contain \(a\).
+
+Note: This does not mean every neighbourhood is closed because it is a union of closed sets; it is either infinite or clopen or both.
+\item Equivalent formulation for \(\mathbf{T_{4}}\): every neighbourhood of an arbitrary closed set contains the closure of a neighbourhood of this set.
+\item Equivalent formulation for \(\mathbf{T_{4}}\): given a finite collection of pairwise disjoint closed sets, there are neighbourhoods of these sets with pairwise disjoint closures.
+\item \(\mathbf{T_{3}}\) does not imply \(\mathbf{T_{1}}\); \(\mathbf{T_{4}}\) does not imply \(\mathbf{T_{1}}\).
+\item Every normal space is regular and every regular space is Hausdorff.
+\item Every subspace of a Hausdorff space is Hausdorff, every subspace of a regular space is regular, and every closed subspace of a normal space is normal.
+\item Every retract of a Hausdorff space is closed.
+
+Let \(A\) be a retract of \(X\) and \(\rho:X\to A\) be a retraction. \(b\in X\backslash A\) \(\Longrightarrow\) \(b\neq\rho(b)\) \(\Longrightarrow\) \(b\) and \(\rho(b)\) have disjoint neighbourhoods \(U\) and \(V\).
+\(\therefore(\forall x\in U)\;\rho(x)\neq x\); but from definition of retraction only points outside \(A\) have \(\rho(x)\neq x\) so \(U\cap A=\varnothing\). Therefore any point not contained in \(A\) have a neighbourhood not intersecting \(A\).
+\item Every metric space is normal.
+
+Clearly every metric space satisfies axiom \(\mathbf{T_{1}}\). Suppose \(A\) and \(B\) are disjoint closed subsets of a metric space.
+Then \(\{x|\dist(x,A)-\dist(x,B)<0\}\) and \(\{x|\dist(x,B)-\dist(x,A)<0\}\) are disjoint open sets containing \(A\) and \(B\). 
+They are open because numerical operations on continuous functions (\(\dist\)) are continuous and preimage of open sets are open.
+\\\\
+\textbf{Urysohn Functions}
+\item Let \(A\) and \(B\) be two disjoint closed subsets of a topological space \(X\). Let \(\Delta\) be the set of dyadic rational numbers of the interval \(\mathbb{I}\) and let \(\Gamma\) be the collection of all neighbourhoods of \(A\) that doesn't intersect \(B\).
+Then there is an injective function \(\varphi:\Delta\to\Gamma\) s.t. \(\Cl(\varphi(r_{1})\subseteq\varphi(r_{2})\) for \(r_{1}<r_{2}\) if \(X\) is normal.
+
+Let \(\varphi(1)=X\backslash B\) and \(\varphi(0)\) be any neighbourhood of \(A\) of which its closure is contained in \(X\backslash B\). \color{gray}(Separation axioms.4) \color{black}
+If \(\varphi(r)\) is already defined such that the ordering condition holds for numbers \(r=m/2^{n}\in\Delta\), it can be extended to \(m/2^{n+1}\):
+If \(m=2k+1\), take \(\varphi(r)\) to be any open set containing \(\Cl(\varphi(k/2^{n}))\) and contained along with its closure in \(\varphi((k+1)/2^{n})\). \color{gray}(Separation axioms.4) \color{black}
+\item An Urysohn function exists for 2 arbitrary disjoint closed subsets \(A, B\) of a normal space \(X\).
+
+\[f(x)=\begin{cases}\inf\{r\;|\;\varphi(r)\ni x\}&x\in\varphi(1)\\1&x\in X\backslash\varphi(1)\end{cases}\]
+To show that \(f\) is continuous, note that intervals \([0,r)\) and \((r,1]\) with \(r\in\Delta\) constitutes a prebase of \(\mathbb{I}\).
+\(f^{-1}([0,r))=\bigcup_{r'<r}\varphi(r')\); \(f^{-1}((r,1])=X\backslash f^{-1}([0,r])=X\backslash \bigcap_{r'>r}\varphi(r')=X\backslash \bigcap_{r'>r}\Cl(\varphi(r'))\)
+Therefore the prebase has open images and \(f\) is continuous.
+\item If any pair of disjoint closed subsets of \(X\) admits an Urysohn function, then \(X\) satisfies \(\mathbf{T_{4}}\).
+\item If \(f\) is any Urysohn function for \(A,B\) and \(g\) distinguishes \(A\), then \(x\mapsto\min(f(x)+g(x),1)\) provudes an Urysohn function which is only zero in \(A\).
+\\\\
+\textbf{Extension Theorems}
+\item Let \(F\) be a closed subset of topological space \(X\) and \(\phi:F\to\mathbb{R}\) be a continuous function where \(|\phi(x)|<L\). If \(X\) is normal, there exists continuous function \(\psi:X\to\mathbb{R}\) s.t.
+\[\begin{cases}|\psi(x)|\le L/3&x\in X \\ |\psi(x)-\phi(x)|\le 2L/3&x\in F\end{cases}\]
+The subsets of \(F\) determined by \(\phi(x)\le-L/3\) and \(\phi(x)\ge L/3\) are closed in \(F\), hence in \(X\), and are disjoint. 
+Therefore there is a continuous function \(\psi: X\to[-L/3, L/3]\), which is an Urysohn function composed with a linear transformation, equal to \(-L/3\) on the first set and equal to \(L/3\) on the second set.
+\item \textbf{Tietze extension theorem} If \(A\) is a closed subset of normal space \(X\), then every continuous function \(A\to\mathbb{R}\) extends to a continuous function \(X\to\mathbb{R}\).
+
+Let us show \(f:A\to(-1,1)\) can be extended to \(g:X\to[-1,1]\). Define \(g\) as the sum of a series of continuous functions \(g_{k}:X\to\mathbb{R}\):
+\[\begin{cases}|g_{k}(x)|\le 2^{k-1}/3^{k}&x\in X\\|f(x)-\sum_{i=0}^{k}g_{i}(x)|_{A}\le (2/3)^{k}&x\in A\end{cases}\]
+Take \(g_{0}=0\) and \(g_{0},...,g_{n}\) are constructed; define \(g_{n+1}\) to be the function obtained after applying \color{gray}(15) \color{black} to \(\phi=f-\sum_{i=0}^{n}(g_{i}|A)\), \(F=A\) and \(L=(2/3)^{n}\).
+The first inequality shows that \(g\) converges uniformly so is continuous; the second inequality shows that \(g|_{A}=f\).
+
+\(\mathbb{R}\) is homeomorphic to \((-1,1)\), so it suffices to show that \(f:A\to\mathbb{R}\to(-1,1)\) can be extended to \(g':X\to(-1,1)\to\mathbb{R}\). 
+We have shown that there exists \(g:X\to [-1,1]\). Let \(B=g^{-1}(-1)\cup g^{-1}(1)\); then \(A\) and \(B\) are closed and disjoint so it has an Urysohn function \(h\). \(g'(x)=g(x)h(x)\) because \(x\in A\) means \(h(x)=1\) and \(g(x)=1\) or \(-1\) means \(h(x)=0\).
+\item If \(A\) is a closed subset of the normal space \(X\), then every continuous map \(A\to \mathbb{R}^{n}\) extends to a continuous map \(X\to \mathbb{R}^{n}\). This claims remains true if one takes a cube instead of \(\mathbb{R}^{n}\).
+\end{enumerate}
+\subsection{Countability axioms}
+\begin{enumerate}
+\item The second axiom of countability implies the first axiom of countability and the separability.
+
+Clearly the second axiom implies the first axiom; the union of all sets in the countable base is a countable dense subset.
+\item Every metric space is first countable.
+
+open balls centered at the point with radii \(1/n\)
+\item A separable metric space is second countable.
+
+The open balls centered at the points of a countable dense set with radii \(1/n\) consitute a countable base.
+\item A set is dense in a metric space \(X\) \(\Longleftrightarrow\) \(\forall x\in X\) and \(\forall \epsilon>0\), \(\exists s\in S\) s.t. \(|s-x|<\epsilon\)
+
+This means every open ball centered at \(x\) contains a \(s\) so there is no open ball in \(X\backslash S\) that is contained entirely in \(X\backslash S\); which means \(\Int(X\backslash S)=\varnothing\) \(\Longrightarrow\) \(\Cl S=X\).
+\item \(\mathbb{R}^{n}\) and \(l_{2}\) are separable and hence second countable.
+
+The collection of all sequences \(\{x_{i}\}_{1}^{n}\) with rational \(x_{i}\)'s is a countable dense set in \(\mathbb{R}^{n}\).
+The set of all finitely supported (having a finite number of nonzero terms) sequences \(\{x_{i}\}_{1}^{\infty}\) with rational \(x_{i}\)'s is a countable dense set in \(l_{2}\).
+\item Every subspace of a second countable space is second countable.
+\item In a separable space, every collection of pairwise disjoint open subsets is countable.
+
+\(\Cl S=X\) \(\Longrightarrow\) \(\Int(X\backslash S)=\varnothing\) so there is no open set that is disjoint to \(S\); For any set in the collection, pick a point of \(S\) contained in the set. This yields an injective mapping of the collection into \(S\).
+\item A continuous surjective map of topological spaces carries every dense set into a dense set; an open map transforms each base into a base and each base at a point into a base at the image of that point; the image of a separable space under a continuous map is separable; the image of a first or a second countable space under an open map is first and respectively second countable.
+
+For every open set in \(X\) there exists \(x\in X\) s.t. \(x\in S\); \(\therefore\exists f(x)\) s.t. \(f(x)\in f(X)\cap f(S)\); some of the open sets in \(X\) are preimages of open sets in \(Y\) so \(f(S)\) is dense.
+\item Every regular second countable space is normal.
+
+Let \(A\) and \(B\) be closed disjoint subsets of a regular second countable space. According to \color{gray}Separation axioms.3\color{black}, each point of \(A,B\) has a neighbourhood whose closure is entirely contained in \(A\) or \(B\) respectively. Such neighbourhoods constitute open covers of \(A\) and \(B\); 
+if they are uncountable, we may refine them by covers made of sets from the countable base (since unions of sets in base can form any set). Index these 2 covers as \(U_{1},U_{2},...\) and \(V_{1},V_{2},...\) then set \(U'_{n}=U_{n}\backslash\bigcup_{i=1}^{n}\Cl V_{i}\) and \(V'_{n}=V_{n}\backslash\bigcup_{i=1}^{n}\Cl U_{i}\).
+The sets \(U=\bigcup_{n=1}^{\infty}U'_{n},V=\bigcup_{n=1}^{\infty}V'_{n}\) are open and disjoint.
+\[u\in U\begin{cases}(u\in U_{1}\land u\notin \Cl V_{1})\land\\(u\in U_{2}\land u\notin \Cl V_{1}\land u\notin \Cl V_{2})\land\\(u\in U_{3}\land u\notin \Cl V_{1}\land u\notin \Cl V_{2}\land u\notin \Cl V_{3})\land\\...\end{cases}\]
+Since \(A\cap \Cl V_{i}=B\cap \Cl U_{i}=\varnothing\), \(A\subseteq U\) and \(B\subseteq V\).
+\\\\
+\textbf{Embedding and Metrization Theorems}
+\item Every regular second countable space can be embedded in \(l_{2}\).
+
+Let \(X\) be a regular space with countable base \(\Gamma\). We index the pairs \((U_{i},V_{i})\), \(U_{i},V_{i}\in\Gamma\), satisfying \(\Cl U_{i}\subseteq V_{i}\). 
+Define \(f:X\to l_{2}\) by \(f(x)=\{\phi_{k}(x)/k\}_{k=1}^{\infty}\) where \(\phi_{k}\) is any Urysohn function for the pair \(\Cl U_{k},X\backslash V_{k}\). 
+If \(x\neq y\), \(\exists\)neighbourhood of \(x\) that doesn't include \(y\) (\(\mathbf{T_{3}}\) and \(\mathbf{T_{1}}\) \(\Longrightarrow\) \((y)\) is a closed set);
+so there is a set \(V\) in \(\Gamma\) that contains \(x\) but not \(y\). According to \color{gray}Separation Axioms.3\color{black}, there is a neighbourhood \(U\) of \(x\) whose closure is contained in \(V\).
+Therefore, \(\exists k\) s.t. \(x\in U_{k}, y\in X\backslash V_{k}\) and so \(f\) is injective.
+
+Given \(x_{0}\in X,\epsilon > 0\), choose \(n\) s.t. \(\sum_{k=n+1}^{\infty}k^{-2}<\epsilon^{2}/2\); \(\exists\)neighbourhood \(U\) of \(x_{0}\) s.t. \(\sum_{k=1}^{n}(|\phi_{k}(x)-\phi_{k}(x_{0})|/k)^{2}<\epsilon^{2}/2\).
+\(\therefore \sum_{k=1}^{\infty}(|\phi_{k}(x)-\phi_{k}(x_{0})|/k)^{2}<\epsilon^{2}\) \(\Longrightarrow\) \(\dist(f(x),f(x_{0}))<\epsilon\) so \(f\) is continuous.
+
+Let \(g\) denote the inverse of \(\ab f:X\to f(X)\). Given a point \(y_{0}\in f(X)\) and a neighbourhood \(U\) of \(g(y_{0})\), choose \(n\) s.t. \(V_{n}\subseteq U\) and \(g(y_{0})\in U_{n}\).
+If \(y\in f(X)\) and \(\dist(y_{0}, y)<1/n\), then \(\sqrt{\sum_{k=1}^{n}(|\phi_{k}(g_{y})-\phi_{k}(g_{y_{0}})|/k)^{2}}<1/n\) \(\Longrightarrow\) \(|\phi_{n}(g(y))-\phi_{n}(g(y_{0}))|<1\) \(\Longrightarrow\) \(g(y)\in V_{n}\) \(\Longrightarrow\) \(g(y)\in U\) so \(g\) is continuous.
+\item A second countable topological space is metrizable \(\Longleftrightarrow\) it is regular.
+\end{enumerate}
+\subsection{Compactness}
+\begin{enumerate}
+\item A subspace \(A\) of a topological space \(X\) is compact \(\Longleftrightarrow\) each open cover of \(A\) in \(X\) there is a finite subcover.
+\item Every closed subset of a compact space is compact.
+
+Let \(\Delta\) be an open cover of \(A\) in \(X\). Add \(X\backslash A\) to \(\Delta\), extract a finite cover from \(\Delta\), then delete \(X\backslash A\) if it remains. This yields a finite cover of \(A\) in \(X\).
+\item In a Hausdorff space, any two compact disjoint sets have disjoint neighbourhoods.
+
+Let \(A,B\) denote the given sets. If \(B\) is a point, for each \(x\in A\) consider disjoint neighbourhoods \(U_{x}, V_{x}\) of \(x\) and \(B\), and extract a finite cover \(U_{x_{1}},...,U_{x_{s}}\) from the open cover of \(A\) given by all of \(U_{x}\). 
+\(\bigcup_{i=1}^{s}U_{x_{i}}\) and \(\bigcap_{i=1}^{s}V_{x_{i}}\) are disjoint neighbourhoods of \(A\) and \(B\).
+
+In the general case, pick for each \(x\in B\) disjoint neighbourhoods \(U_{x}\) and \(V_{x}\) of \(A\) and \(x\) using above procedure; repeat similar procedure to get disjoint neighbourhoods of \(A\) and \(B\).
+\item Every compact subset of a Hausdorff space is closed.
+
+From \color{gray}Compactness.3 \color{black} any point not contained in a compact subset has a neighbourhood which does not intersect this subset.
+\item Every compact Hausdorff space is normal.
+
+Follows from \color{gray}Compactness.2 \color{black} and \color{gray}Compactness.3\color{black}.
+\\\\
+\textbf{Compactness and fundamental covers}
+\item Suppose \(A\) is a compact subset of a Hausdorff space \(X\). Then from every countable fundamental cover of \(X\) one can extract a finite cover of \(A\).
+
+Let \(U_{1},U_{2},...\) be the given cover. If none of the sets \(\bigcup_{i=1}^{m}U_{i}\) covers \(A\), pick a point from each set \(A\backslash \bigcup_{i=1}^{m}U_{i}\) distinctly and denote the set \(Y\).
+Since each intersection \(Y\cap U_{i}\) is finite, they are closed in \(U_{i}\) respectively, so \(Y\) is closed (fundamental cover). In fact, by the same logic, all of its subsets are closed. 
+Hence \(Y\) is compact \color{gray}(Compactness.2) \color{black} and discrete. However, this means \(Y\) is finite as if it is infinite a cover consisting of all points will not have a finite subcover. This contradicts the construction of \(Y\) that implies it is infinite.
+\\\\
+\textbf{Compactness and maps}
+\item The image of a compact space under a continuous map is compact.
+
+Define \(f:X\to Y\) and let \(\Delta\) be an open cover of \(Y\). The setes \(f^{-1}(V)\) for \(V\in\Delta\) form an open cover of \(X\) and a subcover of this cover yields a subcover of \(\Delta\).
+\item Every continuous map of a compact space into a Hausdorff space is closed.
+
+Corollary of \color{gray}Compactness.2, 7, 4\color{black}.
+\item Every invertible continuous map of a compact space onto a Hausdorff space is a homeomorphism. Every injective continuous map of a compact space into a Hausdorff space is an embedding.
+
+Consequences of \color{gray}Compactness.8 \color{black} and the fact that a closed invertible map is a homeomorphism
+\\\\
+\textbf{Compactness and metrics}
+\item Every compact subset of a metric space can be covered by a finite number of open balls having radius \(\epsilon\) for any positive \(\epsilon\).
+
+Since it is compact, such a cover can be extracted from a cover consisting of balls of radius \(\epsilon\) centered at all points.
+\item Every compact metric space has a countable base.
+
+For each positive integer \(n\) construct a finite cover of open balls of radius \(1/n\) then take the union of these covers to get the base.
+\item Every compact metric space is bounded.
+
+From \color{gray}Compactness.10\color{black}, the diameter is at most \(\epsilon\) times the number of balls in the finite cover.
+\item Let \(X\) be a compact topological space. Then every continuous function \(X\to \mathbb{R}\) attains its absolute maximum and absolute minimum.
+
+\color{gray}Compactness.7, 12 \color{black}shows that the image of \(X\) in \(\mathbb{R}\) is bounded. \color{gray}Compactness.8 \color{black} shows that image is closed, which meanse it contains its greatest lower bound and its least upper bound.
+\item Let \(A,B\) be disjoint subsets of a metric space. If \(A\) is compact and \(B\) is closed, then \(\dist(A,B)>0\).
+
+Since \(A\) is compact and \(\dist(x,B)\) depends continuously on \(x\in A\), there exists \(a\in A\) s.t. \(\dist(a,B)=\inf_{x\in A}\dist(x,B)=\dist(A,B)\) \color{gray}(Compactness.13)\color{black}.
+Since \(B\) is closed and \(a\notin B\), \(\dist(a,B)=\dist(A,B)>0\).
+\item Suppose \(f\) is a continuous map of a metric space \(X\) into a topological space \(Y\) and \(\Delta\) is an open cover of \(Y\). If \(X\) is compact, then there is \(\epsilon>0\) s.t. \(\forall A\subseteq X\) with diameter \(<\epsilon\), \(f(A)\) is contained in some element of \(\Delta\).
+
+It is enough to show that there is an \(\epsilon>0\) s.t. \(\forall x,y\in X\) with \(\dist(x,y)<\epsilon\) are both contained in one of the sets of the open cover \(\Gamma=f^{-1}(\Delta)\).
+\(\forall x\in X\) pick an open ball centered at \(x\) and contained in one of the sets of \(\Gamma\). Let \(U_{x}\) be the concentric ball with half the radius. Extract a finite cover \(U_{x_{1}},...,U_{x_{s}}\) from the cover of \(X\) by all \(U_{x}\).
+Let \(\epsilon_{i}\) denote the radius of \(U_{x_{i}}\), and \(\epsilon = \min(\epsilon_{1},...,\epsilon_{s})\). If \(x,y\in X\) and \(\dist(x,y)<\epsilon\), then \(\exists i\) s.t. \(\dist(x,x_{i})<\epsilon_{i}\) (since it is a cover) so \(\dist(x_{i},y)<\dist(x_{i},x)+\dist(x,y)<2\epsilon_{i}\).
+Therefore \(x\) and \(y\) belong to the same ball (of twice the radius), and the same set of cover \(\Gamma\).
+\\\\
+\textbf{Compactness in Euclidean Space}
+\item The cubes of \(\mathbb{R}^{n}\) are compact.
+
+Any cube in \(\mathbb{R}^{n}\) can be divided into \(2^{n}\) cubes of half the edge; if some open cover \(\Gamma\) of the original cube does not contain a finite subcover, then so does the smaller cubes. An iteration of this arguments yields a sequences of cubes \(Q_{1},Q_{2},...\).
+However, the point common to all these cubes (least upper bound) is covered by some set from \(\Gamma\), and by the topology that set is the union of open cuboids, so it must cover all the cubes \(Q_{k}\) with \(k\) large enough.
+\item a subset of \(\mathbb{R}^{n}\) is compact \(\Longleftrightarrow\) it is bounded and closed.
+
+From \color{gray}compactness.4, 13 \color{black} compact subsets are closed and bounded; from \color{gray}compactness.17, 2 \color{black} any bounded subset is contained in some cube so is compact.
+\\\\
+\textbf{Local compactness}
+\item Every closed subset of a locally compact space is locally compact.
+
+If \(a\) is a point of a closed subset \(A\) of locally compact space \(X\), and \(U\) is the neighbourhood of \(a\) with compact \(\Cl_{X}U\), then \(\Cl_{A}(U\cap A)\) is compact because 
+\(A\) is closed so it is closed in \(X\) and is a subset of compact \(\Cl_{X}U\) so by \color{gray}compactness.2 \color{black} it is compact.
+\item Every open subset of a locally compact Hausdorff space is locally compact.
+
+Let \(a\) be a point of the open subset \(A\) of locally compact \(X\), and let \(U\) be the neighbourhood of \(a\) with compact \(\Cl_{X}U\). By \color{gray}compactness.5\color{black}, \(Cl_{X}U\) is regular so \(a\) 
+has a neighbourhood \(V\) s.t. \(\Cl_{\Cl_{X}U}V\subseteq U\cap A\). 
+
+\(V\) is open in \(\Cl_{X}U\), hence it is open in \(U\cap A\) (which is open in \(\Cl_{X}U\)), which in turn implies that \(V\) is open in \(A\). 
+\(\Cl_{\Cl_{X}U}V\) is contained in \(U\cap A\) so it equals \(\Cl_{U\cap A}V\) and is equal to \(\Cl_{A}V\). (the property translates because the entire closure is contained in the sets); since \(\Cl_{\Cl_{X}U}V\) is compact \(\Cl_{A}V\) is compact.
+\item Let \(U\)  be a neighbourhood of point \(a\) of locally compact Hausdorff space \(X\). Then \(a\) has a neighbourhood whose closure is compact and contained in \(U\).
+
+From \color{gray}compactness.19\color{black}, \(a\) has a neighbourhood \(V\) in \(U\) with compact closure. Since \(U\) is open, \(V\) is open in \(U\). Since \(\Cl_{U}V\) is compact and \(X\) is Hausdorff, \(\Cl_{U}V\) is closed in \(X\) so equal to \(\Cl_{X}V\). Therefore \(V\) is the desired neighbourhood of \(a\).
+\item Locally compact Hausdorff spaces are regular.
+
+Consequence of \color{gray}compactness.20\color{black}.
+\end{enumerate}
+\section{Examples}
+\subsection{Topologies}
+\begin{itemize}
+\item \textbf{Trivial topology} \(T=(\varnothing, X)\)
+\item \textbf{Discrete topology} \(T=\mathcal{P}(X)\)
+\item \textbf{Sierpinski topology} \(X=(a,b), T=(\varnothing,(a),(a,b))\)
+\item \textbf{Euclidean topology on a plane} admits as a base the set of all open rectangles with horizontal and vertical sides; and a nonempty intersection of 2 basic sets is also a basic set
+\item \textbf{Lower limit topology} generated by the base \(\{[a,b)\subseteq\mathbb{R}:a<b\}\); the corresponding topological space is called to Sorgenfrey line.
+\item \textbf{Order topology} on a totally ordered set \(X\), it is generated by the prebase \((\{x:a<x\},\{x:x<b\})\)
+\item \textbf{Metric topology} 
+\end{itemize}
+\subsection{Bases}
+\begin{itemize}
+\item The set \(\Gamma\) of all bounded open intervals in \(\mathbb{R}\) generates the usual Euclidean  topology on \(\mathbb{R}\).
+\item The set \(\Sigma\) of all bounded closed intervals in \(\mathbb{R}\) generates the discrete topology on \(\mathbb{R}\). 
+    The Euclidean topology is a subset of discrete topology despite \(\Gamma\not\subseteq\Sigma\).
+\item The \(\Gamma_{\mathbb{Q}}\) of all intervals in \(\Gamma\) s.t. both endpoints of the interval are rational numbers generates the same topology as \(\Gamma\). \color{red}(?)\color{black}
+\item The \(\Sigma_{\mathbb{Q}}\) of all intervals in \(\Sigma\) s.t. both endpoints of the interval are rational numbers generates the same topology as \(\Sigma\). \color{red}(?)\color{black}
+\item \(\Sigma_{\infty}=\{(r,\infty):r\in\mathbb{R}\}\) generates a topology strictly coarser than that generated by \(\Sigma\). \(\Gamma_{\infty}=\{[r,\infty):r\in\mathbb{R}\}\) generates a topology that is strictly coaser than that generated by \(\Gamma\) or \(\Sigma_{\infty}\).
+    The sets \(\Gamma_{\infty}\) and \(\Sigma_{\infty}\) are disjoint but \(\Gamma_{\infty}\) is a subset of the topology generated by \(\Sigma_{\infty}\). \color{red}(?)\color{black}
+\item In the indiscrete topology \((\varnothing, X)\) the base at a point \(x\) is \((X)\).
+\end{itemize}
+\subsection{Metrics}
+\begin{itemize}
+\item The standard \(n\)-dimensional Euclidean space \(\mathbb{R}^{n}\) with metric being \(\sqrt{\sum_{i=1}^{n}(x_{i}-y_{i})^{2}}\)
+\item The standard Hilbert space \(l_{2}\) has infinite sequences with metric \(\sqrt{\sum_{i=1}^{\infty}(x_{i}-y_{i})^{2}}\) satisfying \(\sum_{i=1}^{\infty}x_{i}^{2}<\infty\)
+\end{itemize}
+\subsection{Continuous maps}
+\begin{itemize}
+\item Restriction \(f|_{A}:A\to Y\) is continuous and inclusion of a subspace into its ambient space is continuous.  
+\item invertible continuous map needn't have a continuous inverse: an example is identity map of a set with discrete topology onto the same set but a different topology.
+\end{itemize}
+\subsection{Continuity at a point}
+\begin{itemize}
+\item When \(X\) and \(Y\) are metric spaces and \(\Delta\) and \(\text{E}\) consists of open balls centered at points \(x\) and \(f(x)\), the topological continuity at a point reduces to the formulaion given in calculus: 
+\(f:X\to Y\) is continuous at \(x\in X\) if \(\forall\epsilon > 0\;\exists\delta>0\) s.t. \(\dist_{X}(x,x')<\delta\) implies \(\dist_{Y}(f(x),f(x'))<\epsilon\).
+\end{itemize}
+\subsection{Homeomorphisms and embeddings}
+\begin{itemize}
+\item The open ball \(\Int D^{n}\) is homeomorphic to \(\mathbb{R}^{n}\): 
+\(f:\mathbb{R}^{n}\to \Int D^{n}\) where \[f(v)=\frac{1}{1+\lVert v\rVert}\cdot v\;\;\;\;\;\;\;\; \lVert f(v)\rVert=\frac{\lVert v\rVert}{1+\lVert v\rVert}<1\]
+\(f\) is continuous because norm is continuous.    
+\item The cube \(I^{n}\) is homeomorphic to \(D^{n}\); their interiors and boundaries are also homeomorphic. The homeomorphisms are realized by translation by 
+\((ort_{1}+...+ort_{n})/2\) followed by central projection (\(ort_{i}\) denotes vector \((0,0,0,...,1,...,0,0,0\)).
+\item The punctured sphere \(S^{n}\backslash ort_{1}\) is homeomorphic to \(\mathbb{R}^{n}\). It is given by the composition of homeomorphism 
+\((x_{1},...,x_{n})\mapsto (0,x_{1},...,x_{n})\) onto a subspace of \(\mathbb{R}^{n+1}\) with the stereographic projection from the point \(ort_1\).
+\end{itemize}
+\end{document}

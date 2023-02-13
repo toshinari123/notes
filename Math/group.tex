@@ -1,0 +1,1015 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[a4paper, total={6in, 10in}]{geometry}
+\usepackage{tcolorbox}
+\usepackage{mdframed}
+\usepackage[hidelinks]{hyperref}
+\usepackage{amsfonts}
+\usepackage{mathrsfs}
+\usepackage{centernot}
+\usepackage{tikz-cd}
+
+\setlength{\jot}{10pt}
+
+\DeclareMathOperator{\im}{Im}
+
+\newmdenv[
+  topline=false,
+  bottomline=false,
+  skipabove=\topsep,
+  skipbelow=\topsep,
+  leftmargin=-10pt,
+  rightmargin=-10pt,
+  innertopmargin=0pt,
+  innerbottommargin=0pt,
+  linecolor=blue
+]{siderules}
+\newmdenv[
+  topline=false,
+  bottomline=false,
+  skipabove=\topsep,
+  skipbelow=\topsep,
+  leftmargin=-10pt,
+  rightmargin=-10pt,
+  innertopmargin=0pt,
+  innerbottommargin=0pt,
+  linecolor=red
+]{redrules}
+\newmdenv[
+  topline=false,
+  bottomline=false,
+  skipabove=\topsep,
+  skipbelow=\topsep,
+  leftmargin=-10pt,
+  rightmargin=-10pt,
+  innertopmargin=0pt,
+  innerbottommargin=0pt,
+  linecolor=OliveGreen
+]{greenrules}
+
+\title{Learning Group Theory\\Rotman An introduction to the theory of groups}
+\author{toshinari tong}
+
+\begin{document}
+
+\maketitle
+
+\section{Groups and homomorphisms}
+\null
+\subsection{Permutations}
+If \(X\neq\varnothing\), a \textbf{permutation} of \(X\) is a bijection \(\alpha :X\rightarrow X\).\\\\
+\(S_X\) denotes the set of all permutations of \(X\).\\\\
+\(S_n\) denotes the set of all permutations of \(\{1,2,...,n\}\).\\\\
+\(|X|\) denotes the number of elements in a set \(|X|\). (\(|S_n|=n!\))\\\\
+Define a function \(\alpha :X\rightarrow X\) by \(\alpha[i]=r_i\) for all \(i\in X\). (\(r \) is a rearrangement of \(X\))\\\\
+\null\qquad It is an injection (\(i\) has no repetitions) and an surjection (all elements of \(X\) is in \(i\))\\\\
+\textit{New viewpoint:} Any bijection \(\alpha\) can be denoted by two rows:
+\[\alpha=\begin{pmatrix}1 & 2 & ... & n\\\alpha[1] & \alpha[2] & ... & \alpha[n]\end{pmatrix}\]
+Composite of two bijections is again a bijection
+\[\alpha=\begin{pmatrix}1 & 2 & 3\\3 & 2 & 1\end{pmatrix}\,\,\,\,\beta=\begin{pmatrix}1 & 2 & 3\\2 & 3 & 1\end{pmatrix}\,\,\,\,\alpha\beta=\begin{pmatrix}1 & 2 & 3\\2 & 1 & 3\end{pmatrix}\,\,\,\,\alpha\beta\neq\beta\alpha\]
+\(\alpha\mid X\) means the function created by applying \(\alpha\) on set \(X\) "alpha on X" (\(X\subset\) domain of \(\alpha\))
+\begin{siderules}
+\color{blue}\textit{EXERCISES}\color{black}\\\\
+\color{blue}1. The identity function \(1_X\) on a set \(X\) is a permutation, and we usually denote it by \(1\). Prove that \(1\alpha=\alpha=\alpha 1\) for every permutation \(\alpha\in S_X\).\color{black}\\\\
+\null\qquad\(1(\alpha)[i]=1[\alpha[i]]=\alpha[i]\)\quad\(\alpha(1)[i]=\alpha[1[i]]=\alpha[i]\)\\\\
+\color{blue}2. For each \(\alpha\in S_X\), prove that there is \(\beta\in S_X\) with \(\alpha\beta=1=\beta\alpha\).\color{black}\\\\
+\null\qquad Let \(\beta\) be the inverse function of \(\alpha\). (\(\beta(\alpha)[x]=x\) for all \(x\in X\))\\\\
+\null\qquad\(\alpha(\beta)[\alpha[i]]=\alpha(\beta(\alpha))[i]=\alpha[\beta(\alpha)[i]]=\alpha[i]=1[\alpha[i]]\)\quad\(\beta(\alpha)[j]=j=1[j]\)\\\\
+\color{blue}3. For all \(\alpha,\beta,\gamma\in S_X\), prove that \(\alpha(\beta\gamma)=(\alpha\beta)\gamma\).\color{black}\\\\
+\null\qquad\(p(q)[i]=p[q[i]]\)\\\\
+\null\qquad\(\alpha(\beta(\gamma)))[i]=\alpha[\beta(\gamma)[i]]=\alpha[\beta[\gamma[i]]]\)\quad\((\alpha(\beta))(\gamma)[i]=(\alpha(\beta))[\gamma[i]]=\alpha[\beta[\gamma[i]]]\)\quad for all \(i\in X\)\\
+\end{siderules}
+\subsection{Cycles}
+If \(x\in X\) and \(\alpha\in S_X\), \(\alpha\) \textbf{fixes} \(x\) if \(\alpha[x]=x\) and \(\alpha\) \textbf{moves} \(x\) if \(\alpha[x]\neq x\).\\\\
+Let \(i_1, i_2, ..., i_r\) be distinct integers between \(1\) and \(n\). If \(\alpha\in S_n\) fixes the remaining \(n-r\) integers and if\\
+\[\alpha[i_1]=i_2,\alpha[i_2]=i_3,...,\alpha[i_{r-1}]=i_r,\alpha[i_r]=i_1\]
+then \(\alpha\) is a \textbf{\(r\)-cycle}. Denote \(\alpha\) by \((i_1\,\,i_2\,\,...\,\,i_r)\).\\\\
+A 2-cycle is called a \textbf{transposition}.\\\\
+\[\begin{pmatrix}1 & 2 & 3 & 4 & 5\\5 & 1 & 4 & 2 & 3\end{pmatrix}=(1\,\,5\,\,3\,\,4\,\,2)\,\,\,\,\begin{pmatrix}1 & 2 & 3 & 4 & 5\\2 & 3 & 1 & 4 & 5\end{pmatrix}=(1\,\,2\,\,3)(4)(5)=(1\,\,2\,\,3)\]
+Multiplication with cycle notation:\\
+\[\alpha=(1\,\,2)\,\,\,\,\beta=(1\,\,3\,\,4\,\,2\,\,5)\,\,\,\,\gamma=\alpha\beta\]
+\[\gamma(1)=\alpha(\beta(1))=\alpha(3)=3\,\,\,\,\gamma(3)=\alpha(\beta(3))=\alpha(4)=4\,\,\,\,\gamma(4)=1\,\,\,\,\gamma(2)=5\]
+\[(1\,\,2)(1\,\,3\,\,4\,\,2\,\,5)=(1\,\,3\,\,4)(2\,\,5)\]
+Two permutations \(\alpha,\beta\in S_X\) are \textbf{disjoint} if every \(x\) moved by one is fixed by the other.\\\\
+\(\alpha[x]\neq x\implies\beta[x]=x\) and \(\beta[x]\neq x\implies\alpha[x]=x\) (it is possible that \(\alpha[x]=x=\beta[x]\)).\\\\
+A family of permutations \(\alpha_1,\alpha_2,...,\alpha_m\) is \textbf{disjoint} if each pair of them is disjoint.\\\\
+\begin{siderules}
+\color{blue}\textit{EXERCISES} (Note: all addition in indices assumed to loop around)\\\\
+\color{blue}1. Prove that \((1\,\,2\,\,...\,\,r-1\,\,r)=(2\,\,3\,\,...\,\,r\,\,1)=...=(r\,\,1\,\,...\,\,r-2\,\,r-1)\).\color{black}\\\\
+\null\qquad\(\alpha_1[1]=2,\alpha_1[2]=3,...,\alpha_1[r-1]=r\,\,\,\,\alpha_2[2]=3,\alpha_2[3]=4,...,\alpha_2[r]=1\,\,\,\,...\)\\\\
+\null\qquad\(\alpha_j[i]=i+1\,\,\,\,(\alpha_j[r]=1)\) for all \(1\le j\le n\)\\\\
+\null\qquad There are \(r\) notations for all \(r\)-cycle.\\\\
+\color{blue}2. If \(1\le r\le n\), then there are \(n(n-1)...(n-r+1)/r\) \(r\)-cycles in \(S_n\).\color{black}\\\\
+\null\qquad Pick \(r\) distinct integers in different orders to form the \(r\)-cycles: \(P^n_r=n(n-1)...(n-r+1)\)\\\\
+\null\qquad Account for the \(r\) repetitions: \(P^n_r/r=n(n-1)...(n-r+1)/r\)\\\\
+\color{blue}3. Prove that if \(\alpha\beta=\alpha\gamma\) or \(\beta\alpha=\gamma\alpha\), then \(\beta=\gamma\).\color{black}\\\\
+\null\qquad Consider an \(r\)-cycle of \(\alpha\), \((a_1\,\,a_2\,\,...\,\,a_r)\)\\\\
+\null\qquad Let \(\beta[i]\) be \(a_j\) and \(\gamma[i]\) be \(a_k\): \(\alpha[\beta[i]]=\alpha[a_j]=a_{j+1}\,\,\,\,\alpha[\gamma[i]]=\alpha[a_k]=a_{k+1}\)\\\\
+\null\qquad Since all elements in all \(r\)-cycles of \(\alpha\) are distinct, \(j=k\) and thus \(\beta[i]=\gamma[i]\) for all \(i\)\\\\
+\null\qquad\(\beta[\alpha[i]]=\gamma[\alpha[i]]\) If \(\alpha: X\rightarrow Y\) and \(\beta,\gamma: Y\rightarrow Z\) then \(\beta=\gamma\)\\\\
+\color{blue}4. Let \(\alpha=(a_1\,\,a_2\,\,...\,\,a_r)\) and \(\beta=(b_1\,\,b_2\,\,...\,\,b_s)\). Prove that \(\alpha\) and \(\beta\) are disjoint iff \(\{a_1,a_2,...,a_r\}\cap\{b_1,b_2,...,b_s\}=\varnothing\).\color{black}\\\\
+\null\qquad If \(a\cap b=\varnothing\), \(\alpha[a_i]\neq a_i\) and \(a_i\notin b\) so \(\beta[a_i]=a_i\) and vice versa \(\therefore\) disjoint\\\\
+\null\qquad If \(a\cap b\neq\varnothing\), there exists \(i,j\) such that \(a_i=b_j\). \(\alpha[a_i]\neq a_i\) and \(\beta[b_j]\neq b_j\) \(\therefore\) not disjoint\\\\
+\color{blue}5. If \(\alpha\) and \(\beta\) are disjoint permutations, then \(\alpha\beta=\beta\alpha\); that is, \(\alpha\) and \(\beta\) commute\color{black}\\\\
+\null\qquad If \(i\) is in an \(r\)-cycle of \(\beta\) \((b_1,b_2,...,b_r)\) (\(i=b_j\)), \(\alpha[\beta[i]]=\alpha[\beta[b_j]]=\alpha[b_{j+1}]\)\\\\
+\null\qquad Since \(\alpha\) and \(\beta\) are disjoint and \(b_{j+1}\) is moved by \(\beta\), \(\alpha[b_{j+1}]=b_{j+1}\)\\\\
+\null\qquad Similarly, \(\beta[\alpha[i]]=\beta[\alpha[b_j]]=\beta[b_j]=b_{j+1}\) \(\therefore\alpha[\beta[i]]=\beta[\alpha[i]]=b_{j+1}\)\\\\
+\null\qquad if \(i\) is fixed by \(\beta\), \(\alpha[\beta[i]]=\alpha[i]\) and \(\beta[\alpha[i]]=\alpha[i]\)\\\\
+\null\qquad (If \(i\) is fixed by \(\alpha\), \(\beta[\alpha[i]]=\beta[i]=i=\alpha[i]\);\\\\
+\null\qquad else, \(\beta[\alpha[i]]=\alpha[i]]\) since \(\alpha[i]\) is part of a cycle of \(\alpha\), that is, it is moved by \(\alpha\))\\\\
+\color{blue}6. If \(\alpha,\beta\in S_n\) are disjoint and \(\alpha\beta=1\), then \(\alpha=1=\beta\).\color{black}\\\\
+\null\qquad Let \((b_1,b_2,...,b_r)\) be an \(r\)-cycle of \(\beta\).\\\\
+\null\qquad \(\alpha[\beta[b_i]]=b_i\) and \(\alpha[\beta[b_i]]=\alpha[b_{i+1}]=b_i\) for all \(1\le i\le r\)\\\\
+\null\qquad Since \(b_{i+1}\neq b_i\), \(\alpha\) moves all \(b_{i+1}\) and hence moves all \(b_i\).\\\\
+\null\qquad \(\beta\) moves \(b_i\) and \(\alpha\) moves \(b_i\); contradiction with disjoint\\\\
+\null\qquad\(\therefore\) \(\beta\) has no \(r\)-cycles so \(\beta=1\) so \(\alpha=1\)\\\\
+\color{blue}7. If \(\alpha,\beta\in S_n\) are disjoint, prove that \((\alpha\beta)^k=\alpha^k\beta^k\) for all \(k\ge 0\). Is this true if \(\alpha\) and \(\beta\) are not disjoint?\color{black}\\\\
+\null\qquad If \(x=a_i\in(a_1\,\,a_2\,\,...\,\,a_r)\) (and \(\beta[a_i]=a_i\) for all \(i\) since disjoint),\\\\ \null\qquad\((\alpha\beta)^k[x]=(\alpha\beta)^{k-1}(\alpha\beta)[a_i]=(\alpha\beta)^{k-1}(\alpha)[a_i]=(\alpha\beta)^{k-1}[a_{i+1}]=\)\\\\
+\null\qquad\((\alpha\beta)^{k-j}(\alpha\beta)[a_{i+j-1}]=(\alpha\beta)^{k-j}(\alpha)[a_{i+j-1}]=(\alpha\beta)^{k-j}[a_{i+j}]=...=a_{i+k}=\alpha^k[x]=\alpha^k\beta^k[x]\)\\\\
+\null\qquad Similarly, if \(x=b_i\in(b_1\,\,b_2\,\,...\,\,b_r)\), \((\alpha\beta)^k[x]=b_{i+k}=\alpha^k[b_{i+k}]=\alpha^k\beta^k[x]\)\\\\
+\null\qquad Else, \((\alpha\beta)^k[x]=\alpha^k\beta^k[x]=x\)\\\\
+\color{blue}8. Show that a power of a cycle need not be a cycle.\color{black}\\\\
+\null\qquad Consider \(\alpha=(a_1\,\,a_2\,\,...\,\,a_r)\). \(\alpha^r[a_i]=\alpha^{r-1}[a_{i+1}]=...=a_{i+r}=a_i\) \(\therefore \alpha^r=1\)\\\\
+\color{blue}9. (i) Let \(\alpha=(a_1\,\,a_2\,\,...\,\,a_r)\) be an \(r\)-cycle. For every \(j,k\ge 0\), prove that \(\alpha^k[i_j]=i_{k+j}\) if subscripts are read modulo \(r\).\color{black}\\\\
+\null\qquad \(\alpha^k[i_j]=\alpha^{k-1}[i_{j+1}]=\alpha^{k-r+j}[i_r]=\alpha^{k-r}[i_{r+j}]=\alpha^{k-r}[i_j]=\alpha^{k-lr}[i_j]=i_{j+k-lr}\)\\\\
+\null\qquad where \(l\) is the largest integer such that \(lr<k\) (ok dont ask me about if \(j+k>r\))\\\\
+\color{blue}(ii) Prove that if \(\alpha\) is an \(r\)-cycle, then \(\alpha^r=1\), but that \(\alpha^k\neq 1\) for every positive integer \(k<r\).\color{black}\\\\
+\null\qquad \(\alpha^k[a_i]=a_{i+k}\neq a_i \therefore \alpha^k\neq 1\) (\(r\) proved at \color{gray}(8.)\color{black})\\\\
+\color{blue}(iii) If \(\alpha=\beta_1\beta_2...\beta_m\) is a product of disjoint \(r\)-cycles \(\beta_i\), then the smallest positive integer \(l\) with \(\alpha^l=1\) is the least common multiple of \(\{r_1,r_2,...,r_m\}\).\color{black}\\\\
+\null\qquad\(\alpha^l=(\beta_1\beta_2...\beta_m)^l=\beta_1^l\beta_2^l...\beta_m^l\) \color{gray}(7.) \color{black}\(\therefore \beta_1^l=\beta_2^l=...=\beta_m^l=1\) \color{gray}(6.)\color{black}\\\\
+\null\qquad Since \(\beta_i^k=1\) when \(r\mid k\), \(r_i\mid l\) for all \(i\). \(\therefore\) smallest \(l\) is the lcm.\\\\
+\color{blue}10. (i) A permutation \(\alpha\in S_n\) is \textbf{regular} if either \(\alpha\) has no fixed points and it is the product of disjoint cycles of the same length or \(\alpha=1\). Prove that \(\alpha\) is regular iff \(\alpha\) is a power of an \(n\)-cycle \(\beta\); that is, \(\alpha=\beta^m\) for some \(m\).\color{black}\\\\
+\null\qquad If \(\alpha=\beta^m=(b_1\,\,b_2\,\,...\,\,b_n)^m\), \(\alpha[b_i]=b_{i+m}\) \color{gray}(9.(i))\color{black}\\\\
+\null\qquad In \(\alpha\), \(b_i\) is in \((b_i\,\,b_{i+m}\,\,b_{i+2m}\,\,...)\), which is of length \(k\).\\\\
+\null\qquad Since all \(b_i\) are in cycles of length \(k\), \(\alpha\) is regular.\\\\
+\null\qquad If \(\alpha=(a_1\,\,a_2\,\,...\,\,a_k)(b_1\,\,b_2\,\,...\,\,b_k)...(z_1\,\,z_2\,\,...\,\,z_k)\) is regular, let \(\beta=(a_1\,\,b_1\,\,...\,\,z_1\,\,a_2\,\,b_2\,\,...\,\,z_2\,\,...\,\,z_k)\)\\\\
+\null\qquad\(\beta^m=\alpha\) since \(\beta^m[x_i]=x_{i+m}\) \color{gray}(9.(i))\color{black}\\\\
+\color{blue}(ii) If \(\alpha\) is an \(n\)-cycle, then \(\alpha^k\) is a product of \(gcd(n, k)\) disjoint cycles, each of length \(n/gcd(n, k)\).\color{black}\\\\
+\null\qquad \(\alpha^k=(a_1\,\,a_2\,\,...\,\,a_n)^k\) (assume \(k<n\) as \(\alpha^n=1\)), \(\alpha^k[a_i]=a_{i+k}\) \color{gray}(9.(i))\color{black}\\\\
+\null\qquad In \(\alpha^k\), \(a_i\) is in \((a_i\,\,a_{i+k}\,\,a_{i+2k}\,\,...)\), which is of length \(l\), then \(l\) is the smallest integer s.t. \(n\mid lk\).\\\\
+\null\qquad\(l\mid n\) as all the cycles are of same length; Let \(l=n/q\). Then, \(n\mid lk\,\,\,\,n\mid (nk/q)\,\,\,\,\therefore q\mid k\)\\\\
+\null\qquad For \(l\) to be smallest, \(q=gcd(n,k)\) as \(q\mid n,k\). \(\therefore l=n/gcd(n,k)\)\\\\
+\color{blue}(iii) If \(p\) is a prime, then every power of a \(p\)-cycle is either a \(p\)-cycle or 1.\color{black}\\\\
+\null\qquad\(\pi^k\) is a product of \(gcd(p,k)\) disjoint cycles.  \color{gray}(9.(ii))\color{black}\\\\
+\null\qquad\(gcd(p,k)=p\) (\(\pi^p=1\)) when \(k=p\) and \(gcd(p,k)=1\) (\(\pi^k\) is a \(p\)-cycle) otherwise.\\\\
+\color{blue}11. (i) Let \(\alpha=\beta\gamma\) in \(S_n\), where \(\beta\) and \(\gamma\) are disjoint. If \(\beta\) moves \(i\), then \(\alpha^k[i]=\beta^k[i]\) for all \(k\ge 0\).\color{black}\\\\
+\null\qquad Since \(\beta\) moves \(i\) and all elements in its cycle, \(\gamma\) fixes all elements in that cycle.\\\\
+\null\qquad\(\therefore \alpha^k[i]=(\beta\gamma)^k[i]=\beta^k[i]\)\\\\
+\color{blue}(ii) Let \(\alpha\) and \(\beta\) be cycles in \(S_n\). If there is \(i_1\) moved by both \(\alpha\) and \(\beta\) and if \(\alpha^k[i_1]=\beta^k[i_1]\) for all positive integers \(k\), then \(\alpha=\beta\).\color{black}\\\\
+\null\qquad Let \(\alpha,\beta\) be \((a_1\,\,a_2\,\,,,,\,\,a_n)\) and \((b_1\,\,b_2\,\,,,,\,\,b_m)\) where \(a_1=b_1=i_1\). WLOG assume \(n\le m\)\\\\
+\null\qquad Since \(\alpha^k[i_1]=\beta^k[i_1],\) \(a_2=b_2,a_3=b_3,...,a_n=b_n\). \(\alpha[a_n]=\beta[b_n]\) so \(a_1=b_{n+1}=b_1\)\\\\
+\null\qquad However all elements of \(b\) is distinct, so \(n=m\) \(\therefore \alpha=\beta\)
+\end{siderules}
+\subsection{Factorization into Disjoint Cycles}
+Let us factor \(\alpha=\begin{pmatrix}1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9\\6 & 4 & 1 & 2 & 5 & 3 & 8 & 9 & 7\end{pmatrix}\) into a product of disjoint cycles.\\\\
+Starting from \(1\), \(\alpha[1]=6,\alpha[6]=3,\alpha[3]=1\) so \((1\,\,6\,\,3)\); Smallest integer not having\\\\
+appeared is \(2\), which becomes \((2\,\,4)\). Continuing like this, \(\alpha=(1\,\,6\,\,3)(2\,\,4)(5)(7\,\,8\,\,9)\)\\\\
+\begin{redrules}\color{red}
+\textbf{Theorem 1.1} \textit{Every permutation \(\alpha\in S_n\) is either a cycle or a product of disjoint cycles.}\\\\\color{black}
+\textit{Proof.} The proof is by induction on the number \(k\) of points moved by \(\alpha\).\\\\
+Base case \(k=0\) is true, for then \(\alpha=1\).\\\\
+If \(k>0\), let \(i_1\) be a point moved by \(\alpha\). Define \(i_j=\alpha[i_{j-1}]\) for all \(j>1\).\\\\
+Define \(r\) as the smallest integer for which \(i_{r+1}\in\{i_1,i_2,...,i_r\}\).\\\\
+\null\qquad We claim that \(\alpha[i_r]=i_1\). Otherwise, \(\alpha[i_r]=i_j\) for some \(j>1\),\\\\
+\null\qquad but \(\alpha[i_{j-1}]=i_j\), contradicting \(\alpha\) is an injection.\\\\
+Let \(X\) be the set of points \(\{i_1,i_2,...,i_r\}\) and \(\sigma\) be the \(r\)-cycle \((i_1\,\,i_2\,\,...\,\,i_r)\). If \(r=n\), \(\alpha=\sigma\).\\\\
+If \(r<n\) and \(Y\) is the set of remaining \(n-r\) points, then \(\alpha[Y]=Y\) and \(\sigma\) fixes points in \(Y\).\\\\
+\(\sigma\mid X = \alpha\mid X\) (\(\alpha\mid X\) means the function on domain \(X\) "alpha on X")\\\\
+If \(\alpha'\) is the permutation with \(\alpha'\mid Y=\alpha\mid Y\) and which fixes \(X\),\\\\
+\null\qquad then \(\sigma\) and \(\alpha'\) are disjoint and \(\alpha=\sigma\alpha'\).\\\\
+Since \(\alpha'\) moves fewer point than \(\alpha\), \(\alpha'\), and hence \(\alpha\), is a product of disjoint cycles by induction.
+\end{redrules}
+A \textbf{complete factorization} of a permutation \(\alpha\) is a factorization which contains one \(1\)-cycle \((i)\) for every \(i\) fixed by \(\alpha\).
+\begin{redrules}\color{red}
+\textbf{Theorem 1.2} \textit{Let \(\alpha\in S_n\) and \(alpha=\beta_1\beta_2...\beta_t\) be a complete factorization. This factorization is unique except for the order in which the factors occur.}\\\\\color{black}
+\textit{Proof.} Disjoint cycles commute \color{gray}(1.2.5) \color{black} so the order of factors is not uniquely determined.\\\\
+Suppose \(\alpha=\gamma_1\gamma_2...\gamma_s\) is a second complete factorization into disjoint cycles.\\\\
+If \(\beta_t\) moves \(i_1\), some \(\gamma_j\) moves \(i_1\), and we may assume that \(\gamma_j=\gamma_s\) as disjoint cycles commute.\\\\
+\(\beta_t^k[i_1]=\gamma_s^k[i_1]=\alpha^k[i_1]\) \color{gray}(1.2.11(i)) \color{black} \(\therefore \beta_t=\gamma_s\) \color{gray}(1.2.11(ii))\color{black}\\\\
+The cancellation law \color{gray}(1.2.3) \color{black} gives \(\beta_1\beta_2...\beta_{t-1}=\gamma_1\gamma_2...\gamma_{s-1}\).\\\\
+By induction on \(max(s,t)\), the factorization is unique.
+\end{redrules}
+\begin{siderules}\color{blue}
+\textit{EXERCISES}\\\\
+1. Let \(\alpha\) be the permutation of \(\{1,2,...,9\}\) defined by \(\alpha[i]=10-i\). Factorize \(\alpha\).\\\\\color{black}
+\null\qquad\(\alpha=(1\,\,9)(2\,\,8)(3\,\,7)(4\,\,6)(5)\)\\\\
+\color{blue}2. Let \(p\) be a prime and let \(\alpha\in S_n\). If \(\alpha^p=1\), then either \(\alpha=1\), \(\alpha\) is a \(p\)-cycle, or \(\alpha\) is a product of disjoint \(p\)-cycles.\\\\\color{black}
+\null\qquad Let \(\alpha=\beta_1\beta_2...\beta_t\) be the complete factorization of \(\alpha\).\\\\
+\null\qquad \(\alpha^p=(\beta_1\beta_2...\beta_t)^p=\beta_1^p\beta_2^p...\beta_t^p=1\) \color{gray}(1.2.7) \color{black}and \(\beta_1^p,\beta_2^p,...,\beta_t^p\) are disjoint \color{gray}(1.2.9(i)) \color{black}\\\\ \null\qquad\(\therefore\beta_1^p=\beta_2^p=...=\beta_t^p=1\) \color{gray}(1.2.6) \color{black}\\\\
+\null\qquad\(\beta_i^p\) is a product of \(gcd(r_i,p)\) disjoint cycles where \(r_i\) is length of \(\beta_i\) \color{gray}(1.2.10(ii)) \color{black}\\\\
+\null\qquad Since \(\beta_i^p=1\), \(gcd(r_i,p)=r_i\), which is only possible if \(r_i=k_ip\)\\\\
+\null\qquad The smallest integer \(l\) where \(\alpha^l=1\) is the lcm of \(\{r_1,r_2,...,r_t\}=\{k_1p,k_2p,...,k_tp\}\) \color{gray}(1.2.9(iii))\color{black}\\\\
+\null\qquad However, \(l=p\) since all \(m\) which satisfies \(\alpha^m=1\) must be a multiple of \(l\), and \(p\) is a prime.\\\\
+\null\qquad\(\therefore lcm(k_1p,k_2p,...,k_tp)=p\) so all \(k_i=1\) and all \(\beta_i\) are \(p\)-cycles. (Of course, if \(\alpha=1\), \(\alpha^p=1\))\\\\
+\color{blue}3. How many \(\alpha\in S_n\) are there with \(\alpha^2=1\)?\\\\\color{black}
+\null\qquad From \color{gray}(2)\color{black}, \(\alpha=1\) or \(\alpha=\beta_1\beta_2...\beta_t\) where \(\beta_i\) are all disjoint \(2\)-cycles.
+\[x=\sum_{i=0}^{2i\le n}{\binom{n}{2i}\frac{(2i)!}{2^ii!}}=\sum_{i=0}^{2i\le n}{\binom{n}{2i}(2i-1)!!}\]
+\null\qquad(\href{https://oeis.org/A000085}{A000085} number of self-inverse permutations)\\\\
+\color{blue}4. Give an example of permutations \(\alpha,\beta,\gamma\) in \(S_5\) with \(\alpha\) commuting with \(\beta\), \(\beta\) commuting with \(\gamma\), but with \(\alpha\) not commuting with \(\gamma\).\color{black}\\\\
+\(\alpha=\begin{pmatrix}1 & 2 & 3 & 4 & 5\\2 & 1 & 3 & 4 & 5\end{pmatrix}\) \(\beta=\begin{pmatrix}1 & 2 & 3 & 4 & 5\\1 & 2 & 3 & 5 & 4\end{pmatrix}\) \(\gamma=\begin{pmatrix}1 & 2 & 3 & 4 & 5\\1 & 3 & 2 & 4 & 5\end{pmatrix}\)
+\end{siderules}
+\subsection{Even and Odd Permutations}
+A \textbf{transposition} is a \(2\)-cycle.
+\begin{redrules}\color{red}
+\textbf{Theorem 1.3} \textit{Every permutation \(\alpha\in S_n\) is a product of transpositions.}\color{black}\\\\
+\textit{Proof.} By \color{gray}Theorem 1.1\color{black}, it suffices to factor cycles:
+\[(i_1\,\,i_2\,\,...\,\,i_r)=(i_1\,\,i_r)(i_1\,\,i_{r-1})...(i_1\,\,i_2)\;\;\;\;\;\;\;\;\text{note that }i_j:j\mapsto 1\mapsto (j+1)\]
+\end{redrules}
+Such factorization is not as nice as complete factorization: the transpositions need not commute, and neither the factors nor the number of factors are uniquely determined.\\\\
+However, the parity of the number of factors is the same for all factorizations.\\\\
+A permutation \(\alpha\in S\) is \textbf{even} if it is a product of an even number of transpositions; otherwise \(\alpha\) is \textbf{odd}.\\\\
+However, the above definition doesn't account for if \(\alpha\) has factorizations of both even and odd number of transpositions.\\\\
+\begin{greenrules}\color{OliveGreen}
+\textbf{Lemma 1.4} \textit{If \(k,l\ge 0\), then\\  \null\qquad\((a\,\,b)(a\,\,c_1\,\,...\,\,c_k\,\,b\,\,d_1\,\,...\,\,d_l)=(a\,\,c_1\,\,...\,\,c_k)(b\,\,d_1\,\,...\,\,d_l)\) and \\
+\null\qquad\((a\,\,b)(a\,\,c_1\,\,...\,\,c_k)(b\,\,d_1\,\,...\,\,d_l)=(a\,\,c_1\,\,...\,\,c_k\,\,b\,\,d_1\,\,...\,\,d_l)\)}\\\\\color{black}
+\textit{Proof.} Directly evaluating, (letting L.H.S. be \(f\cdot g=f(g(x))\))
+\[f(g(a))=f(c_1)=c_1\;\;\;\;\;\;\;\;f(g(b))=f(d_1)=d_1\]
+\[f(g(c_i))=f(c_{i+1})=c_{i+1}\;\;\;\;\;\;\;\;f(g(d_i))=f(d_{i+1})=d_{i+1}\]
+\[f(g(c_k))=f(b)=a\;\;\;\;\;\;\;\;f(g(d_l))=f(a)=b\]
+\null\qquad\(\therefore(a\,\,b)(a\,\,c_1\,\,...\,\,c_k\,\,b\,\,d_1\,\,...\,\,d_l)=(a\,\,c_1\,\,...\,\,c_k)(b\,\,d_1\,\,...\,\,d_l)\)\\\\
+\null\qquad\((a\,\,b)(a\,\,b)(a\,\,c_1\,\,...\,\,c_k\,\,b\,\,d_1\,\,...\,\,d_l)=(a\,\,b)(a\,\,c_1\,\,...\,\,c_k)(b\,\,d_1\,\,...\,\,d_l)\)\\\\
+\null\qquad\(\therefore(a\,\,b)(a\,\,c_1\,\,...\,\,c_k)(b\,\,d_1\,\,...\,\,d_l)=(a\,\,c_1\,\,...\,\,c_k\,\,b\,\,d_1\,\,...\,\,d_l)\)
+\end{greenrules}
+If \(\alpha\in S_n\) and \(\alpha=\beta_1 ...\beta_t\) is a complete factorization into disjoint cycles, \textbf{signum} \(\alpha\) is defined by
+\[sgn(\alpha)=(-1)^{n-t}\]
+By \color{gray}Theorem 1.2\color{black}, \(t\) is unique for all \(\alpha\) so \(sgn\) is a well-defined function.\\\\
+If \(\tau\) is a transposition, \(t=(n-2)+1=n-1\) ((\(n-2\)) 1-cycles and \(1\) swap), so
+\[sgn(\tau)=(-1)^{n-(n-1)}=-1\]
+\begin{greenrules}\color{OliveGreen}
+\textbf{Lemma 1.5} \textit{If \(\beta\in S_n\) and \(\tau\) is a transposition, then \(sgn(\tau\beta)=-sgn(\beta)\)}\\\\\color{black}
+\textit{Proof.} Let \(\tau=(a\,\,b)\) and \(\beta=\gamma_1...\gamma_t\) be a complete factorization of \(\beta\) into disjoint cycles.\\\\
+If \(a\) and \(b\) occur in the same \(\gamma_i\), by \color{gray}Lemma 1.4\color{black},
+\[\tau\gamma_i=(a\,\,b)(a\,\,c_1\,\,...\,\,c_k\,\,b\,\,d_1\,\,...\,\,d_l)=(a\,\,c_1\,\,...\,\,c_k)(b\,\,d_1\,\,...\,\,d_l)\;\;\;\;\;\;\;\;k,l\ge 0\]
+On the other hand, if \(a\) and \(b\) occur in different \(\gamma_i\) and \(\gamma_j\), by \color{gray}Lemma 1.4\color{black},
+\[\tau\gamma_i\gamma_j=(a\,\,b)(a\,\,c_1\,\,...\,\,c_k)(b\,\,d_1\,\,...\,\,d_l)=(a\,\,c_1\,\,...\,\,c_k\,\,b\,\,d_1\,\,...\,\,d_l)\;\;\;\;\;\;\;\;k,l\ge 0\]
+\(\therefore\tau\beta\) either consists of 1 more or 1 fewer cycle than \(\beta\), so \(sgn(\tau\beta)=-sgn(\beta)\).
+\end{greenrules}
+\begin{redrules}\color{red}
+\textbf{Theorem 1.6} \textit{For all \(\alpha,\beta\in S_n, sgn(\alpha\beta)=sgn(\alpha)sgn(\beta).\)}\color{black}\\\\
+\textit{Proof.} Assume \(\alpha=\tau_1...\tau_m\) is a factorization of \(\alpha\) into transpositions with minimal \(m\).\\\\
+\null\qquad The factorization \(\tau_1...\tau_{m-1}\) is also minimal:\\\\
+\null\qquad If there is one with less transpositions (\(\sigma_1...\sigma_q=\tau_1...\tau_{m-1}\)),\\\\
+\null\qquad then \(\alpha=\tau_1...\tau_m\) would not be minimal (\(\sigma_1...\sigma_q\tau_m\) would be better).\\\\
+\null\qquad\(\therefore\) For all \(1\le k\le m\) factorization \(\tau_1...\tau_k\) is minimal.\\\\
+We prove by induction on \(m\) that \(sgn(\alpha\beta)=sgn(\alpha)sgn(\beta)\) for every \(\beta\in S_n\).\\\\
+The base case \(m=1\) is \color{gray}Lemma 1.5\color{black}: \(sgn(\tau_1\beta)=-sgn(\beta)=sgn(\tau_1)sgn(\beta)\)\\\\
+If \(m>1\), assuming \(sgn(\tau_1...\tau_{m-1}\beta)=sgn(\tau_1...\tau_{m-1})sgn(\beta)\),
+\begin{alignat*}{2}
+sgn(\alpha\beta)&=sgn(\tau_1...\tau_m\beta)\\
+&=-sgn(\tau_1...\tau_{m-1}\beta)&&(\text{\color{gray}Lemma 1.5\color{black}})\\
+&=-sgn(\tau_1...\tau_{m-1})sgn(\beta)\;\;\;\;&&(\text{by induction})\\
+&=sgn(\tau_1...\tau_m)sgn(\beta)&&(\text{\color{gray}Lemma 1.5\color{black}})\\
+&=sgn(\alpha)sgn(\beta)
+\end{alignat*}
+\end{redrules}
+\begin{redrules}\color{red}
+\textbf{Theorem 1.7} \textit{A permutation \(\alpha\in S_n\) is even iff \(sgn(\alpha)=1\);\\A permutation \(\alpha\in S_n\) is odd iff it is a product of an odd number of transpositions.}\\\\\color{black}
+\textit{Proof.} If \(\alpha=\tau_1...\tau_m\), by \color{gray}Theorem 1.6\color{black}, \(sgn(\alpha)=sgn(\tau_1)...sgn(\tau_m)=(-1)^m\).\\\\
+If \(sgn(\alpha)=1\), then \(m\) is even, so \(\alpha\) is even. Conversely, if \(\alpha\) is even,\\\\
+there exist a factorization into transpositions with \(m\) even, so \(sgn(\alpha)=1\) (\(sgn\) is well-defined).\\\\
+If \(m\) is odd, \(sgn(\alpha)=(-1)^m=-1\); since \(\alpha\) is even iff \(sgn(\alpha)=1\), \(\alpha\) must be odd.\\
+Conversely, if \(\alpha\) is odd, it has no factorizations into an even number of transpositions (or it will be even), so \(m\) must be odd.
+\end{redrules}
+\begin{siderules}\color{blue}
+\textit{EXERCISES}\\\\
+1. Show that an \(r\)-cycle is an even permutation iff \(r\) is odd.\color{black}
+\[(i_1\,\,i_2\,\,...\,\,i_r)=(i_1\,\,i_r)(i_1\,\,i_{r-1})...(i_1\,\,i_2)\]
+\null\qquad If \(r\) is odd, the above factorization consists of \(r-1\), hence even number of transpositions.\\\\
+\null\qquad By definition, the \(r\)-cycle is even. Conversely, if it is even, \(sgn(\alpha)=1\) from \color{gray}Theorem 1.7\color{black}.\\\\
+\null\qquad \(\therefore(-1)^{n-t}=1\), where \(t\) is the number of disjoint cycles in the complete factorization of \(\alpha\).\\\\
+\null\qquad But \(\alpha\) is just an \(r\)-cycle, so \(t=1\).\\\\
+\null\qquad\(\therefore n-1\) is even, thus \(n\), hence \(r\) is odd. (only an \(n\)-cycle \(\in S_n\), so \(n=r\)).\\\\
+\color{blue}2. Compute \(sgn(\alpha)\) for \(\alpha=\begin{pmatrix}1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9\\9 & 8 & 7 & 6 & 5 & 4 & 3 & 2 & 1\end{pmatrix}\).\\\\\color{black}
+\null\qquad Factorizing, \(\alpha=(1\,\,9)(2\,\,8)(3\,\,7)(4\,\,6)(5)\); \(sgn(\alpha)=(-1)^{9-5}=1\).\\\\
+\null\qquad Also, \(\alpha=(1\,\,9)(2\,\,8)(3\,\,7)(4\,\,6)(5\,\,1)(1\,\,5)\)\\\\
+\color{blue}3. Show that \(S_n\) has the same number of even permutations as of odd permutations.\\\\\color{black}
+\null\qquad Consider function \(f:S_n\rightarrow S_n\) where \(f(\alpha)=(1\,\,2)\alpha\).\\\\
+\null\qquad (Assume \(n>1\); if \(n=1\), there is only 1 even permutation because \(sgn(\alpha)=(-1)^{1-1}=1 \))\\\\
+\null\qquad If \(\alpha\) is even, \(f(\alpha)\) is odd, vice versa. If there were \(x\) and \(y\) even and odd permutations in \(S_n\), there would be \(x\) and \(y\) even and odd permutations in \(f(S_n)\).\\\\
+\null\qquad However, \(f(S_n)=S_n\), so \(x=y\).\\\\
+\color{blue}4. Let \(\alpha,\beta\in S_n\). If \(\alpha\) and \(\beta\) have the same parity, then \(\alpha\beta\) is even; if \(\alpha\) and \(\beta\) have distinct parity, then \(\alpha\beta\) is odd.\\\\\color{black}
+\null\qquad By \color{gray}Theorem 1.7\color{black}, \(\alpha\) is even iff \(sgn(\alpha)=1\); therefore \(\alpha\) is odd (and not even) iff \(sgn(\alpha)=-1\).\\\\
+\null\qquad If \(\alpha\) and \(\beta\) are both even or both odd, \(sgn(\alpha\beta)=sgn(\alpha)sgn(\beta)=1\), so \(\alpha\beta\) is even.\\\\
+\null\qquad If \(\alpha\) and \(\beta\) have distinct parity, \(sgn(\alpha\beta)=sgn(\alpha)sgn(\beta)=-1\), so \(\alpha\beta\) is odd.
+\end{siderules}
+\subsection{Semigroups}
+A binary \textbf{operation} on a nonempty set \(G\) is a function \(\mu : G\times G\rightarrow G\).\\\\
+The \textbf{Law of Substitution} states that \((a=a'\) and \(b=b')\implies a*b=a'*b'\);\\(just another way of saying \(\mu\) is well-defined)\\\\
+An operation \(*\) on a set \(G\) is \textbf{associative} if \((a*b)*c=a*(b*c)\) for every \(a,b,c\in G\).\\\\
+\begin{redrules}\color{red}
+\textbf{Theorem 1.8} \textit{If \(*\) is an associative operation, every expression \(a_1*a_2*...*a_n\) needs no parentheses.}\\\\\color{black}
+\textit{Proof.} The proof is by induction on \(n\ge 3\). The base case \(n=3\) obviously holds.\\\\
+Assume case \(n=l\) holds for all \(l\le k\). Consider the last operation used is between \(a_i\) and \(a_{i+1}\);\\\\
+then the expression can be expanded to \((a_1*...*a_i)*(a_{i+1}*...*a_k)\)\\\\
+Compare 2 choices \((a_1*...*a_i)*(a_{i+1}*...*a_k)\) and \((a_1*...*a_j)*(a_{j+1}*...*a_k)\): (wlog \(i\le j\))\\\\
+If \(i=j\), the 2 products are equal; if \(i<j\), rewrite the expressions to:
+\[(a_1*...*a_i)*((a_{i+1}*...*a_j)*(a_{j+1}*...*a_k))\;\;\;\;((a_1*...*a_i)*(a_{i+1}*...*a_j))*(a_{j+1}*...*a_k)\]
+By induction, each of the 3 small expressions yield uniquely defined elements, and by associativity the 2 products are the same.
+\end{redrules}
+A \textbf{semigroup} \((G,*)\) is a nonempty set \(G\) equipped with an associative operation \(*\).\\\\
+Let \(G\) be a semigroup and \(a\in G\). Define \(a^1=a\) and \(a^{n+1}=a*a^n\) (\(n\ge 1\))\\
+\begin{greenrules}\color{OliveGreen}
+\textbf{Corollary 1.9} \textit{Let \(m,n\) be positive integers. \(a^m*a^n=a^{m+n}=a^n*a^m\) and \((a^m)^n=a^{mn}=(a^n)^m\)}\\\\\color{black}
+\textit{Proof.} Both sides of the first or second equations arise from an expression with \(m+n\) or \(mn\) factors equal to \(a\). By \color{gray}Theorem 1.8\color{black}, they don't need parentheses.
+\end{greenrules}
+When the operation is denoted by \(+\), \(a^n\) is denoted as \(na\);\\\\
+\color{gray}Corollary 1.9 \color{black} becomes \(ma+na=(m+n)a=na+ma\) and \(n(ma)=(mn)a=m(na)\)
+\subsection{Groups}
+A \textbf{group} is a semigroup \(G\) containing an element \(e\) such that:
+\begin{enumerate}
+    \item \(e*a=a=a*e\) for all \(a\in G\)
+    \item for every \(a\in G\), there is an element \(b\in G\) with \(a*b=e=b*a\)
+\end{enumerate}
+From exercises \color{gray}(1.1.1), (1.1.2), (1.1.3) \color{black}, \(S_X\) is a group with composition as operation;\\\\
+\(S_X\) is called the \textbf{symmetric group} on \(X\).\\\\
+When \(X=\{1,2,...,n\}\), \(S_X\) is denoted \(S_n\) and called the \textbf{symmetric group on n letters}.\\\\
+A pair of elements \(a\) and \(b\) in a semigroup \textbf{commutes} if \(a*b=b*a\).\\\\
+A group or a semigroup is \textbf{abelian} if every pair of its elements commutes.\\\\
+Examples of groups:
+\begin{enumerate}
+    \item \(\mathbb{Z}\) is an abelian group with addition as operation (\(e=0,-a+a=0\));\\\\
+    \(\mathbb{Q}, \mathbb{R}, \mathbb{C}\) are also additive abelian group (a semigroup with \(1\) under multiplication)
+    \item Define congruence class \([a]\) of an integer \(a\) mod \(n\) by \([a]=\{a+kn: k\in\mathbb{Z}\}\)\\\\
+    set \(\mathbb{Z}_n\) of all congruence classes mod \(n\) is an abelian group under operation \([a]+[b]=[a+b]\)\\\\
+    (\(\mathbb{Z}_n\) is a commutative ring with \([1]\) under operation \([a][b]=[ab]\))
+    \item If \(k\) is a field, set of all \(n\times n\) invertible matrices with entries in \(k\) is a group \(\mathrm{GL}(n,k)\)\\\\
+    The operation of general linear group is matrix multiplication with \(e\) being the identity matrix\\\\
+    \(\mathrm{GL}(n,k)\) is only abelian when \(n=1\), which is the multiplicative group \(k^\times\) of nonzero element in \(k\)
+    \item If \(R\) is an associative ring, \(u\) is a unit in \(R\) if there exists \(v\in R\) with \(uv=1=vu\)\\\\
+    If \(a\) is a unit, \(ua\) is also a unit so \(U(R)\), the group of units in \(R\), is a multiplicative group\\\\
+    If \(k\) is a field, \(U(k)=k^\times\) and \(U(M_n(k))=\mathrm{GL}(n,k)\)
+\end{enumerate}
+\begin{redrules}\color{red}
+\textbf{Theorem 1.10} \textit{If \(G\) is a group, \(\exists !e\;\forall a\in G\;(e*a=a=a*e)\) and \(\forall a\in G\;\exists !b\;(a*b=e=b*a))\)}\\\\\color{black}
+\textit{Proof.} Suppose there is another \(e'\) s.t. \(\forall a\in G (e'*a=a=a*e')\). If \(a=e\), \(e'*e=e\).\\\\
+\null\qquad However, the defining property of \(e\) gives \(e'*e=e'\), so \(e'=e\).\\\\
+Suppose that \(a*c=e=c*a\). Then \(c=c*e=c*(a*b)=(c*a)*b=e*b=b\).
+\end{redrules}
+With the uniqueness assertions, we can call \(e\) the \textbf{identity} of \(G\) and \(b\) (or \(a^{-1}\)) the \textbf{inverse} of \(a\).\\
+\begin{greenrules}\color{OliveGreen}
+    \textbf{Corollary 1.11} \textit{If \(G\) is a group and \(a\in G\), \((a^{-1})^{-1}=a\).}\\\\\color{black}
+    \textit{Proof.} By definition, \(a^{-1}*(a^{-1})^{-1}=e\). But \(a^{-1}*a\) is also equal to \(e\), so by uniqueness \((a^{-1})^{-1}=a\).
+\end{greenrules}
+If \(G\) is a group and \(a\in G\), the \textbf{powers} of \(a\) are as follows: \(a^{0}=e\); If \(n\in\mathbb{Z}^{+}\), \(a^{n}\) is defined as in any semigroup and \(a^{-n}\) is defined as \((a^{-1})^{n}\).\\
+\begin{redrules}\color{red}
+\textbf{Theorem 1.12} \textit{If \(G\) is a semigroup with \(e\in G\) s.t. \(\forall a\in G\;(e*a=a)\) and \(\forall a\in G\;\exists b\in G\;(b*a=e)\), then \(G\) is a group.}\\\\\color{black}
+\textit{Proof.} If \(x*x=x\), then \(x=e*x=(x^{-1}*x)*x=x^{-1}*(x*x)=x^{-1}*x=e\).\\\\ 
+If \(b*a=e\), then \((a*b)*(a*b)=a*(b*a)*b=a*e*b=a*b\). From above, \(a*b=e\).\\\\
+\(a=a*e=a*(a^{-1}*a)=(a*a^{-1})*a=e*a\)
+\end{redrules}
+The above theorem simplifies the process of proving a particular example is a group.\\
+\begin{siderules}\color{blue}\textit{EXERCISES}\color{black}\\\\
+\color{blue}1. If \(G\) is a group and \(a_{1},a_{2},...,a_{n}\in G\), then \((a_{1}*a_{2}*...*a_{n})^{-1}=a_{1}^{-1}*a_{2}^{-1}*...*a_{n}^{-1}\).\color{black}\\\\
+\null\qquad \(e=(a_{1}*a_{1}^{-1})*(a_{2}*a_{2}^{-1})*...*(a_{n}*a_{n}^{-1})=(a_{1}*a_{2}*...*a_{n})*(a_{1}^{-1}*a_{2}^{-1}*...*a_{n}^{-1})\)\\\\
+\null\qquad If \(n\ge 0\), then \((a^{n})^{-1}=(a^{-1})^{n}\).\\\\
+\color{blue}2. Let \(a_{1},a_{2},...,a_{n}\) be elements of an abelian semigroup. If \(b_{1},b_{2},...b_{n}\) is a rearrangement of \(a\), then \(a_{1}*a_{2}*...*a_{n}=b_{1}*b_{2}*...*b_{n}\).\\\\\color{black}
+\null\qquad Prove by induction on \(n\): let \(1\le k\le n\) s.t. \(b_{k}=a_{n}\).\\\\
+\null\qquad Since abelian, \((b_{1}*...*b_{k})*(b_{k+1}*...*b_{n})=(b_{k+1}*...*b_{n})*(b_{1}*...*b_{k})\)\\\\
+\null\qquad \(n=1\) obviously holds, and proved by rearranging the first \(n-1\) terms in the same way\\\\
+\color{blue}3. Let \(a\) and \(b\) lie in semigroup \(G\). If \(a\) and \(b\) commute, then \((a*b)^{n}=a^{n}*b^{n}\) for every \(n\ge 1\); if \(G\) is a group, then the equation holds for every \(n\in\mathbb{Z}\).\\\\\color{black}
+\null\qquad Proof by induction: \((a*b)^{n}=a*(b*a)^{n-1}*b=a*(a*b)^{n-1}*b=a*(a^{n-1}*b^{n-1})*b=a^{n}*b^{n}\)\\\\
+\null\qquad \((b*a)^{-1}*b*a=e\implies a^{-1}=(b*a)^{-1}*b\) \qquad \(b*a*(b*a)^{-1}=e\implies b^{-1}=a*(b*a)^{-1}\)\\\\
+\null\qquad \(a^{-1}*b^{-1}=(b*a)^{-1}*b*a*(b*a)^{-1}=(b*a)^{-1}=(a*b)^{-1}\) \color{gray} (\(a\) and \(b\) commute)\color{black}\\\\
+\null\qquad \((a*b)^{-n}=((a*b)^{-1})^{n}=(a^{-1}*b^{-1})^{n}=(a^{-1})^{n}*(b^{-1})^{n}=a^{-n}*b^{-n}\)\\\\
+\color{blue}4. A group in which \(x^{2}=e\) for every \(x\) must be abelian.\\\\\color{black}
+\null\qquad \(a*b=a*(a*b)^{2}*b=a*a*b*a*b*b=a^{2}*b*a*b^{2}=b*a\)\\\\
+\color{blue}5. (i) Let \(G\) be a finite abelian group containing no elements \(a\neq e\) with \(a^{2}=e\). Evaluate \(a_{1}*a_{2}*...*a_{n}\), where \(a_{1},a_{2},...,a_{n}\) is a list with no repetitions, of all the elements in \(G\).\\\\\color{black}
+\null\qquad Exclude \(e\) from the list. Let \(1\le j\le n\) s.t. \(a_{j}=(a_{i})^{-1}\). Since \((a_{i})^{2}\neq e\), \(i\neq j\).\\\\
+\null\qquad Therefore the list can be rearranged to pairs (abelian) and the result is \(e\).\\\\
+\color{blue}(ii) Prove \textbf{Wilson's theorem}: If \(p\) is a prime, then \((p-1)!\equiv -1\;\;\pmod p\)\\\\\color{black}
+\null\qquad \(\forall x\in\mathbb{Z}_{p}\backslash 0\), \(1\times x\equiv x\pmod p\).\\\\
+\null\qquad Let \(a,b\in\mathbb{Z}_{p}\backslash 0\) s.t. \(a\neq b\). If \(ax\equiv bx\pmod p\), \((a-b)x\equiv 0\pmod p\).\\\\
+\null\qquad But \(a-b\neq 0\) and \(x\neq 0\), so \(ax\not\equiv bx\pmod p\).\\\\
+\null\qquad Since \(ax\pmod p\) is distinct for all \(a\), There must exist \(ax\equiv 1\pmod p\).\\\\
+\null\qquad Therefore \(\mathbb{Z}_{p}\backslash 0\) is a group under modular multiplication. \color{gray}(Theorem 1.12) \color{black}\\\\
+\null\qquad If \(x^2=1\pmod p\), \((x+1)(x-1)\equiv 0\pmod p\) so \(x=1\) or \(x=p-1\).\\\\
+\null\qquad \(2,3,...,p-2\) can be arranged into pairs of \((a,a^{-1})\);\\\\
+\null\qquad Therefore \(2\times 3\times ...\times(p-2)\equiv 1\pmod p\) and \((p-1)!\equiv p-1\pmod p\).\\\\
+\color{blue}6. (i) If \(\alpha=(1\;\;2\;\;...\;\;r-1\;\;r)\), then \(\alpha^{-1}=(r\;\;r-1\;\;...\;\;2\;\;1)\).\\\\\color{black}
+\null\qquad \(\alpha^{-1}[\alpha[i]]=\alpha^{-1}[i+1]=i+1-1=i\) so \(\alpha^{-1}\alpha=e\). (\(\alpha^{-1}[\alpha[r]]=\alpha^{-1}[1]=r\))\\\\
+\color{blue}(ii) Find the inverse of \(\begin{pmatrix}1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 \\ 6 & 4 & 1 & 2 & 5 & 3 & 8 & 9 & 7\end{pmatrix}\).\\\\\color{black}
+\null\qquad \(\begin{pmatrix}1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 \\ 6 & 4 & 1 & 2 & 5 & 3 & 8 & 9 & 7\end{pmatrix}^{-1}=\begin{pmatrix}6 & 4 & 1 & 2 & 5 & 3 & 8 & 9 & 7 \\ 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9\end{pmatrix}\)\\\\
+\color{blue}7. Show that \(\alpha: \mathbb{Z}_{11}\to\mathbb{Z}_{11}\), defined by \(\alpha(x)=4x^{2}-3x^{7}\), is a permutation of \(\mathbb{Z}_{11}\) and write it as a product of disjoint cycles. What is the parity of \(\alpha\) and what is \(\alpha^{-1}\)\\\\\color{black}
+\null\qquad From computation, \(\alpha=(0)(1)(2\;\;6\;\;10\;\;7)(3\;\;9\;\;4\;\;5)(8)\) so \(sgn(\alpha)=(-1)^{11-5}=-1\)\\\\
+\null\qquad \(\alpha^{-1}=(0)(1)(7\;\;10\;\;6\;\;2)(5\;\;4\;\;9\;\;3)(8)\)\\\\
+\color{blue}8. Let \(G\) be a group, \(a\in G\), and \(m,n\in\mathbb{Z}\). Prove that \(a^{m}*a^{n}=a^{m+n}=a^{n}*a^{m}\) and \((a^{m})^{n}=a^{mn}=(a^{n})^{m}\)\\\\\color{black}
+\null\qquad If 1 of them is negative (WLOG \(-m<0\)), \(a^{-m}*a^{n}=(a^{-1})^{m}*a^{m}*a^{n-m}=a^{n-m}\)\\\\
+\null\qquad \((a^{-m})^{n}=((a^{-1})^{m})^{n}=(a^{-1})^{mn}=a^{-mn}\;\;(a^{n})^{-m}=((a^{n})^{-1})^{m}=((a^{-1})^{n})^{m}\) \color{gray} (1.6.1) \color{black}\(=a^{-mn}\)\\\\
+\null\qquad If both are negative, \(a^{-m}*a^{-n}=(a^{-1})^{-m}*(a^{-1})^{-n}=(a^{-1})^{m+n}=a^{-m-n}\)\\\\
+\null\qquad \((a^{-m})^{-n}=(((a^{-1})^{m})^{-1})^{n}=(((a^{-1})^{-1})^{m})^{n}\) \color{gray} (1.6.1) \color{black}\(=a^{mn}\)\\\\
+\color{blue}9. In a group \(G\), either of the equations \(a*b=a*c\) and \(b*a=c*a\) implies \(b=c\). \color{black}\\\\
+\null\qquad \(a*b=a*c\implies a^{-1}*a*b=a^{-1}*a*c\implies b=c\) similarly \(b*a=c*a\implies b=c\)\\\\
+\color{blue}10. (i) For each \(a\in G\), prove that the functions \(L_{a}:G\to G\), defined by \(x\mapsto a*x\) (\textbf{left translation} by \(a\)) and \(R_{a:G\to G}\), defined by \(x\mapsto x*a^{-1}\) (\textbf{right translation} by \(a\)) are bijections.\color{black}\\\\
+\null\qquad If \(L_{a}(x)=L_{a}(y)\), \(a*x=a*y\) and from \color{gray} (1.6.9) \color{black} \(x=y\).\\\\
+\null\qquad \(\therefore\) there are \(n\) distinct outputs and codomain \(G\) only has \(n\) elements, so it is a bijection.\\\\
+\null\qquad Similarly, \(R_{a}\) is also a bijection.\\\\
+\color{blue}(ii) For all \(a,b\in G\), prove that \(L_{a*b}=L_{a}\circ L_{b}\) and \(R_{a*b}=R_{a}\circ R_{b}\).\color{black}\\\\
+\null\qquad \(L_{a}(L_{b}(x))=a*b*x=L_{a*b}(x)\)\\\\
+\null\qquad \(R_{a}(R_{b}(x))=x*b^{-1}*a^{-1}=x*(a*b)^{-1}\) \color{gray}(1.6.3)  \color{black}\(=R_{a*b}(x)\)\\\\
+\color{blue}(iii) For all \(a\) and \(b\), prove that \(L_{a}\circ R_{b}=R_{b}\circ L_{a}\). \color{black}\\\\
+\null\qquad \(L_{a}(R_{b}(x))=a*(x*b^{-1})=(a*x)*b^{-1}=R_{b}(L_{a}(x))\)\\\\
+\color{blue}11. Let \(G\) denote the multiplicative group of positive rationals. What is the identity of \(G\)? If \(a\in G\), what is its inverse? \color{black}\\\\
+\null\qquad \((\forall r\in\mathbb{R})\;\;\;\;1\times r=r=r\times 1\;\;\;\; a\times\frac{1}{a}=1=\frac{1}{a}\times a\)\\\\
+\color{blue}12. Let \(n\) be a positive integer and let \(G\) be the multiplicative group of all \(n\)th roots of unity. What is the identity of \(G\)? If \(a\in G\), what is its inverse? How many elements does \(G\) have? \color{black}\\\\
+\null\qquad \((\forall k\in\mathbb{Z})\;\;\;\;1\times e^{2\pi ik/n}=e^{2\pi ik/n}=e^{2\pi ik/n}\times 1\;\;\;\; e^{2\pi ik/n}*e^{-2\pi ik/n}=1=e^{2\pi ik/n}*e^{-2\pi ik/n}\)\\\\
+\null\qquad Since \(e^{2\pi in/n}=1\), \(e^{2\pi ik/n}=e^{2\pi i(k+an}/n\) where \(a\in\mathbb{Z}\). So there are \(n\) elements in \(G\).\\\\
+\color{blue}13. Prove that the following four permutations form a group \(\mathbb{V}\): (called the \textbf{4-group}) 
+\((1)(2)(3)(4), \)\\\((1\;\;2)(3\;\;4), (1\;\;3)(2\;\;4), (1\;\;4)(2\;\;3)\)\\\\\color{black}
+\null\qquad \((\forall \alpha\in\mathbb{V})\;\; ((1)(2)(3)(4))\alpha=\alpha=\alpha((1)(2)(3)(4))\) and \(\alpha^{2}=(1)(2)(3)(4)\implies\alpha=\alpha^{-1}\)\\\\
+\color{blue} 14. Let \(\hat{\mathbb{R}}=\mathbb{R}\cup\{\infty\}\) and define \(1/0=\infty, 1/\infty=0, \infty/\infty=1, 1-\infty=\infty=\infty-1\). Show that the 6 functions \(\hat{\mathbb{R}}\to\hat{\mathbb{R}}\) given by \(x,1/x,1-x,1/(1-x),x/(x-1),(x-1)/x\) form a group with composition as operation.\color{black}\\\\
+\null\qquad Call the 6 functions \(f_{1}, ...,f_{6}\). Computing, \((f_{1}(0),...,f_{6}(0))=(0,\infty,1,1,0,-\infty)\), \\\\
+\null\qquad \((f_{1}(1),...,f_{6}(1))=(1,1,0,\infty,\infty,0)\), \((f_{1}(\infty),...,f_{6}(\infty))=(\infty,0,\infty,0,1,1)\)\\\\
+\null\qquad \(-(1-\infty)=\infty-1\implies -\infty=\infty\) so \(f_{6}(0)=\infty\). Also, \((\forall a\in\mathbb{R} \backslash\{0,1\})\;\; f_{i}(a)\in\mathbb{R}\)\\\\
+\null\qquad Moreover, \(f_{2}(f_{2}(a))=f_{3}(f_{3}(a))=f_{5}(f_{5}(a))=f_{4}(f_{6}(a))=f_{6}(f_{4}(a))=a\),\\\\
+\null\qquad \(f_{1}\) is obviously \(e\). From above, \(f_{2}\circ f_{2}=f_{3}\circ f_{3}=f_{5}\circ f_{5}=f_{4}\circ f_{6}=f_{6}\circ f_{4}=e\).\\\\
+\null\qquad Therefore, all elements have inverses and thus the functions form a group.
+\end{siderules}
+\subsection{Homomorphisms}
+Let \(G\) be a group with \(n\) elements \(a_{1},a_{2},...,a_{n}\). A \textbf{multiplication table} for \(G\) is the \(n\times n\) matrix with \(i,j\) entry \(a_{i}*a_{j}\).
+Notice that a table depends on the ordering of the elements in \(G\), and \(e\) is usually listed first.\\
+Compare the 2 tables for groups \(\{1,-1\}\) under multiplication and \(\{0,1\}\) under addition modulo 2:
+\[\begin{pmatrix}1&-1\\-1&1\end{pmatrix}\;\;\;\;\begin{pmatrix} 0&1\\1&0\end{pmatrix}\]
+It is apparent that there is no significant difference between them.\\\\
+Let \((G,*)\) and \((H,\circ)\) be groups (or semigroups).\\\\
+A function \(f:G\to H\) is a \textbf{homomorphism} if for all \(a,b\in G\), \(f(a*b)=f(a)\circ f(b)\).\\\\
+An \textbf{isomorphism} is a homomorphism that is also a bijection.\\\\
+\(G\) is isomorphic to \(H\), denoted by \(G\cong H\), if there exists an isomorphism \(f:G\to H\).\\\\
+The above 2 groups are isomorphic: \(1\mapsto 0\) and \(-1\mapsto 1\).\\\\
+Essentially, 2 groups are isomorphic if their table 'match' when superimposed on each other.\\\\
+In group theory, the 2 important problems are classifying groups: when are two groups isomorphic; and classifying transformations: describe all the homomorphism from one group to another.
+\begin{redrules}\color{red}
+\textbf{Theorem 1.13} \textit{Let \(f:(G,*)\to(G',\circ)\) be a homomorphism. Then, \(f(e)=e'\);\\
+If \(a\in G\), then \(f(a^{-1})=f(a)^{-1}\); If \(a\in G\) and \(n\in\mathbb{Z}\), then \(f(a^{n})=f(a)^{n}\).}\\\\\color{black}
+\textit{Proof.} \(f(e)=f(e)\circ f(e)\circ f(e)^{-1}=f(e*e)\circ f(e)^{-1}=f(e)\circ f(e)^{-1}=e'\)\\\\
+\(e'=f(e)=f(a*a^{-1})=f(a)\circ f(a^{-1})\); From uniqueness of inverse \color{gray} (Theorem 1.10)\color{black}, \(f(a^{-1})=f(a)^{-1}\)\\\\
+By induction, \(f(a^{n})=f(a)\circ f(a^{n-1})=f(a)^{n}\) (\(n\ge 0\)); \(f(a^{-n})=f((a^{-1})^{n})=f(a^{-1})^{n}=f(a)^{-n}\)
+\end{redrules}
+Examples: \(sgn: S_{n}\to\{\pm 1\}\) \color{gray} (Theorem 1.6)\color{black}; \(v:\mathbb{Z}\to\mathbb{Z}_{n}\), defined by \(v(a)=[a]\); \(det: \mathrm{GL}(n,k)\to k^{\times}\)\\\\
+\begin{siderules}\color{blue}\textit{EXERCISES}\color{black}\\\\
+\color{blue}1. (i) Write a multiplication table for \(S_{3}\).\color{black}
+\null\qquad \[\begin{pmatrix}\begin{pmatrix}1&2&3\\1&2&3\end{pmatrix}&\begin{pmatrix}1&2&3\\1&3&2\end{pmatrix}&\begin{pmatrix}1&2&3\\2&1&3\end{pmatrix}&\begin{pmatrix}1&2&3\\2&3&1\end{pmatrix}&\begin{pmatrix}1&2&3\\3&1&2\end{pmatrix}&\begin{pmatrix}1&2&3\\3&2&1\end{pmatrix}\\
+\begin{pmatrix}1&2&3\\1&3&2\end{pmatrix}&\begin{pmatrix}1&2&3\\1&2&3\end{pmatrix}&\begin{pmatrix}1&2&3\\2&3&1\end{pmatrix}&\begin{pmatrix}1&2&3\\2&1&3\end{pmatrix}&\begin{pmatrix}1&2&3\\3&2&1\end{pmatrix}&\begin{pmatrix}1&2&3\\3&1&2\end{pmatrix}\\
+\begin{pmatrix}1&2&3\\2&1&3\end{pmatrix}&\begin{pmatrix}1&2&3\\3&1&2\end{pmatrix}&\begin{pmatrix}1&2&3\\1&2&3\end{pmatrix}&\begin{pmatrix}1&2&3\\3&2&1\end{pmatrix}&\begin{pmatrix}1&2&3\\1&3&2\end{pmatrix}&\begin{pmatrix}1&2&3\\2&3&1\end{pmatrix}\\
+\begin{pmatrix}1&2&3\\2&3&1\end{pmatrix}&\begin{pmatrix}1&2&3\\3&2&1\end{pmatrix}&\begin{pmatrix}1&2&3\\1&3&2\end{pmatrix}&\begin{pmatrix}1&2&3\\3&1&2\end{pmatrix}&\begin{pmatrix}1&2&3\\1&2&3\end{pmatrix}&\begin{pmatrix}1&2&3\\2&1&3\end{pmatrix}\\
+\begin{pmatrix}1&2&3\\3&1&2\end{pmatrix}&\begin{pmatrix}1&2&3\\2&1&3\end{pmatrix}&\begin{pmatrix}1&2&3\\3&2&1\end{pmatrix}&\begin{pmatrix}1&2&3\\1&2&3\end{pmatrix}&\begin{pmatrix}1&2&3\\2&3&1\end{pmatrix}&\begin{pmatrix}1&2&3\\1&3&2\end{pmatrix}\\
+\begin{pmatrix}1&2&3\\3&2&1\end{pmatrix}&\begin{pmatrix}1&2&3\\2&3&1\end{pmatrix}&\begin{pmatrix}1&2&3\\3&1&2\end{pmatrix}&\begin{pmatrix}1&2&3\\1&3&2\end{pmatrix}&\begin{pmatrix}1&2&3\\2&1&3\end{pmatrix}&\begin{pmatrix}1&2&3\\1&2&3\end{pmatrix}\\\end{pmatrix}\]
+\color{blue} (ii) Show that \(S_{3}\) is isomorphic to the group of Exercise 1.6.14.\color{black}\\\\
+\null\qquad From computations in \color{gray} (1.6.14)\color{black}, the functions in that group distinctly permute \(\{0,1,\infty\}\).\\\\
+\null\qquad Map each function to the permutation it corresponds; it is a bijection since the permutations are distinct.\\\\
+\color{blue} 2. Let \(f: X\to Y\) be a bijection between sets \(X\) and \(Y\). Show that \(\alpha\mapsto f\circ\alpha\circ f^{-1}\) is an isomorphism \(S_{X}\to S_{Y}\)\color{black}\\\\
+\null\qquad Let \(g\) be the latter function. \(g(\alpha\circ_{X}\beta)=f\circ\alpha\circ_{X}\beta\circ f^{-1}=f\circ\alpha\circ f^{-1}\circ_{Y} f\circ\beta\circ f^{-1}=g(\alpha)\circ_{Y}g(\beta)\)\\\\
+\null\qquad how to prove bijection?\\\\
+\color{blue} 3. Isomorphic groups have the same number of elements. Prove that the converse is false using \(\mathbb{Z}_4\) and \(\mathbb{V}\).\\\\\color{black}
+\null\qquad \((\forall a\in\mathbb{V})\;\; a^2=e\); so an isomorphism \(f:\mathbb{V}\to\mathbb{Z}_4\) must satisfy \(f(a)^2=e'\).\\\\
+\null\qquad However not all \(b\in\mathbb{Z}_4\) satisfy \(b^2=e'\); therfore an isomorphism doesn't exist.\\\\
+\color{blue} 4. If isomorphic groups are regarded as being the same, prove, for each \(n\in\mathbb{N}\), that there are only finitely many distinct groups with \(n\) elements.\color{black}\\\\
+\null\qquad Consider the multiplication table \(A\) for a group \(G\) of \(n\) elements.\\\\
+\null\qquad Each \(A_{i,j}\) only has at most \(n\) choices, so the number of possible tables is at most \(n^{n^2}\).\\\\
+\null\qquad Since the number of possible groups are finite, there are only finitely many distinct groups.\\\\
+\color{blue} 5. Let \(G=\{x_1,...,x_n\}\) be a set equipped with an operation \(*\), \(A\) be its multiplication table and assume \(G\) has a two-sided identity \(e\).\color{black}\\\\
+\color{blue} (i) Show that \(*\) is commutative iff \(A\) is a symmetric matrix.\color{black}\\\\
+\null\qquad By definition, \(A_{i,j}=A_{j,i}\iff x_i*x_j=x_j*x_i\)\\\\
+\color{blue} (ii) Show that \(\forall x\in G\) has a two-sided inverse iff \(A\) is a \textbf{Latin square} (no \(x\in G\) is repeated in any row or column)\color{black}\\\\
+\null\qquad If first condition holds, let \(x_i*x_j=e=x_j*x_i\);\\\\
+\null\qquad \((\forall x_k\in G)\;\;x_k=x_i*x_j*x_k=x_i*L_{x_j}(x_k)\implies A_{i,L_{x_j}(x_k)}=k\)\\\\
+\null\qquad Since \(L_{x_j}\) is a bijection \color{gray} (1.6.10)\color{black}, the \(i\)th row is a permtation of \(G\).\\\\
+\null\qquad Similarly, \(x_k=R_{x_j}(x_k)*x_j\) and \(A_{R_{x_j}(x_k),j}=k\), so \(j\)th column is a permutation of \(G\).\\\\
+\null\qquad The converse is false; consider the following table:
+\[\begin{pmatrix}1&2&3&4\\4&3&2&1\\2&1&4&3\\3&4&1&2\end{pmatrix}\]
+\color{blue} (iii) Assume that \(e=x_1\). Show that \(A_{i,1}=x_{i}^{-1}\) for all \(i\) iff \(A_{i,i}=e\) for all \(i\).\color{black}\\\\
+\null\qquad If \(A_{i,i}=e\), \(x_{i}*x_{i}=e\) so \(A_{i,1}=x_{i}=x_{i}^{-1}\)\\\\
+\null\qquad If \(A_{i,1}=x_{i}=x_{i}^{-1}\), \(A_{i,i}=x_{i}*x_{i}=x_{i}*x_{i}^{-1}=e\)\\\\
+\color{blue} (iv) With the multiplication table as in \color{gray} (iii)\color{blue}, show that \(*\) is associative iff \(A_{i,j}A_{j,k}=A_{i,k}\) for all \(i,j,k\). \color{black}\\\\
+\null\qquad If \(A_{i,j}A_{j,k}=A_{i,k}\), \((x_{i}*x_{j})*(x_{j}*x_{k})=x_{i}*x_{k}\)\\\\
+\null\qquad \(\therefore (x*y)*z=(x*y)*(e*z)=(x*y)*((e*y)*(y*z))=(x*y)*(y*(y*z))=x*(y*z)\)\\\\
+\null\qquad If \(*\) is associative, \((x_{i}*x_{j})*(x_{j}*x_{k})=x_{i}*(x_{j}*x_{j})*x_{k}=x_{i}*x_{k}\)\\\\
+\color{blue} 6. (i) If \(f:G\to H\) and \(g:H\to K\) are homomorphisms, then so is the composite \(g\circ f:G\to K\).\color{black}\\\\
+\null\qquad \(g\circ f(x*_{G}y)=g(f(x)*_{H}f(y))=g(f(x))*_{K}g(f(y))\)\\\\
+\color{blue} (ii) If \(f:G\to H\) is an isomorphism, then its inverse \(f^{-1}:H\to G\) is also an isomorphism.\\\\\color{black}
+\null\qquad \(f(x*_{G}y)=f(x)*_{H}f(y)\implies f^{-1}(f(x*_{G}y))=f^{-1}(f(x)*_{H}f(y))\implies\)\\\\
+\null\qquad \(x*_{G}y=f^{-1}(f(x)*_{H}f(y))\implies f^{-1}(f(x))*_{G}f^{-1}(f(y))=f^{-1}(f(x)*_{H}f(y))\)\\\\
+\null\qquad Since isomorphic, \(\{f(x)\;|\;x\in G\}=\{y\;|\;y\in H\}\) so \(f^{-1}(x'*_{H}y')=f^{-1}(x')*_{G}f^{-1}(y)\)\\\\
+\color{blue} (iii) If \(\mathscr{C}\) is a class of groups, show that the relation of isomorphism is an equivalence relation on \(\mathscr{C}\).\\\\\color{black}
+\null\qquad Every group has an isomorphism \(x\mapsto x\) to itself;\\\\
+\null\qquad From \color{gray}(ii)\color{black}, if isomorphism \(f:G\to H\) exist, isomorphism \(f^{-1}: H\to G\) exists\\\\
+\null\qquad From \color{gray}(i)\color{black}, the compositions of isomorphisms is a homomorphism\\\\
+\null\qquad and it is isomorphic because composition of bijections is a bijection\\\\
+\color{blue} 7. Let \(G\) be a group, \(X\) be a set and \(f:G\to X\) be a bijection. Show that there is a unique operation on \(X\) so that \(X\) is a group and \(f\) is an isomorphism.\\\\\color{black}
+\null\qquad \(\forall a,b\in X\) define \(a*b=f(f^{-1}(a)*_{G}f^{-1}(b))\). It is associative so \(X\) is a semigroup.\\\\
+\null\qquad From \color{gray}Theorem 1.13\color{black}, \(X\) has an identity and inverses; thus \(X\) is a group.\\\\
+\null\qquad Define a different operation \(\circ\) where \(\exists c,d\in X\) such that \(c\circ d\neq c*d\).\\\\
+\null\qquad Then \(f^{-1}(c)*_{G}f^{-1}(d)=f^{-1}(c*d)\neq f^{-1}(c\circ s)\), so \(f\) is not an isomorphism with \(\circ\).\\\\
+\color{blue} 8. If \(k\) is a field, denote the columns of the \(n\times n\) identity matrix \(I\) by \(\epsilon_{1},...,\epsilon_{n}\). A \textbf{permutation matrix} \(P\) over \(k\)
+is a matrix with columns being \(\epsilon_{\alpha_{1}},...,\epsilon_{\alpha_{n}}\) for some \(\alpha\in S_{n}\). Prove that the set 
+of all permutation matrices over \(k\) is a group isomorphic to \(S_{n}\).\color{black}\\\\
+\null\qquad Matrix multiplication is associative; \(\forall P\;\; IP=P\) and \(P^{T}P=I\) By \color{gray}Theorem 1.13 \color{black} its a group\\\\
+\null\qquad Define the isomorphism \(f\) as in the definition above (permutation of columns)\\\\
+\null\qquad Since matrices multiply row by column, \(PQ\) represents the permutation from \(P^{T}\) to \(Q\).\\\\
+\null\qquad Let \(p,q,p^{-1},q^{-1}\) be \(f^{-1}(P),f^{-1}(Q),f^{-1}(P^{T}),f^{-1}(Q^{T})\)\\\\
+\null\qquad \(P^{T}\) to \(Q\) means \(q(p(p^{-1}))=q\) so the permutation \(PQ\) represents is \(q\circ p\)\\\\
+\null\qquad Therefore group of permutation matrices is isomorphic to \(S_{n}\) (\(q\circ p\) uses prefix notation)\\\\
+\color{blue} 9. Let \(\mathbb{T}\) denote the \textbf{circle group}: the multiplicative group of all complex numbers of absolute value \(1\). 
+For a fixed real number \(y\), show that \(f_{y}:\mathbb{R}\to\mathbb{T}\) given by \(f_{y}(x)=e^{iyx}\), is a homomorphism.\color{black}\\\\
+\null\qquad \(f_{y}(a+b)=e^{iy(a+b)}=e^{iya}e^{iyb}=f_{y}(a)f_{y}(b)\)\\\\
+\color{blue} 10. (i) If \(a\) is a fixed element of a group \(G\), define \textbf{conjugation} by \(a\) as \(\gamma_{a}(x)=a*x*a^{-1}\)
+Prove that \(\gamma_{a}\) is an isomorphism.\\\\\color{black}
+\null\qquad From \color{gray}(1.6.10)\color{black}, \(L_{a}\) and \(R_{a}\) are isomorphisms so \(\gamma_{a}=L_{a}\circ R_{a}\) is an isomorphism\\\\
+\color{blue} (ii) If \(a,b\in G\) prove that \(\gamma_{a}\gamma_{b}=\gamma_{a*b}\).\\\\\color{black}
+\null\qquad \(\gamma_{a}\gamma_{b}=L_{a}R_{a}L_{b}R_{b}=L_{a}L_{b}R_{a}R_{b}\) \color{gray}(1.6.10(iii)) \color{black}\(=L_{a*b}R_{a*b}\) \color{gray}(1.6.10(ii)) \color{black}\(=\gamma_{a*b}\)\\\\
+\color{blue} 11. If \(G\) denotes the multiplicative group of all complex \(n\)th roots of unity 
+then \(G\cong\mathbb{Z}_{n}\).\\\\\color{black}
+\null\qquad Bijection \([k]\mapsto e^{i\pi k/n}\); \(e^{i\pi [x]/n}e^{i\pi [y]/n}=e^{i\pi (x+y)/n}=e^{i\pi [x+y]/n}\)\\\\
+\color{blue} 12. Describe all the homomorphisms from \(\mathbb{Z}_{12}\) to itself. Which of these are isomorphisms?\color{black}\\\\
+\null\qquad Let \(f(1)=x\). Then \(f(n)=f(1+...+1)=f(1)+...+f(1)=nx\).\\\\
+\null\qquad Therefore there are \(12\) possible homomorphisms for \(12\) choices of \(x\).\\\\
+\null\qquad Out of them \(x=1,5,7,11\) are isomorphisms.\\\\
+\color{blue} 13. (i) Prove that a group \(G\) is abelian iff \(f:G\to G\) defined by \(f(a)=a^{-1}\) is a homomorphism.\\\\\color{black}
+\null\qquad \(a*b*(a*b)^{-1}=1\implies b*(a*b)^{-1}=a^{-1}\implies (a*b)^{-1}=b^{-1}*a^{-1}\)\\\\
+\null\qquad \(f(a*b)=f(a)*f(b)\implies (a*b)^{-1}=a^{-1}*b^{-1}\) Therefore \(a^{-1}*b^{-1}=b^{-1}*a^{-1}\)\\\\
+\color{blue} (ii) Let \(f:G\to G\) be an isomorphism from a finite group \(G\) to itself. If \(f\) has no 
+nontrivial fixed points (\(f(x)=x\implies x=e\)) and if \(f\circ f\) is the identity function, 
+then \(f(x)=x^{-1}\) for all \(x\in G\) and \(G\) is abelian.\\\\\color{black}
+\null\qquad \(f(f(x)*x)=f(f(x))*f(x)=f(x)*x\implies f(x)*x=e\implies f(x)=x^{-1}\)\\\\
+\null\qquad From \color{gray}(i)\color{black}, \(G\) is abelian.\\\\
+\color{blue} 14. An element \(a\) in a ring \(R\) has a \textbf{left quasi-inverse} if there exists 
+an element \(b\in R\) with \(a+b-ba=0\). Prove that if every element in a ring \(R\) 
+except \(1\) has a left quasi-inverse, then \(R\) is a division ring.\\\\\color{black}
+\null\qquad Define \(f(x)=1-x\); \(f(a+b-ba)=1-a-b+ba=(1-b)(1-a)=f(b)f(a)\)\\\\
+\null\qquad \(a+b-ba=0\implies f(a+b-ba)=f(0)\implies f(b)f(a)=1\implies f(a)^{-1}=f(b)\)\\\\
+\null\qquad Since \(f\) is a bijection from \(R-\{1\}\to R-\{0\}\), \(R\) is a division ring.\\\\
+\color{blue} 15. (i) If \(G\) is the multiplicative group of all positive real numbers, 
+show that \(\log: G\to (\mathbb{R}, +)\) is an isomorphism.\\\\\color{black}
+\null\qquad \(\forall x\in \mathbb{R}^{+}\;\;e^{\log x}=x\) and \(\forall x\in \mathbb{R}\;\;\log e^{x}=x\) so \(\log\) is a bijection and an isomorphism.\\\\
+\color{blue} (ii) Let \(G\) be the additive group of \(\mathbb{Z}[x]\) (all polynomials with 
+integer coefficients) and let \(H\) be the multiplicative group of all positive rational numbers. 
+Prove that \(G\cong H\).\\\\\color{black}
+\null\qquad \(\forall r\in \mathbb{R}^{+}\;\; r=2^{a_{1}}3^{a_{2}}5^{a_{3}}...\) where \(a_{i}\in\mathbb{Z}\); define \(f: \mathbb{R}^{+}\to\mathbb{Z}[x]\) as \(f(r)=a_{1}x+a_{2}x^{2}+a_{3}x^{3}...\)\\\\
+\null\qquad Since it is a unique representation \(f\) is a bijection; \(f(rs)=f(r)+f(s)\) so \(G\cong H\).
+\end{siderules}
+\newpage
+\section{The isomorphism theorems}
+\null
+\subsection{Subgroups}
+A nonempty subset \(S\) of a group \(G\) is a \textbf{subgroup} of \(G\) if \(s\in H\) implies \(s^{-1}\in H\) and \(s,t\in H\) implies \(st\in H\).\\\\
+If \(X\) is a subset of a group \(G\), we write \(X\subset G\); if \(X\) is a subgroup of \(G\), we write \(X\le G\).\\
+\begin{redrules}\color{red}
+\textbf{Theorem 2.1} \textit{If \(S\le G\), then \(S\) is a group.}\\\\\color{black}
+\textit{Proof.} "\(s,t\in S\implies st\in S\)" means that \(S\) is equipped with operation \(\mu|S\times S\) where \(\mu: G\times G\to G\)\\\\
+\null\qquad and that \(\mu|S\times S\) has its image contained in \(S\).\\\\
+This operation on \(S\) is associative because it is associative for every element in \(G\).\\\\
+Since \(S\) is nonempty, \(s\in S\implies s^{-1}\in S\implies ss^{-1}=1\in S\)
+\end{redrules}
+Verifying associativity is the most tedious part of showing that a given set \(G\) equipped 
+with an operation is actually a group. Therefore, if \(G\) is given as a subset of a group \(G^{*}\), 
+it is much simpler to show that \(G\) is a subgroup of \(G^{*}\).\\
+\begin{redrules}\color{red}
+\textbf{Theorem 2.2} \textit{A subset \(S\) of a group \(G\) is a subgroup iff \(1\in S\) and \(s,t\in S\) implies \(st^{-1}\in S\).}\\\\\color{black}
+\textit{Proof.} If \(s\in S\), then \(1s^{-1}=s^{-1}\in S\); if \(s,t\in S\), then \(s(t^{-1})^{-1}=st\in S\) (converse is easy)
+\end{redrules}
+If \(G\) is a group and \(a\in G\), then the \textbf{cyclic subgroup generated by \(a\)}, denoted by \(\langle a\rangle\), is the set of all the powers of \(a\).\\\\
+A group \(G\) is called \textbf{cyclic} if there is \(a\in G\) with \(G=\langle a\rangle\).\\\\
+If \(G\) is a group and \(a\in G\), then the \textbf{order} of \(a\) is \(|\langle a\rangle|\), the number of elements in \(\langle a\rangle\).\\
+\begin{redrules}\color{red}
+\textbf{Theorem 2.3} \textit{If \(G\) is a group and \(a\in G\) has finite order \(m\), then \(m\) is the smallest positive integer such that \(a^{m}=1\).}\\\\\color{black}
+\textit{Proof.} If \(a=1\), then \(m=1\). If \(a\neq 1\), there is an integer \(k>1\) so that \(1,a,a^{2},...,a^{k-1}\) are distinct elements 
+while \(a^{k}=a^{i}\) for some \(0\le i<k\).\\\\
+If \(a^{k}=a^{i}\) for some \(1\le i<k\), \(a^{k-i}=1\) and \(k-i>0\), contradicting \(1,a,a^{2},...,a^{k-1}\) has no repetitions. Therefore the smallest integer \(k\) that \(a^{k}=a^{i}\) satisfies \(a^{k}=1\).\\\\
+It now suffices to prove that \(m=k\). Clearly \(\{1,a,a^{2},...,a^{k-1}\}\subset\langle a\rangle\).\\\\
+Let \(l=qk+r\) where \(0\le r<k\). \(a^{l}=a^{qk+r}=a^{r}\) so \(a^{l}=a^{r}\in \{1,a,a^{2},...,a^{k-1}\}\).\\\\
+Since \(\langle a\rangle\) is defined as the set of \(a^{l}\), \(\langle a\rangle\subset \{1,a,a^{2},...,a^{k-1}\}\). Therefore \(\langle a\rangle=\{1,a,a^{2},...,a^{k-1}\}\) and \(m=k\).
+\end{redrules}
+If \(\alpha\in S_{n}\) is written as a product of \(t\) disjoint \(r_{i}\)-cycles, \color{gray}(1.2.9(iii)) \color{black}
+shows that the order of \(\alpha\) is \(lcm(r_{1},...,r_{t})\).\\
+\begin{greenrules}\color{OliveGreen}
+\textbf{Corollary 2.4} \textit{If \(G\) is a finite group, then a nonempty subset \(S\) of \(G\) is a subgroup iff \(s,t\in S\) implies \(st\in S\).}\\\\\color{black}
+\textit{Proof.} Necessity is obvious. By induction \(S\) contains all the powers of \(s\).\\\\
+ Since \(G\) is finite, \(s\) has a finite order \(m\). Therefore \(s^{-1}=s^{m-1}\in S\).
+\end{greenrules}
+If \(G\) is a group, then \(G\) and \(\{1\}\) (the \textbf{trivial} subgroup) are always subgroups.\\\\
+Any subgroup \(H\) other than \(G\) is called \textbf{proper} (\(H<G\)).\\\\
+Let \(f:G\to H\) be a homomorphism; define
+\[\ker(f)=\{a\in G: f(a)=1\}\;\;\;\;\mathrm{im}(f)=\{h\in H: \exists a\in G\;\;h=f(a)\}\]
+Then \(\ker(f)\le G\) and \(\mathrm{im}(f)\le H\). (\(f(st^{-1})=f(s)f(t)^{-1}=1\) and \(uv^{-1}=f(f^{-1}(u)f^{-1}(v)^{-1})\))
+\begin{redrules}\color{red}
+\textbf{Theorem 2.5} \textit{The intersection of any family of subgroups of a group \(G\) is again a subgroup of \(G\).}\\\\\color{black}
+\textit{Proof.} Let \(\{S_{i}: i\in I\}\) be a family of subgroups. \((\forall i\in I)\;1\in S_{i}\) so \(1\in \bigcap S_{i}\)\\\\
+If \(a,b\in\bigcap S_{i}\), then \(ab^{-1}\in S_{i}\) for all \(i\), so \(ab^{-1}\in\bigcap S_{i}\) and thus \(\bigcap S_{i}\le G\).
+\end{redrules}
+\begin{greenrules}\color{OliveGreen}
+\textbf{Corollary 2.6} \textit{If \(X\) is a subset of \(G\), then there is a \textbf{smallest} subgroup \(H\) of \(G\) containing \(X\).}\\\\\color{black}
+\textit{Proof.} \(X\le G\), so there are subgroups of \(G\) that contains \(X\).\\\\
+Define \(H\) as the intersection of all subgroups that contain \(X\).
+By \color{gray}Theorem 2.5\color{black}, \(H\le G\).\\\\
+If \(S\le G\) and \(X\subset S\), then \(S\) is one of the subgroups intersected to form \(H\) so \(H\le S\).\\\\
+Therefore \(H\) is the smallest subgroup containing \(X\).
+\end{greenrules}
+The smallest subgroup of \(G\) containing \(X\), \(\langle X\rangle\), is called the 
+\textbf{subgroup generated by \(X\)}.\\\\
+If \(H\) and \(K\) are subgroups of \(G\), the subgroup \(\langle H\cup K\rangle\) is denoted by \(H\lor K\).\\\\
+If \(X\) is a nonempty subset of a group \(G\), then a \textbf{word} on \(X\) is an element \(w\in G\) of the form\\\\
+\(w=x_{1}^{e_{1}}x_{2}^{e_{2}}...x_{n}^{e_{n}}\) where \(x_{i}\in X\), \(e_{i}=\pm 1\) and \(n\ge 1\). (\(x_{i}\) need not be distinct)\\
+\begin{redrules}\color{red}
+\textbf{Theorem 2.7} \textit{Let \(X\) be a subset of a group \(G\). If \(X=\varnothing\), then \(\langle X\rangle=\{1\}\); else \(\langle X\rangle\) is the set of all the words on \(X\).}\\\\\color{black}
+\textit{Proof.} If \(X=\varnothing\), the smallest possible subgroup \(\{1\}\) contains \(X\), so \(\langle X\rangle=\{1\}\).\\\\
+Let \(W\) be the set of all words. Since \(x_{1}^{-1}x_{1}=1\in W\) and \((\forall v,w\in W)\;vw^{-1}\in W\), \(W\le G\).\\\\
+Since \(\langle X\rangle\) is the smallest subgroup containing \(X\) and \(X\subset W\), \(\langle X\rangle\subset W\)\\\\
+Every subgroup \(H\) containing \(X\) must contain every word on \(X\), so \(W\le H\). Therefore \(\langle X\rangle=W\).
+\end{redrules}
+\begin{siderules}\color{blue}\textit{EXERCISES}\color{black}\\\\
+\color{blue}1. Show that \(A_{n}\), the set of all even permutations in \(S_{n}\), (called the \textbf{alternating group} on \(n\) letters),  
+is a subgroup with \(n!/2\) elements.\\\\\color{black}
+\null\qquad From \color{gray}(1.6.6(i))\color{black}, \((1\;2\;...\;r-1\;r)^{-1}=(r\;r-1\;...\;2\;1)\), so the 
+number of disjoint cycles of the inverse of an even permutation is the same as that of itself. Therefore \((\forall a\in A_{n})\;sgn(a^{-1})=sgn(a)\)\\\\
+\null\qquad Therefore \((\forall a,b\in A_{n})\;sgn(ab^{-1})=sgn(a)sgn(b^{-1})=sgn(a)sgn(b)=1\times 1=1\)\\\\
+\null\qquad Therefore \(A_{n}\le S_{n}\) and from \color{gray}(1.4.3) \color{black} \(A_{n}\) has \(n!/2\) elements.\\\\
+\color{blue}2. If \(k\) is a field, show that \(\mathrm{SL}(n, k)\), the \textbf{special linear group} over \(k\), the set of all \(n\times n\) 
+matrices over \(k\) having determinant \(1\), is a subgroup of \(\mathrm{GL}(n, k)\).\color{black}\\\\
+\null\qquad Since \(\det(A)\det(B)=\det(AB)\) and \(\det(A)\det(A^{-1})=\det(I)\),\\
+\null\qquad if \(a,b\in\mathrm{SL}(n,k)\) then \(ab^{-1}\in\mathrm{SL}(n,k)\) so \(\mathrm{SL}(n,k)\le\mathrm{GL}(n,k)\)\\\\
+\color{blue}3. The set theoretic union of two subgroups is a subgroup iff one is 
+contained in the other. Is this true if we replace "two subgroups" by "three subgroups"?\\\\\color{black}
+\null\qquad Let \(a,b\) be elements and \(G,H\) be subgroups such that \(a\in G,a\notin H,b\in H,b\notin G\).\\\\
+\null\qquad If \(ab\in G\), then \(a^{-1}ab\in G\), but \(a^{-1}ab=b\notin G\), so \(ab\notin G\) and similarly \(ab\notin H\).\\\\ 
+\null\qquad However, consider group \(\{0,...,7\}\) with bitwise xor operation, and subgroups \(\{0,1,6,7\},\)\\\\
+\null\qquad \(\{0,2,5,7\},\{0,3,4,7\}\); the union is a subgroup. Therefore the statement is no longer true.\\\\
+\color{blue}4. Let \(S\) be a proper subgroup of \(G\). If \(G-S\) is the complement of \(S\), 
+prove that \(\langle G-S\rangle=G\).\\\\\color{black}
+\null\qquad Let \(a\in S\) and \(b\in G\) but \(b\notin S\). If \(ab\in S\), \(a^{-1}ab\in S\) but \(a^{-1}ab=b\notin S\).\\\\
+\null\qquad \(b,ab\in G-S\), so \(abb^{-1}=a\in\langle G-S\rangle\). Therefore \(a\in S\) implies \(a\in\langle G-S\rangle\), so \(\langle G-S\rangle=G\).\\\\
+\color{blue}5. Let \(f,g:G\to H\) be homomorphisms and let \(K=\{a\in G:f(a)=g(a)\}\). Must \(K\le G\)?\color{black}\\\\
+\null\qquad If \(a,b\in K\), \(f(ab^{-1})=f(a)f(b)^{-1}=g(a)g(b)^{-1}=g(ab^{-1})\) so \(ab^{-1}\in K\) so \(K\le G\).\\\\
+\color{blue}6. Suppose that \(X\) is a nonempty subset of a set \(Y\). Show that \(S_{X}\) 
+can be \textbf{imbedded} in \(S_{Y}\); that is, \(S_{X}\) is isomorphic to a subgroup of \(S_{Y}\).\\\\\color{black}
+\null\qquad too hard for me rn, google says need concepts after this or betrands postulate or smth\\\\
+\color{blue}7. (i) Prove that \(S_{n}\) can be generated by \((1\;2), (1\;3), ..., (1\;n)\).\color{black}\\\\
+\null\qquad For any permutation \(\beta\in S_{n}\), start with identity permutation \(\alpha=1_{n}\).\\\\
+\null\qquad Repeat procedure: find \(i\neq j\) s.t. \(\alpha[i]=\beta[j]\); then \(\alpha:=(1\;i)(1\;j)\alpha\)\\\\
+\color{blue}(ii) Prove that \(S_{n}\) can be generated by \((1\;2), (2\;3), ..., (n-1\;n)\)\color{black}\\\\
+\null\qquad Since \((1\;i)=(1\;2)(2\;3)...(i-1\;i)\), do the same procedure as above.\\\\
+\color{blue}(iii) Prove that \(S_{n}\) can be generated by \(\tau=(1\;2)\) and \(\rho=(1\;2\;...\;n)\).\color{black}\\\\
+\null\qquad Since \((i\;i+1)\) is \(\rho^{n-i}\tau\rho^{i}\), do the same procedure as above.\\\\
+\color{blue}(iv) Prove that \(S_{4}\) cannot be generated by \(\alpha=(1\;3)\) and \(\beta=(1\;2\;3\;4)\).\color{black}\\\\
+\null\qquad Let \(f_{1}(\gamma)=|\gamma[1]-\gamma[3]|\) and \(f_{2}(\gamma)=|\gamma[2]-\gamma[4]|\) for \(\gamma\in S_{4}\).\\\\
+\null\qquad Then \(f_{1}(\alpha)=f_{2}(\alpha)=f_{1}(\beta)=f_{2}(\beta)=f_{1}(1_{4})=f_{2}(1_{4})=2\) so for all \(\delta\in\langle\alpha, \beta\rangle\), \(f_{1}(\delta)=2\).\\\\
+\null\qquad However, \(f_{1}((1\;2))=1\), so \(S_{4}\) cannot be generated by \(\alpha\) and \(\beta\).
+\end{siderules}
+\newpage
+\subsection{Lagrange's Theorem}
+If \(S\le G\) and \(t\in G\), a \textbf{right coset} and a \textbf{left coset} of \(S\) in \(G\) are subsets of \(G\) 
+\[St=\{st: s\in S\}\;\;\;\;tS=\{ts: s\in S\}\]
+\(t\) is called the \textbf{representative} of \(St\) and \(tS\).\\\\
+In the additive group of \(\mathbb{R}^{2}\), \(l=\{r\vec{v}: r\in\mathbb{R}\}\) is a subgroup, and \(\vec{u}+l\) is a coset.\\\\
+In the additive group \(\mathbb{Z}\) of all integers, the coset \(a+\langle n\rangle\) is the congruence class \([a]\) of \(a\;\text{mod}\;n\).\\\\
+Not only is \(t\) a representative of \(St\), every element  \(st\) for \(s\in S\) is a representative of \(St\).\\\\
+\begin{greenrules}\color{OliveGreen}
+\textbf{Lemma 2.8} \textit{If \(S\le G\), then \(Sa=Sb\) iff \(ab^{-1}\in S\) (and \(aS=bS\) iff \(b^{-1}a\in S).\)}\\\\\color{black}
+\textit{Proof.} If \(Sa=Sb\), then \(a=1a\in Sa= Sb\) so there is \(s\in S\) with \(a=sb\), hence \(ab^{-1}\in S\).\\\\
+Assume \(ab^{-1}\in S\), then if \(x\in Sa\), \(x=sa=sab^{-1}b\in Sb\);\\\\
+\null\qquad If \(y\in Sb\), \(y=s'b=s'ba^{-1}a=s(ab^{-1})^{-1}a\in Sa\), so \(Sa=Sb\).
+\end{greenrules}
+\begin{redrules}\color{red}
+\textbf{Theorem 2.9} \textit{If \(S\le G\), any 2 right (or any 2 left) cosets of S in G are either identical or disjoint.}\\\\\color{black}
+\textit{Proof.} If \(\exists x\;\;x\in Sa\cap Sb\), \(x=sb=ta\) where \(s,t\in S\). Hence \(ab^{-1}=t^{-1}s\in S\).\\\\
+By \color{gray}Lemma 2.8 \color{black}, \(Sa=Sb\).
+\end{redrules}
+From above, the right cosets of a subgroup \(S\) comprise a partition of \(G\).\\\\
+For equivalence relation  \(a\equiv b\) if \(ab^{-1}\in S\), its equivalence classes are the right cosets of \(S\).
+\begin{redrules}\color{red}
+\textbf{Theorem 2.10} \textit{If \(S\le G\), then the number of right cosets of S in G is equal to the number of left cosets of S in G.}\\\\\color{black}
+\textit{Proof.} Let \(f:\mathscr{R}\to\mathscr{L}\) be \(f(Sa)=a^{-1}S\). It is trivially a bijection.\\\\
+(\(f(Sa)=aS\) is not well-defined because \(Sa=Sb\implies ab^{-1}\in S\centernot\implies ba^{-1}\in S\implies aS=bS\))
+\end{redrules}
+If \(S\le G\), the \textbf{index} of \(S\) in \(G\), denoted by \([G:S]\), is the number of right cosets of \(S\) in \(G\).\\\\
+From P. Hall (1935), in a finite group \(G\), one can always choose a \textbf{common system of representatives} for the right and left cosets of a subgroup S; 
+if \([G:S]=n\), there exist elements \(t_{1},...,t_{n}\in G\) s.t. \(t_{1}S,...,t_{n}S\) and \(St_{1},...,St_{n}\) is the family 
+of all left and right cosets.
+\begin{redrules}\color{red}
+\textbf{Theorem 2.11 (Lagrange but prolly Galois)} \textit{If \(G\) is a finite group and \(S\le G\), then \(|S|\) divides \(|G|\) and 
+\([G:S]=|G|/|S|\)}\\\\\color{black}
+\textit{Proof.} By \color{gray}Theorem 2.9\color{black}, \(G\) is partitioned into right cosets: \(G=St_{1}\cup St_{2}\cup...\cup St_{n}\)\\\\
+\(f_{i}:S\to St_{i}\), defined by \(f_{i}(s)=st_{i}\), is a bijection so \(|St_{i}|=|S|\) for all \(i\). Therefore \(|G|=[G:S]|S|\).
+\end{redrules}
+\begin{greenrules}\color{OliveGreen}
+\textbf{Corollary 2.12} \textit{If \(G\) is a finite group and \(a\in G\), then the order of \(a\) divides \(|G|\).}\\\\\color{black}
+\textit{Proof.} Order of \(a\) is \(|\langle a\rangle|\), and \(\langle a\rangle\le G\), so from \color{gray}Theorem 2.11 \color{black} the order of \(a\) divides \(|G|\).
+\end{greenrules}
+A group \(G\) has \textbf{exponent} \(n\) if \(x^{n}=1\) for all \(x\in G\).\\\\
+Lagrange's theorem shows that a finite group \(G\) of order \(n\) has exponent \(n\).\\
+\begin{greenrules}\color{OliveGreen}
+\textbf{Corollary 2.13} \textit{If \(p\) is a prime and \(|G|=p\), then \(G\) is a cyclic group.}\\\\\color{black}
+\textit{Proof.} Take \(a\in G\) with \(a\neq 1\). The cyclic subgroup \(\langle a\rangle\) has more than 1 element.\\\\
+From \color{gray}Corollary 2.12\color{black}, \(|\langle a\rangle|\) divides \(p\), so \(|\langle a\rangle|=p=|G|\), so \(\langle a\rangle=G\)
+\end{greenrules}
+\begin{greenrules}\color{OliveGreen}
+\textbf{Corollary 2.14 (Fermat)} \textit{If  \(p\) is a prime and \(a\) is an integer, then \(a^{p}\equiv a\text{ mod } p\)}\\\\\color{black}
+\textit{Proof.} Let \(G=U(\mathbb{Z}_{p})\), the multiplicative group of nonzero elements of \(\mathbb{Z}_{p}\)\\\\
+For integers \(a\) and \(b\), \(a\equiv b\text{ mod }p\) iff \([a]=[b]\) in \(\mathbb{Z}_{p}\). If \([a]=[0]\), \([a]^{p}=[0]=[a]\).\\\\
+If \([a]\neq[0]\), then \([a]\in G\) so \([a]^{|G|}=[a]^{p-1}=[1]\). \(\therefore a^{p}\equiv a\text{ mod }p\).
+\end{greenrules}
+\begin{siderules}\color{blue}\textit{EXERCISES}\color{black}\\\\
+\color{blue}1. If \(G\) is a finite group and \(K\le H\le G\), then \([G:K]=[G:H][H:K]\).\color{black}\\\\
+\null\qquad \([G:K]=|G|/|K|=|G|/|H|\times|H|/|K|=[G:H][H:K]\)\\\\
+\color{blue}2. Let \(a\in G\) have order \(n=mk\) where \(mk\ge 1\). Prove that \(a^{k}\) has order \(m\).\\\\\color{black}
+\null\qquad \(1=a^{n}=a^{mk}=(a^{k})^{m}\)\\\\
+\color{blue}3. (i) Prove that every group \(G\) of order 4 is isomorphic to either \(\mathbb{Z}_{4}\) or the 4-group \(\mathbb{V}\).\\\\\color{black}
+\null\qquad If there exist \(a\in G\) such that \(|\langle a\rangle|=4\), \(G\cong \mathbb{Z}_{4}\)\\\\
+\null\qquad Else, \(G=\{1,a,b,c\}\) where \(a^{2}=b^{2}=c^{2}=1\).\\\\
+\null\qquad Then, \(ab=c\) because otherwise \(1\neq a\neq b\) would be false.\\\\
+\null\qquad Similarly, \(ba=c, ac=b, ca=b, bc=a, cb=a\) so \(G\cong\mathbb{V}\).\\\\
+\color{blue}(ii) If \(G\) is a group with \(|G|\le 5\), then \(G\) is abelian.\\\\\color{black}
+\null\qquad If \(|G|=2,3,5\), \(|\langle a\rangle|=1\) or \(|G|\) by Lagrange's theorem, so \(G\) must be cyclic.\\\\
+\null\qquad \(\{1\}\), cyclic groups and \(\mathbb{V}\) are all abelian.\\\\
+\color{blue}4. If \(a\in G\) has order \(n\) and \(k\) is an integer with \(a^{k}=1\), then \(n\) divides \(k\). 
+Indeed, \(\{k\in\mathbb{Z}: a^{k}=1\}\) consists of all the multiples of \(n\).\\\\\color{black}
+\null\qquad By definition, order \(n\) is the smallest integer s.t. \(a^{n}=1\). \(\therefore 1=(a^{n})^{m}=a^{nm}=a^{k}\)\\\\
+\null\qquad If \(k=nm+r\) where \(0<r\le n\), \(a^{k}=a^{nm}a^{r}=a^{r}\neq 1\).\\\\
+\color{blue}5. If \(a\in G\) has finite order and \(f:G\to H\) is a homomorphism, then the order of \(f(a)\) divides the order of \(a\).\\\\\color{black}
+\null\qquad \(f(a)^{|\langle a\rangle|}=f(a^{|\langle a\rangle|})=f(1)=1\). From \color{gray}4.\color{black}, \(|\langle a\rangle|\) is a multiple of \(|\langle f(a)\rangle|\).\\\\
+\color{blue}6. Prove that a group \(G\) of even order has an odd number of elements of order 2 
+(in particular, it has at least 1 such element).\\\\\color{black}
+\null\qquad There is an even number of order \(>2\) elements because they can be paired into \((x,x^{-1})\).\\\\
+\null\qquad Subtracting that and 1 more (identity), there is an odd number of elements of order 2.\\\\\\
+\color{blue}7. If \(H\le G\) had index 2, then \(a^{2}\in H\) for every \(a\in G\).\\\\\color{black}
+\null\qquad \( a\in H\implies a^{2}\in H\therefore a^{2}\notin H\implies a\notin H\) \\\\
+\null\qquad Since \([G:H]=2\), \(Ha=Ha^{2}\implies H=Ha\) but they are different cosets.\\\\
+\null\qquad Therefore the assumption that there exists \(a^{2}\notin H\) is wrong so \(a^{2}\in H\) for every \(a\).\\\\
+\color{blue}8. (i) If \(a,b\in G\) commute and \(a^{m}=1=b^{n}\), then \((ab)^{k}=1\), where \(k=lcm(m,n)\). Conclude that if 
+\(a\) and \(b\) have finite order, then \(ab\) also has finite order.\\\\\color{black}
+\null\qquad \((ab)^{k}=a^{k}b^{k}=a^{mx}b^{ny}=1\).\\\\ \null\qquad  \(a,b\) finite order\(\implies\exists a^{m}=1=b^{n}\implies\exists(ab)^{k}=1\implies ab\) finite order.\\\\
+\color{blue}(ii) Let \(G=\text{GL}(2,\mathbb{Q})\), \(A=\begin{bmatrix}0&-1\\1&0\end{bmatrix}\) and 
+\(B=\begin{bmatrix}0&1\\-1&-1\end{bmatrix}\). Show that \(A^{4}=I=B^{3}\) but \(AB\) has infinite order.\\\\\color{black}
+\null\qquad \(A^{2}=\begin{bmatrix}-1&0\\0&-1\end{bmatrix}\), \(B^{2}=\begin{bmatrix}-1&-1\\1&0\end{bmatrix}\), 
+\(A^{4}=B^{3}=\begin{bmatrix}1&0\\0&1\end{bmatrix}\), \(AB=\begin{bmatrix}1&1\\0&1\end{bmatrix}\), \((AB)^{n}=\begin{bmatrix}1&2^{n-1}\\0&1\end{bmatrix}\)\\\\
+\color{blue}9. Prove that every subgroup of a cyclic group is cyclic.\\\\\color{black}
+\null\qquad For any \(a^{i},a^{j}\in \langle a\rangle\), \(\langle a^{i},a^{j}\rangle=\langle a^{g}\rangle\) where \(g=gcd(i,j)\). \\\\
+\null\qquad This is because \(\forall x,y\;(g\;|\;ix+jy)\) therefore \(\langle a^{i},a^{j}\rangle\subseteq\langle a^{g}\rangle\) and \\\\
+\null\qquad \(\exists z,w\;(iz+jw\equiv g)\) by Euclid's algorithm so \(\forall n\;(gn=izn+jwn)\) so \(\langle a^{g}\rangle\subseteq\langle a^{i},a^{j}\rangle\)\\\\
+\null\qquad Since all subgroups are generated by some elements and those can be reduced to 1 element as shown above, all subgroups are generated by an element or in other words, cyclic.\\\\
+\color{blue}10. Prove that two cyclic groups are isomorphic iff they have the same order.\\\\\color{black}
+\null\qquad If they are isomorphic there is a bijection so they have the same order;\\\\
+\null\qquad if same order an isomorphism \(f:\langle a\rangle\to\langle b\rangle\) such that \(f(a)=b\) exists.\\\\
+\color{blue}The \textbf{Euler \(\phi\)-function} is defined as: \(\phi(1)=1\) and \(\phi(n)=\sum_{k=1}^{n-1}[gcd(k,n)=1]\) for \(n>1\)\color{black}\\\\
+\color{blue}11. If \(G=\langle a\rangle\) is cyclic of order \(n\), then \(a^{k}\) is also a generator of \(G\) iff \(gcd(k,n)=1\). 
+Conclude that the number of generators of \(G\) is \(\phi(n)\).\\\\\color{black}
+\null\qquad \(|\langle a^{k}\rangle|\) is the smallest integer such that \((a^{k})^{|\langle a^{k}\rangle|}=1\) so \(n\;|\;k\times|\langle a^{k}\rangle|\) \color{gray}(4.)\\\\\color{black}
+\null\qquad \(\therefore gcd(k,n)=1 \Longleftrightarrow |\langle a^{k}\rangle|=n\) and \(\phi(n)\) is the number of generators of \(G\).\\\\
+\color{blue}12. (i) Let \(G=\langle a\rangle\) have order \(rs\) where \(gcd(r,s)=1\). Show that there are unique 
+\(b,c\in G\) with \(b\) of order \(r\), \(c\) of order \(s\), and \(a=bc\).\\\\\color{black}
+\null\qquad From \color{gray}steps in (9.)\color{black}, \(\langle a^{s}, a^{r}\rangle=\langle a\rangle\) so \(a^{sx}a^{ry}=a\) for some unique \(x,y\) (pigeon hole).\\\\
+\null\qquad \(|\langle a^{sx}\rangle|={n}/{gcd(n, sx)}={r}/{gcd(r,x)}\); similarly \(|\langle a^{ry}\rangle|=s/gcd(s,y)\)\\\\
+\null\qquad \(\because gcd(|\langle a^{sx}\rangle|,|\langle a^{ry}\rangle|)=1\) \(\therefore|\langle a^{sx}\rangle||\langle a^{ry}\rangle|=|\langle a^{sx}a^{ry}\rangle|=|\langle a\rangle|=n\)\\\\
+\null\qquad Therefore \(|\langle a^{sx}\rangle|\) and \(|\langle a^{ry}\rangle|\) must be \(r\) and \(s\) respectively. (\(b=a^{sx},c=a^{ry}\))\\\\
+\color{blue}(ii) Prove that if \(gcd(r,s)=1\), then \(\phi(rs)=\phi(r)\phi(s)\).\\\\\color{black}
+\null\qquad \(gcd(k,n)=1\) iff \(gcd(k,r)=gcd(k,s)=1\) and \(a^{k}=b^{k}c^{k}\) \\\\
+\null\qquad so when \(a^{k}\) generates \(\langle a\rangle\), \(b^{k}, c^{k}\) generates \(\langle b\rangle,\langle c\rangle\); and \(\langle a\rangle=\langle b\rangle\langle c\rangle\) so \(\phi(rs)=\phi(r)\phi(s)\)\\\\
+\color{blue}13. (i) If \(p\) is prime, then \(\phi(p^{k})=p^{k}-p^{k-1}=p^{k}(1-1/p)\).\\\\\color{black}
+\null\qquad \(p\) is the only prime s.t. \(p\;|\;p^{k}\) so there are \(p^{k-1}-1\) numbers (\(x\)) with \(x<p^{k}\) and \(gcd(p^{k},x)\neq 1\)\\\\
+\null\qquad \(\therefore \phi(p^{k})=p^{k}-(p^{k-1}-1)-1=p^{k}-p^{k-1}=p^{k}(1-1/p)\) (extra \(-1\) from the identity)\\\\
+\color{blue}(ii) If the distinct prime divisors of \(n\) are \(p_{1},...,p_{i}\) then \(\phi(n)=n(1-1/p_{1}),...,(1-1/p_{i})\).\\\\\color{black}
+\null\qquad Evident from \color{gray}(12. (ii)) \color{black} and \color{gray}(13. (i))\color{black}\\\\
+\color{blue}14. If \(gcd(r,s)=1\), then \(s^{\phi(r)}\equiv 1\pmod r\).\\\\\color{black}
+\null\qquad \(uv=1\pmod r\Longrightarrow uv=1\pmod{p_{1},...,p_{i}}\Longrightarrow u\neq 0\pmod{p_{1},...,p_{i}}\Longrightarrow gcd(u,r)=1\)\\\\
+\null\qquad Since all \(u\) form a group \(U(\mathbb{Z}_{n})\) \color{gray}(example 1.6.4)\color{black}, \(s^{\phi(r)}\equiv 1\pmod r\) for all \(s\in U(\mathbb{Z}_{n})\).
+\end{siderules}
+\subsection{Cyclic Groups}
+\begin{greenrules}\color{OliveGreen}
+\textbf{Lemma 2.15} \textit{\(G\) is a cyclic group of order \(n\) \(\Longrightarrow\) \(\forall d|n\;(!\exists\) a subgroup of order \(d)\).}\\\\\color{black}
+\textit{Proof.} \(G=\langle a\rangle\) \(\Longrightarrow\) \(|\langle a^{n/d}\rangle|=d\) \color{gray}(exercise 2.2.2)\color{black}\\\\
+Assume \(S=\langle b\rangle \) is a subgroup of order \(d\). \(S\) is cyclic. \color{gray}(exercise 2.2.9)\\\\\color{black}
+\(b^{d}=1\) and \(\exists m\; b=a^{m}\). By \color{gray}(exercise 2.2.4)\color{black}, \(\exists k\; md=nk\) \(\Longrightarrow\) \(b=a^{m}=(a^{n/d})^{k}\) \(\Longrightarrow\) \(\langle b\rangle \le \langle a^{n/d}\rangle \).
+Since \(|\langle b\rangle|=|\langle a^{n/d}\rangle|=d\), the inclusion is equality \(\langle b\rangle =\langle a^{n/d}\rangle \).
+\end{greenrules}
+\begin{redrules}\color{red}
+\textbf{Theorem 2.16} \textit{If \(n\) is a positive integer, \(n=\sum_{d|n}\phi(d)\)\\\\}\color{black}
+\textit{Proof.} If \(C\) is a cyclic subgroup of \(G\), let \(gen(C)\) denote the set of all its generators.\\\\
+Since each element \(a\) generates a unique cyclic subgroup \(\langle a\rangle \), \(G=\bigcup gen(C)\).\\\\
+From \color{gray}(lemma 2.15) \color{black}each \(C\) is unique so \(n=\sum_{d|n}|gen(C_{d})|=\sum_{d|n}\phi(d)\).
+\end{redrules}
+\begin{redrules}\color{red}
+\textbf{Theorem 2.17} \textit{A group \(G\) of order \(n\) is cyclic \(\Longleftrightarrow\) \(\forall d|n\) There is at most 1 cyclic subgroup of \(G\) with order \(d\).}\\\\\color{black}
+\textit{Proof.} Implication is proved in \color{gray}(lemma 2.15)\color{black}. From previous proof, \(n=\sum|gen(C)|\).\\\\
+Since there is at most 1 cyclic subgroup of order \(d\), \(n=\sum_{d|n}\phi(d)\times [C_{d}\in G]\)\\\\
+But from \color{gray}(theorem 2.16) \color{black} \(n=\sum_{d|n}\phi(n)\) so \(\forall d\; \exists C_{d}\in G\)\\\\
+Therefore there exists a cyclic subgroup of order \(d=n\) so \(G\) is cyclic.
+\end{redrules}
+\begin{redrules}\color{red}
+\textbf{Theorem 2.18} \textit{If \(F\) is a field and \(G\) is a finite subgroup of \(F^{\times}\), the multiplicative group of nonzero elements of \(F\), then \(G\) is cyclic.}\\\\\color{black}
+\textit{Proof.} If \(|G|=n\) and \(a\in G\) satisfies \(a^{d}=1\;(d|n)\), then \(a\) is a root in \(F\) of \(x^{d}-1\).\\\\
+Since a polynomial of degree \(d\) over a field has at most \(d\) roots (fundamental theorem of algebra), there is at most 1 cyclic subgroup of \(G\) having order \(d\).\\\\
+Therefore from \color{gray}(theorem 2.17) \color{black} \(G\) is cyclic.
+\end{redrules}
+The proof is not constructive; no algorithm is known to display a generator of \(\mathbb{Z}^{\times}_{p}\) for all primes.
+\begin{redrules}\color{red}
+\textbf{Theorem 2.19} \textit{Let \(p\) be a prime. A group \(G\) of order \(p^{n}\) is cyclic iff it is an abelian group having a unique subgroup \(H\) of order \(p\).}\\\\\color{black}
+\textit{Proof.} Necessity follows from \color{gray}lemma 2.15\color{black}. For converse, let \(a\in G\) have largest order \(p^{k}\).\\\\
+\(\forall g\in G, |\langle g\rangle|=p^{j}\) where \(j\le k\) so \(g^{p^{k}}=1\). If \(b\in G\) and \(b^{p}=1\), \(b\in \langle b\rangle = H\) (or \(b=1\in H\)).\\\\
+Let \(w\in G\) but \(w\notin \langle a\rangle \). At some point in \(w, w^{p}, w^{p^{2}},...,w^{p^{k}}=1\), \(\exists i\;w^{p^{i}}\notin \langle a\rangle \) to \(w^{p^{i+1}}\in \langle a\rangle \).\\\\
+Let \(x=w^{p^{i}}\) and \(x^{p}=a^{l}\). If \(k=1\), \(x^{p^{k}}=x^{p}=1\) so \(x\in H\le\langle a\rangle \), a contradiction.\\\\
+if \(k>1\), \(1=x^{p^{k}}=(x^{p})^{p^{k-1}}=a^{lp^{k-1}}\), then \(p^{k}|lp^{k-1}\) \color{gray}(exercise 2.2.4) \color{black} so \(\exists m\in\mathbb{Z}\;l=pm\).\\\\
+Hence \(x^{p}=a^{l}=a^{mp}\) \(\Longrightarrow\) \(1=x^{-p}a^{mp}=(x^{-1}a^{m})^{p}\) (abelian) \(\Longrightarrow\) \(x^{-1}a^{m}\in H\le \langle a\rangle \), a contradiction.\\\\
+Therefore there is no \(w\in G\) s.t. \(w\notin \langle a\rangle \) hence \(G=\langle a\rangle \).
+\end{redrules}
+\begin{siderules}\color{blue}\textit{EXERCISES}\color{black}\\\\
+\color{blue}1. Let \(G=\left\langle\begin{bmatrix}0&i\\i&0\end{bmatrix},\begin{bmatrix}0&1\\-1&0\end{bmatrix}\right\rangle \). Show that \(G\) is a nonabelian group of order 8 having a unique subgroup of order 2.\\\\\color{black}
+\null\qquad Subgroup: \(\left(\begin{bmatrix}1&0\\0&1\end{bmatrix},\begin{bmatrix}-1&0\\0&-1\end{bmatrix}\right)\) Representatives:\(\left(\begin{bmatrix}0&i\\i&0\end{bmatrix},\begin{bmatrix}0&1\\-1&0\end{bmatrix},\begin{bmatrix}-i&0\\0&i\end{bmatrix}\right)\)
+\end{siderules}
+\subsection{Normal Subgroups}
+If \(S\) and \(T\) are nonempty subsets of a group \(G\), \(ST=\{st:s\in S\land t\in T\}\).\\\\
+The family of all nonempty subsets of \(G\) is a semigroup (it is associative).\\
+\begin{redrules}\color{red}
+\textbf{Theorem 2.20 (Product Formula)} \textit{If \(S\) and \(T\) are subgroups of a finite group \(G\), then\\ \(|ST||S\cap T|=|S||T|\)}\\\\\color{black}
+\textit{Proof.} Define \(\phi: S\times T\to ST\) by \((s,t)\mapsto st\). \\\\
+\(\phi\) is a surjection so it suffices to show \(x\in ST\) \(\Longrightarrow\) \(|\phi^{-1}(x)|=|S\cap T|\).\\\\
+Let \(U=\{(sd,d^{-1}t):d\in S\cap T\}\) where \(st=x\). Clearly, \(U\subseteq \phi^{-1}(x)\). Let \((s,t),(\sigma,\tau)\in\phi^{-1}(x)\).\\\\
+Then \(st=x=\sigma\tau\) \(\Longrightarrow\) \(s^{-1}\sigma=t\tau^{-1}\in S\cap T\) \(\Longrightarrow\) \((\sigma,\tau)=(ss^{-1}\sigma,\tau t^{-1}t)=(s(s^{-1}\sigma), (s^{-1}\sigma)^{-1}t)\)\\\\
+Therefore \(\phi^{-1}(x)\subseteq U\) and \(\phi^{-1}(x)=U\) so \(|S||T|=|ST||S\cap T|\).
+\end{redrules}
+A subgroup \(K\le G\) is a \textbf{normal subgroup}, denoted by \(K\vartriangleleft G\), if \(\forall g\in G\;gKg^{-1}=K\).\\\\
+\(K\le G\) and \(\forall g\in G\;(gKg^{-1}\le K)\) \(\Longrightarrow\) \(g^{-1}Kg\le K\) \(\Longrightarrow\) \(K\le gKg^{-1}\) \(\Longrightarrow\) \(K\vartriangleleft G\)\\\\
+\(K\le G\) and \(\forall g\in G\;(Kg=gK)\) \(\Longleftrightarrow\) \(K=Kgg^{-1}=gKg^{-1}\) \(\Longleftrightarrow\) \(K\vartriangleleft G\)\\\\
+\(a\in ker(f)\) \(\Longrightarrow\) \(f(gag^{-1})=f(g)f(a)f(g)^{-1}=f(g)f(g)^{-1}=1\) \(\Longrightarrow\) \(gag^{-1}\in ker(f)\) \(\Longrightarrow\) \(ker(f)\vartriangleleft G\)\\\\
+If \(x\in G\) a \textbf{conjugate} of \(x\) in \(G\) is an element of the form \(axa^{-1}\) for some \(a\in G\).\\\\
+\(x\) and \(y\) are conjugate if \(y=\gamma_{a}(x)\) for some \(a\in G\).\\\\
+For example, if \(k\) is a field,  \(A\) and \(B\) in \(GL(n,k)\) are conjugate \(\Longleftrightarrow\) they are similar.
+\begin{siderules}\color{blue}\textit{EXERCISES}\color{black}\\\\
+\color{blue}1. \(S\le G\) \(\Longrightarrow\) \(SS=S\); \(|S|\in \mathbb{N}\land SS=S\) \(\Longrightarrow\) \(S\le G\); Give an example to show the converse may be false when \(S\) is infinite.\\\\\color{black}
+\null\qquad If \(S\le G\), clearly \(SS\subseteq S\); moreover \(S=S1\subseteq SS\). For the converse, \(\forall a,b\in S\; (ab\in S)\);\\\\
+\null\qquad \(\forall a\neq b\neq c\in S\) if \(ab=ac\), \(a\in G\) \(\Longrightarrow\) \(a^{-1}\in G\) \(\Longrightarrow\) \(a^{-1}ab=a^{-1}ac\) \(\Longrightarrow\) \(b=c\)\\\\
+\null\qquad Therefore \(\forall a,b,c\in S\; (ab\neq ac)\) \(\Longrightarrow\) if \(S\) is finite, \(\forall x\in S\; (Sx=S)\) \(\Longrightarrow\) \(\forall x\in S\; (x^{-1}\in S)\)\\\\
+\null\qquad Example: \(\mathbb{N}\) in additive group of \(\mathbb{Z}\) \color{gray}I just saw corollary 2.4 :(\color{black}\\\\
+\color{blue}2. Let \(\{S_{i}:i\in I\}\)\ s.t. \(S_{i}\le G\) and let \(D=\bigcap S_i\). Prove that either \(\bigcap S_{i}t_{i}=\varnothing\) or \(\bigcap S_{i}t_{i}=Dg\) for some \(g\).\color{black}\\\\
+\null\qquad Let \(x\in\bigcap S_{i}t_{i}\). \(x\in Dg\) for some \(g\) and only \(S_{i}g\supseteq Dg\) so \(\bigcap S_{i}t_{i}=\bigcap S_{i}g=Dg\).\\\\
+\null\qquad \(\therefore \bigcap S_{i}t_{i}\neq \varnothing\) \(\Longrightarrow\) \(\bigcap S_{i}t_{i}=Dg\)\\\\
+\color{blue}3. If \(S,T\le G\), then an \textbf{\(S\)-\(T\)-double coset} is a subset of \(G\) in the form \(SgT\) where \(g\in G\).
+Prove that the family of all (\(S\)-\(T\))-double cosets partitions \(G\).\\\\\color{black}
+\null\qquad Define \(a\equiv b\) if \(\exists s\in S\;\exists t\in T\;(b=sat)\). \(a=1a1\); \(b=sat\) \(\Longrightarrow\) \(a=s^{-1}bt^{-1}\);\\\\
+\null\qquad \(b=s_{1}at_{1}\land c=s_{2}bt_{2}\) \(\Longrightarrow\) \(c=s_{2}s_{1}at_{1}t_{2}\). Therefore it is an equivalence relation.\\\\
+\color{blue}4. Let \(S,T\le G\) where \(G\) is a finite group and \(G=\bigcup_{i=1}^{n}Sg_{i}T\). Prove that \([G:T]=\sum_{i=1}^{n}[S:S\cap g_{i}Tg_{i}^{-1}]\).\\\\\color{black}
+\null\qquad From product formula, \(\sum_{i=1}^{n}|S|/|S\cap g_{i}Tg_{i}^{-1}|=\sum_{i=1}^{n}|Sg_{i}Tg_{i}^{-1}|/|g_{i}Tg_{i}^{-1}|=1/|T|\sum_{i=1}^{n}|Sg_{i}Tg_{i}^{-1}|\)\\\\
+\null\qquad \(=1/|T|\sum_{i=1}^{n}|Sg_{i}T|=|G|/|T|=[G:T]\)\\\\
+\color{blue}5. (i) \textbf{(H. B. Mann)} Let \(G\) be a finite group and \(S,T\) be nonempty subsets. Prove that either \(G=ST\) or \(|G|\ge |S|+|T|\).\color{black}\\\\
+\null\qquad If \(G=ST\), \(\exists x\) s.t. \(st\neq x\). \(\forall a\in G\;\exists b\in G\) s.t. \(ab=x\) and all the \(b\)s cover \(G\).\\\\
+\null\qquad \(\therefore\) For each of the \(|G|\) pairs \((a,b)\), \(a\in S\land b\in T\) is false. \(\therefore |S|+|T|\le|G|+|G|-|G|=|G|\)\\\\
+\color{blue}(ii) Prove that every element in a finite field \(F\) is a sum of two squares.\\\\\color{black}
+\null\qquad \(\forall a\in F\) s.t. \(a\neq 0\) there is at most 2 solutions to \(x^{2}=a\).\\\\
+\null\qquad Therefore there is at most \(\lceil(|F|-1|)/2\rceil+1>|F|/2\) squares.\\\\
+\null\qquad Since number of squares\(\times 2>|F|\), the sum of two squares cover \(F\) by \color{gray}(i)\color{black}.\\\\
+\color{blue}6. If \(S\le G\) and \([G:S]=2\), then \(S\vartriangleleft G\).\\\\\color{black}
+\null\qquad Let \(x\in G\) s.t. \(x\notin S\). If \(sxtx\in Sx\) for some \(s,t\in S\), \(sxt\in S\) but \((Sx)S=(xS)S=xS=Sx\).\\\\
+\null\qquad \(\therefore SxSx=S\). If \(g\in S\), \(gSg^{-1}=S\). Else, \(gSg^{-1}\subseteq SxSSx=SxSx=S\).\\\\
+\color{blue}7. If \(G\) is abelian, then every subgroup of \(G\) is nromal. The converse is false: show that the group of order \(8\) in \color{gray}exercise 2.3.1 \color{black} is a counterexample.\\\\\color{black}
+\null\qquad \(\forall g\in G\) and some \(S\le G\), \(gSg^{-1}=gg^{-1}S=S\);\\\\
+\null\qquad \(g=\begin{bmatrix}0&i\\i&0\end{bmatrix}\), \(g(\left(\begin{bmatrix}1&0\\0&1\end{bmatrix},\begin{bmatrix}-1&0\\0&-1\end{bmatrix}\right)g^{-1}=\left(\begin{bmatrix}1&0\\0&1\end{bmatrix}\right)\)\\\\
+\color{blue}8. If \(H\le G\), then \(H\vartriangleleft G\) \(\Longleftrightarrow\) \(\forall x,y\in G\;(xy\in H\) \(\Longleftrightarrow\) \(yx\in H)\).\\\\\color{black}
+\null\qquad \(Hy^{-1}y=H\) and \(xy\in H\) and \(\{Hg:g\in G\}\) disjoint \(\Longrightarrow\) \(x\in Hy^{-1}\) \(\Longrightarrow\) \(yx\in yHy^{-1}\)\\\\
+\null\qquad \(\therefore H\vartriangleleft G\) \(\Longrightarrow\) \(yx\in yHy^{-1}= H\)\\\\
+\null\qquad Fix \(y\in G\). For the \(|H|\) \(x\)s s.t. \(xy\in H\), there are \(|H|\) elements \(yx\in yHy^{-1}\).\\\\
+\null\qquad However all of them is in \(H\) \(\Longrightarrow\) \(\forall y\;(yHy^{-1}\le H)\) \(\Longrightarrow\) \(H\vartriangleleft G\)\\\\
+\color{blue}9. If \(K\le H\le G\) and \(K\vartriangleleft G\), then \(K\vartriangleleft H\).\\\\\color{black}
+\null\qquad \(\forall g\in G\;(gKg^{-1}=K)\) \(\Longrightarrow\) \(\forall h \in H\;(hKh^{-1}=K)\)\\\\
+\color{blue}10. \(S\vartriangleleft G\) \(\Longleftrightarrow\) \((s\in S\) \(\Longrightarrow\) every conjugate of \(s\) in \(S\) (equivalently \(\gamma(S)\le S\))).\color{black}\\\\
+\null\qquad By definition\\\\
+\color{blue}11. Prove that \(SL(n,k)\vartriangleleft GL(n,k)\)\color{black}\\\\
+\null\qquad For \(s\in SL(n,k)\) and \(g\in GL(n,k)\), \(\det(gsg^{-1})=\det(g)\det(s)\det(g^{-1})=\det(g)\det(g)^{-1}=1\)\\\\
+\color{blue}12. Prove that \(A_{n}\vartriangleleft S_{n}\) for every \(n\).\\\\\color{black}
+\null\qquad \([A_{n}:S_{n}]=2\) so by \color{gray}(6)\color{black} \(A_{n}\vartriangleleft S_{n}\)\\\\
+\color{blue}13. (i) The intersection of any family of normal subgroups of a group \(G\) is itself a normal subgroup of \(G\). If \(X\) is a subset of \(G\), then there is a 
+smallest normal subgroup of \(G\) which contains \(X\) called the \textbf{normal subgroup generated by \(X\)}, \(\langle X\rangle^{G}\)\color{black}\\\\
+\null\qquad Intersection of subgroups is a subgroup; \(\forall g\in G\), \(\forall s\in\bigcap S_{i}\) and \(\forall S_{i}\), \(gsg^{-1}\in S_{i}\) \(\therefore gsg^{-1}\in\bigcap S_{i}\)\\\\
+\null\qquad The smallest normal subgroup which contains \(X\) is the intersection of all subrgoup that contains \(X\) and \(G\) is also a normal subgroup.\\\\
+\color{blue}(ii) \(X=\varnothing\) \(\Longrightarrow\) \(\langle X\rangle^{G}=1\) else \(\langle X\rangle^{G}\) is the set of all words on conjugates of elements in \(X\).\\\\\color{black}
+\null\qquad Every normal subgroup that contains \(X\) must contain \(\langle X \cup g_{1}Xg_{1}^{-1}\cup...\cup g_{n}Xg_{n}^{-1} \rangle\)\\\\
+\null\qquad And it is a normal group because \(gg_{1}x_{1}g_{1}^{-1}g_{2}x_{2}g_{2}^{-1}...g_{n}xg_{n}^{-1}g^{-1}=g_{1}'x_{1}g_{1}^{-1}g_{2}x_{2}g_{2}^{-1}...g_{n}x_{n}g_{n}^{-1}\)\\\\
+\null\qquad \(=g_{1}'x_{1}g_{1}'^{-1}gg_{2}x_{2}g_{2}^{-1}...g_{n}x_{n}g_{n}^{-1}=g_{1}'x_{1}g_{1}'^{-1}g_{2}'x_{2}g_{2}'^{-1}...g_{n}'x_{n}g_{n}'^{-1}\)\\\\
+\color{blue}(iii) If \(gxg^{-1}\in X\) for all \(x\in X,g\in G\), then \(\langle X\rangle=\langle X\rangle^{G}\vartriangleleft G\).\\\\\color{black}
+\null\qquad\(\langle X\rangle\ni x_{1}...x_{n}=g_{1}x_{1}'g_{1}^{-1}...g_{n}x_{n}g_{n}^{-1}\in \langle X\rangle^{G} \therefore \langle X\rangle=\langle X\rangle^{G}\vartriangleleft G\)\\\\
+\color{blue}14. If \(H,K\vartriangleleft G\) then \(H\lor K\vartriangleleft G\).\\\\\color{black}
+\null\qquad Proved like \color{gray}(13 (ii))\color{black}\\\\
+\color{blue}15. Prove that if a normal subgroup \(H\) of \(G\) has index \(n\), then \(g^{n}\in H\) for all \(g\in G\). Give an exmaple to show this may be false when H is not normal.\\\\\color{black}
+\null\qquad Fix \(g\in G\). Then \(G\) can be parititioned into disjoint sets \(G=\bigcup^{x}_{i=1} \langle g\rangle s_{i} H\) \((s_{i}\in G)\) \color{gray}(3.)\color{black}.\\\\
+\null\qquad \(x=|G|/(|\langle g\rangle||H|)\) \(\Longrightarrow\) \(x|\langle g\rangle|=[G:H]\) \(\Longrightarrow\) \(g^{n}=1\in H\) for all \(g\in G\)
+\end{siderules}
+\subsection {Quotient Groups}
+\begin{redrules}\color{red}
+\textbf{Theorem 2.21} \textit{If \(N\vartriangleleft G\), then the cosets of \(N\) in \(G\) form a group, denoted by \(G/N\) or order \([G:N]\).}\\\\\color{black}
+\textit{Proof.} \(NaNb=Na(a^{-1}Na)b=NNab=Nab\); identity is \(N\) and inverse of \(Na\) is  \(Na^{-1}\)
+\end{redrules}
+\begin{greenrules}\color{OliveGreen}
+\textbf{Corollary 2.22} \textit{If \(N\vartriangleleft G\), then the \textbf{natural map} (\(\nu:G\to G/N\) defined by \(\nu(a)=Na\)) is a surjective homomorphism with kernel \(N\).}\\\\\color{black}
+\textit{Proof.} Clearly \(\nu\) is a homomorphism; \(Na\in G/N\) \(\Longrightarrow\) \(Na=\nu(a)\) so \(\nu\) is surjective; \(\ker\nu=N\)
+\end{greenrules}
+If \(a,b\in G\), the \textbf{commutator} of \(a\) and \(b\), denoted by \([a,b]\), is \(aba^{-1}b^{-1}\).\\\\
+The \textbf{commutator subgroup} or derived subgroup of \(G\), denoted \(G'\), is the subgroup of \(G\) generated by all the commutators.
+\begin{redrules}\color{red}
+\textbf{Theorem 2.23} \textit{\(G'\vartriangleleft G\); if \(H\vartriangleleft G\), then \(G/H\) is abelian \(\Longleftrightarrow\) \(G'\le H\).}\\\\\color{black}
+\textit{Proof.} If \(f:G\to G\) is a homomorphism, then \(f(G')\le G'\) because \(f([a,b])=[f(a),f(b)]\). From \color{gray}(2.4.10)\color{black}, \(\gamma(G')\le G'\) \(\Longrightarrow\) \(G'\vartriangleleft G\)\\\\
+If \(G/H\) abelian, then \(HaHb=HbHa\) \(\Longrightarrow\) \(Hab=Hba\) \(\Longrightarrow\) \(Haba^{-1}b^{-1}=H\) therefore every commutator should be in \(H\) which implies \(G'\le H\) (because \(H\) is a group)\\\\
+If \(G'\le H\), then \(Haba^{-1}b^{-1}=H\) \(\Longrightarrow\) \(Hab=Hba\) \(\Longrightarrow\) \(HaHb=HbHa\)
+\end{redrules}
+\begin{siderules}\color{blue}\textit{EXERCISES}\color{black}\\\\
+\color{blue}1. Let \(H\vartriangleleft G\), \(\nu:G\to G/H\) be the natural map, and \(x\subset G\) s.t. \(\langle \nu(X)\rangle=G/H\). Prove that \(G=\langle H\cup X\rangle\).\\\\\color{black}
+\(\nu(X)\) generates all cosets of \(H\) \(\Longrightarrow\) \(X\) generates all the representatives; \(\therefore\) \(X\cup H\) generates \(G\)\\\\
+\color{blue}2. Let \(G\) be a finite group of odd order, and let \(x\) be the product of all elements in some order. Prove that \(x\in G'\).\color{black}\\\\
+Let \(x=a_{1}...a_{n}\). To move \(a_{j}\) to position \(i\), where \(i<j\), one can do the following: \\\\
+\(x[(a_{j}...a_{n})^{-1}, (a_{i}...a_{j-1})^{-1}]=(a_{1}...a_{i-1})(a_{i}...a_{j-1})(a_{j}...a_{n})(a_{j}...a_{n})^{-1}(a_{i}...a_{j-1})^{-1}(a_{j}...a_{n})(a_{i}...a_{j-1})\)\\\\
+\(=a_{1}...a_{i-1}a_{j}...a_{n}a_{i}...a_{j-1}\)\\\\
+Therefore, one can apply the procedure in increasing \(i\) to sort \(x\) into the form \(a_{1}a_{1}^{-1}a_{2}a_{2}^{-1}...=1\)\\\\
+Since multiplying by commutators ended up with \(1\), \(x\) itself must be in \(G'\).\\\\
+\color{blue}3. For any group \(G\), show that \(G'\subseteq\{a_{1}a_{2}...a_{n}a_{1}^{-1}a_{2}^{-1}...a_{n}^{-1}\}\)\color{black}\\\\
+\([a,b][c,d][e,f]...=aba^{-1}b^{-1}cdc^{-1}d^{-1}efe^{-1}f^{-1}...a^{-1}ab^{-1}bc^{-1}cd^{-1}de^{-1}ef^{-1}f...\)\\\\
+\(=(a)(ba^{-1})(b^{-1})(c)(dc^{-1})(d^{-1})(e)(fe^{-1})(f^{-1})...(a^{-1})(ba^{-1})^{-1}(b)(c^{-1})(dc^{-1})^{-1}(d)(e^{-1})(fe^{-1})^{-1}(f)...\)\\\\
+\color{blue}4. (i) Let \(k[x,y]\) denote the ring of all polynomials in 2 variables over a field \(k\); let \(k[x]\) and \(k[y]\) denote subrings of all polynomials in \(x\) and \(y\). Define \(G\) to be the set of all matrices of the form 
+\[A=\begin{bmatrix}1&f(x)&h(x,y)\\0&1&g(y)\\0&0&1\end{bmatrix}\] where \(f(x)\in k[x],g(y)\in k[y],h(x,y)\in k[x,y]\). Prove that \(G\) is a multiplicative group and \(G'\) consists of all those matrices for which \(f(x)=g(y)=0\).\color{black}\\\\
+\[\begin{bmatrix}1&f&h\\0&1&g\\0&0&1\end{bmatrix}\begin{bmatrix}1&f'&h'\\0&1&g'\\0&0&1\end{bmatrix}=\begin{bmatrix}1&f+f'&h+h'+fg'\\0&1&g+g'\\0&0&1\end{bmatrix}\]
+\[\begin{bmatrix}1&f&h\\0&1&g\\0&0&1\end{bmatrix}\begin{bmatrix}1&-f'&-h'+f'g'\\0&1&-g'\\0&0&1\end{bmatrix}=\begin{bmatrix}1&f-f'&h-h'+f'g'-fg'\\0&1&g-g'\\0&0&1\end{bmatrix}\in G\]
+\[[A,A']=\begin{bmatrix}1&f&h\\0&1&g\\0&0&1\end{bmatrix}\begin{bmatrix}1&f'&h'\\0&1&g'\\0&0&1\end{bmatrix}\begin{bmatrix}1&-f&-h+fg\\0&1&-g\\0&0&1\end{bmatrix}\begin{bmatrix}1&-f'&-h'+f'g'\\0&1&-g'\\0&0&1\end{bmatrix}\]
+\(\therefore [A,A']_{1,2}=f+f'-f-f'=0\) and \([A,A']_{2,3}=g+g'-g-g'=0\) so \(G'\subseteq\{f,g=0\}\)
+\[\left[\begin{bmatrix}1&f&0\\0&1&0\\0&0&1\end{bmatrix},\begin{bmatrix}1&0&0\\0&1&g\\0&0&1\end{bmatrix}\right]=\begin{bmatrix}1&f&0\\0&1&0\\0&0&1\end{bmatrix}\begin{bmatrix}1&0&0\\0&1&g\\0&0&1\end{bmatrix}\begin{bmatrix}1&-f&0\\0&1&0\\0&0&1\end{bmatrix}\begin{bmatrix}1&0&0\\0&1&-g\\0&0&1\end{bmatrix}\]
+\[=\begin{bmatrix}1&f&fg\\0&1&g\\0&0&1\end{bmatrix}\begin{bmatrix}1&-f&fg\\0&1&-g\\0&0&1\end{bmatrix}=\begin{bmatrix}1&0&fg\\0&1&0\\0&0&1\end{bmatrix}\]
+\[\therefore\text{ if }h=\sum_{i,j}a_{i,j}x^{i}y^{j}\text{ then }\begin{bmatrix}1&0&h\\0&1&0\\0&0&1\end{bmatrix}=\prod_{i,j}\left[\begin{bmatrix}1&a_{i,j}x^{i}&0\\0&1&0\\0&0&1\end{bmatrix},\begin{bmatrix}1&0&0\\0&1&y_{j}\\0&0&1\end{bmatrix}\right]\text{ so }\{f,g=0\}\subseteq G'\]
+\color{blue}(ii) If \(\begin{bmatrix}1&0&h\\0&1&0\\0&0&1\end{bmatrix}\) is a commutator, then there are polynomials \(f(x),f'(x),g(y),g'(y)\) s.t. \(h=fg'-f'g\).\color{black}
+\[[A,A']=\begin{bmatrix}1&f&h\\0&1&g\\0&0&1\end{bmatrix}\begin{bmatrix}1&f'&h'\\0&1&g'\\0&0&1\end{bmatrix}\begin{bmatrix}1&-f&-h+fg\\0&1&-g\\0&0&1\end{bmatrix}\begin{bmatrix}1&-f'&-h'+f'g'\\0&1&-g'\\0&0&1\end{bmatrix}\]
+\[=\begin{bmatrix}1&f+f'&h+h'+fg'\\0&1&g+g'\\0&0&1\end{bmatrix}\begin{bmatrix}1&-f-f'&-h-h'+fg+f'g'+fg'\\0&1&-g-g'\\0&0&1\end{bmatrix}=\begin{bmatrix}1&0&fg'-f'g\\0&1&0\\0&0&1\end{bmatrix}\]
+\color{blue}(iii) Show that \(h(x,y)=x^{2}+xy+y^{2}\) does not possess a decomposition as in \color{gray}(ii)\color{blue}, and that \(\begin{bmatrix}1&0&x^{2}+xy+y^{2}\\0&1&0\\0&0&1\end{bmatrix}\) is not a commutator.\color{black}\\\\
+Let \(f(x)=\sum_{i=1}^{\infty}a_{i}x^{i},f'(x)=\sum_{i=1}^{\infty}b_{i}x^{i}\). Since \(h=fg'-f'g\), 
+\[\begin{cases}b_{0}g'(y)-c_{0}g(y)=0+0y+y^{2}\\b_{1}g'(y)-c_{1}g(y)=0+y+0y^{2}\\b_{2}g'(y)-c_{2}g(y)=1+0y+0y^{2}\end{cases}\]
+It is impossible that 3 linear combinations of 2 vectors to be orthogonal. Therefore it is not a commutator.
+\end{siderules}
+\subsection{The Isomorphism theorems}
+There are 3 theorems formulated by E. Noether that desctibes the relationship between quotient groups, normal subgroups and homomorphisms. 
+Analogues of them are true for most types of algebraic systems such as semigroups, rings, vector spaces, modules and operator groups.\\\\
+\begin{redrules}\color{red}
+\textbf{Theorem 2.24 (First Isomorphism Theorem)} \textit{Let \(f:G\to H\) be a homomorphism with kernel \(K\). Then \(K\vartriangleleft G\) and \(G/K\cong \im f\)}.\\\\\color{black}
+\textit{Proof.} Define \(\varphi: G/K\to H\) by \(\varphi(Ka)=f(a)\). To see that it is well-defined, assume \(Ka=Kb\) \(\Longleftrightarrow\)\\\\ \(ab^{-1}\in K\) \(\Longleftrightarrow\) \(1=f(ab^{-1})=f(a)f(b)^{-1}\) \(\Longleftrightarrow\) \(f(a)=f(b)\) \(\Longleftrightarrow\) \(\varphi(Ka)=\varphi(Kb)\)\\\\
+\(\varphi\) is a homomorphism: \(\varphi(KaKb)=\varphi(Kab)=f(ab)=f(a)f(b)=\varphi(Ka)\varphi(Kb)\). \(\im\varphi=\im f\).\\\\
+Finally, \(\varphi\) is an injection: \(\varphi(Ka)=\varphi(Kb)\) \(\Longrightarrow\) \(Ka=Kb\) from above. So \(\varphi\) is an isomorphism.
+\begin{center}
+\begin{tikzcd}[column sep=tiny]
+    G\arrow[dr, "\nu"']\arrow[rr, "f"]&&H\\
+    &G/K\arrow[ur, "\varphi"']&
+\end{tikzcd}
+\end{center}
+\end{redrules}
+\begin{greenrules}\color{OliveGreen}
+\textbf{Lemma 2.25} \textit{If \(S,T\le G\) and one of them is normal, then \(ST=S\lor T=TS\)}\\\\\color{black}
+\textit{Proof.} Clearly \(ST,TS\subseteq S\lor T\); If \(ST\) is a group, then \(S\lor T\subseteq ST\) by definition.\\\\
+Assume \(T\vartriangleleft G\). \((s_{1}t_{1})(s_{2}t_{2})^{-1}=s_{1}s_{2}^{-1}s_{2}t_{1}t_{2}^{-1}s_{2}^{-1}=s_{1}s_{2}^{-1}t_{3}\in ST\)\\\\
+Similarly, \(TS\le G\) so \(ST=S\lor T=TS\).
+\end{greenrules}
+\begin{redrules}\color{red}
+\textbf{Theorem 2.26 (Second Isomorphism Theorem)} \textit{Let \(N\vartriangleleft G,T\le G\). Then \(N\cap T\vartriangleleft T\) and \(T/(N\cap T)\cong (NT)/N\).}\\\\\color{black}
+\textit{Proof.}  Let \(\nu:G\to G/N\) be the natural map. Since \(\ker(\nu|_{T})=N\cap T\),\\\\
+first isomorphism theorem gives \(N\cap T\vartriangleleft T\) and \(T/(N\cap T)\cong \im(\nu|_{T})\).\\\\
+\(\im(\nu|_{T})\) is the family of all cosets of \(N\) having a representative in \(T\), or \((NT)/N\).
+\begin{center}
+\begin{tikzcd}
+    &NT\ar[dl, dash, "\vartriangleleft"]\ar[dr, dash]&\\
+    N\ar[dr, dash]&&T\ar[dl, dash, "\vartriangleleft"]\\
+    &N\cap T&
+\end{tikzcd}
+\end{center}
+\end{redrules}
+\begin{redrules}\color{red}
+\textbf{Theorem 2.27 (Third Isomorphism Theorem)} \textit{Let \(K\le H\le G\) where \(K,H\vartriangleleft G\). Then \(H/K\vartriangleleft G/K\) and \((G/K)/(H/K)\cong G/H\).}\\\\\color{black}
+\textit{Proof.} Define \(f:G/K\to G/H\) by \(f(Ka)=Ha\) (well-defined because \(K\le H\)).\\\\
+\(\ker f\) is the cosets of \(K\) in \(H\). By first isomorphism theorem, \(H/K\vartriangleleft G/K\) and \((G/K)/(H/K)\cong G/H\).
+\end{redrules}
+\begin{siderules}\color{blue}\textit{EXERCISES}\color{black}\\\\
+\color{blue}1. Prove that homomorphism \(f:G\to H\) is an injection \(\Longleftrightarrow\) \(\ker f=1\).\\\\\color{black}
+\(f\) injection \(\Longleftrightarrow\) \(\im\cong H\cong G\) \(\Longleftrightarrow\) \(G\cong G/K\) \(\Longleftrightarrow\) \(K=1\)
+\color{blue}2. (i) Show that \(\mathbf{V}\vartriangleleft S_{4}\).\color{black}\\\\
+There exists homomorphism \(f:S_{4}\to S_{3}\) with kernel \(\mathbf{V}\) \(\Longrightarrow\) \(\mathbf{V}\vartriangleleft S_{4}\).\\\\
+\color{blue}(ii) If \(K=\langle (1\;2)(3\;4)\rangle\) show that \(K\vartriangleleft\mathbf{V}\) but \(K\not\vartriangleleft S_{4}\). Conclude that normality need not be transitive.\\\\\color{black}
+K consists of 2 elements so by \color{gray}(2.4.6) \color{black} \(K\vartriangleleft \mathbf{V}\). \((1\;3)(1\;2)(3\;4)(1\;3)=(1\;4)(2\;3)\notin K\).\\\\
+\color{blue}3. Let \(N\vartriangleleft G\) and \(f:G\to H\) be a homomorphism whose kernel contains \(N\). 
+Show that \(f\) induces a homomorphism \(f_{*}:G/N\to H\) by \(f_{*}(Na)=f(a)\).\\\\\color{black}
+\(Na=Nb\) \(\Longleftrightarrow\) \(ab^{-1}\in N\subseteq\ker f\) \(\Longleftrightarrow\) \(1=f(ab^{-1})=f(a)f(b)^{-1}\) \(\Longleftrightarrow\) \(f(a)=f(b)\) \(\Longleftrightarrow\) \(f_{*}(Na)=f_{*}(Nb)\)\\\\
+\(\therefore\) \(f\) is well-defined and injective. Clearly \(f\) is a homomorphism.\\\\
+\color{blue}4. If \(S,T\le G\) then \(ST\le G\) \(\Longleftrightarrow\) \(ST=TS\).\\\\\color{black}
+\(sT=Ts\) \(\Longrightarrow\) \(sTs^{-1}=T\); \(s_{1}t_{1}(s_{2}t_{2})^{-1}=s_{1}s_{2}^{-1}s_{2}t_{1}t_{2}^{-1}s_{2}^{-1}=s_{1}s_{2}^{-1}t_{3}\). \(\therefore ST=TS\) \(\Longrightarrow\) \(ST\le G\).\\\\
+If \(ST\le G\), \(s_{1}t_{1}t_{2}^{-1}s_{2}^{-1}=s_{3}t_{3}\) \(\Longrightarrow\) \(t_{2}^{-1}s_{2}^{-1}=t_{1}^{-1}s_{1}^{-1}s_{3}t_{3}\) \(\Longrightarrow\) \(t_{5}s_{5}=t_{4}s_{4}(t_{6}s_{6})^{-1}\) \(\Longrightarrow\) \(TS\le G\).\\\\
+By \color{gray}Lemma 2.25\color{black}, \(ST=S\lor T=TS\).\\\\
+\color{blue}5. \textbf{(Modular Law)} Let \(A,B,C\le G\) and \(A\le B\). If \(A\cap C=B\cap C\) and \(AC=BC\), then \(A=B\).\\\\\color{black}
+\(|A||C|=|AC||A\cap C|=|BC||B\cap C|=|B||C|\) so \(|A|=|B|\) and \(A\le B\) therefore \(A=B\).\\\\
+\color{blue}6. \textbf{(Dedekind Law)} Let \(H,K,L\le G\) with \(H\le L\). Then \(HK\cap L=H(K\cap L).\\\\\)\color{black}
+\(\forall h\in H\), \(h(K\cap L)=h(K\cap h^{-1}L)=hK\cap L\); \(\therefore H(K\cap L)=HK\cap L\).\\\\
+\color{blue}7. Let \(f:G\to G^{*}\) be a homomorphism and \(S^{*}\le G^{*}\). Then \(\ker f\subseteq \{x\in G:f(x)\in S^{*}\}\le G\).\\\\\color{black}
+For \(x,y\) in the set, \(f(xy^{-1})=f(x)f(y)^{-1}\in S^{*}S^{*}=S^{*}\) so \(xy^{-1}\) is also in the set.\\\\
+Therefore it is a subgroup, and \(\ker f\) is clearly contained.
+\end{siderules}
+\subsection{Correspondance theorem}
+This theorem should be called the fourth isomorphism theorem. Let \(X\) and \(X^{*}\) be sets. A function \(f:X\to X^{*}\) induces a forward and a backward motion between subsets of \(X\) and subsets of \(X^{*}\). \\\\
+Forward motion assigns \(S\subseteq X\) the subset \(f(S)=\{f(s):s\in S\}\) of \(X^{*}\); backward motion assigns \(S^{*}\subseteq X^{*}\) the subset \(f^{-1}(S^{*})=\{x\in X:f(x)\in S^{*}\}\) of \(X\).\\\\
+If \(f\) is a surjection, these motions define a bijection between all subsets of \(X^{*}\) and certain subsets of \(X\).\\\\
+\begin{redrules}\color{red}
+\textbf{Theorem 2.28 (Correspondance Theorem)} \textit{Let \(K\vartriangleleft G\) and \(\nu:G\to G/K\) be the natural map. Then \(S\mapsto\nu(S)=S/K\) 
+is a bijection from the family of all subgroups \(S\le G\) which contain \(K\) to the family of all the subgroups of \(G/K\).\\
+If we denote \(S/K\) by \(S^{*}\), then:\\
+\(T\le S\) \(\Longleftrightarrow\) \(T^{*}\le S^{*}\), and then \([S:T]=[S^{*}:T^{*}]\);\\
+\(T\vartriangleleft S\) \(\Longleftrightarrow\) \(T^{*}\vartriangleleft S^{*}\), and then \(S/T\cong S^{*}/T^{*}\)}\\\\\color{black}
+\textit{Proof.} We show first that \(S\mapsto S/K\) is an injection: \(S/K=T/K\) \(\Longrightarrow\) \(S=T\).
+\end{redrules}
+\end{document}
