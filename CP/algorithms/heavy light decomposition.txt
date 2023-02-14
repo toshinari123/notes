@@ -1,0 +1,23 @@
+dfs 1: calculate subtree sizes and label heavy nodes
+
+par[n]: parent of node i
+
+heavy[n]: node that is heavy
+
+depth[n]: depth of node i
+
+size[n]: size of subtree of node i
+
+dfs 2: decompose the tree into disjoint paths
+
+head[n]: the head of the chain node i is in
+
+pos[n]: the position of node i in segment tree
+
+NP1313
+
+FUCK
+
+https://cp-algorithms.com/graph/hld.html
+
+https://www.geeksforgeeks.org/heavy-light-decomposition-set-2-implementation/

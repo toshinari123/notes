@@ -1,0 +1,9 @@
+dimensions:
+
+the position
+
+the last character
+
+length of consecutive characters
+
+position in target string

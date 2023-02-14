@@ -1,0 +1,43 @@
+all-pairs shortest path
+
+problem:
+
+directed graph with weighted edges, no source vertex
+
+also no negative cost cycle (report if it has)
+
+can use n single source shortest path subroutines
+
+running time:
+
+if non-negative edge costs: O(n m log n)
+
+    if sparse: O(n^2 log n)
+
+    if dense: O(n^3 log n)
+
+if can be negative, bellman-ford O(n^2 m)
+
+    if sparse: O(n^3)
+
+    if dense: O(n^4)
+
+transitive closure of a binary relation (all-pairs reachability)
+
+optimal substructure:
+
+can be tricky to define ordering on subproblems in graph problems
+
+key idea:
+
+order the vertices arbitratily. V = {1, 2, 3, ..., n}
+
+V[k] = {1, 2, 3, ..., k}
+
+Fix source i and destination j, k.
+
+Let P = shortest i-j path with all internal nodes in V[k]. (internal nodes: nodes on the path excluding i and j)
+
+case 1: if k is not used as an internal node, P is also shortest i-j path with V[k-1]
+
+case 2: if k is used, P1 is the shortest i-k path with V[k-1] and P2 is the shortest k-j path V[k-1]

@@ -1,0 +1,50 @@
+//gap is always a power of 2
+//sa[] = suffices sorted in order by first [gap] chars
+//pos[] = 'buckets' of same [gap] chars
+
+int sa[maxn], pos[maxn], temp[maxn], gap;
+bool cmp(int i, int j){ 				//compare two suffices
+	if (pos[i] != pos[j]) return pos[i] < pos[j];	//different buckets, just compare buckets
+	i += gap, j += gap;				//same buckets, compare the next [gap] chars
+	if (i < n && j < n) return pos[i] < pos[j];	//both in bound, compare the buckets of the next [gap] chars
+	return i > j;					//out of bound, just compare position in s because thats same as comparing the length of the suffix (and shorter length goes first)
+}
+void build(){
+	for (int i = 0; i < n; i++) sa[i] = i, pos[i] = s[i];					//initialize (pos[i] = s[i] is just some trick)
+	for (gap = 1; ; gap <<= 1){								//for gaps of powers of 2
+		sort(sa, sa + n, cmp);								//sort
+		for (int i = 0; i < n - 1; i++) temp[i + 1] = temp[i] + cmp(sa[i], sa[i + 1]);	//computing the next pos[]
+		for (int i = 0; i < n; i++) pos[sa[i]] = temp[i];				//assigning
+		if (temp[n - 1] == n - 1) break;						//break if there are n buckets, everything already sorted
+	}
+}
+
+
+
+
+
+
+example problems:
+
+find minimum lexicographic rotation
+
+    concatenate 2 of the same string, build suffix array
+
+find longest substring that appears at least k times
+
+    build suffix array, compute longest common prefix of i to i + k - 1 by using sparse table and the fact that 
+    lps(x, y) = min(lps(x, x + 1), lps(x + 1, x + 2), ..., lps(y - 1, y))
+
+find number of distinct substrings
+
+    build suffix array, find longest common prefix of consecutive suffixes
+
+
+
+binary search in suffix array:
+
+since its just a sorted lists of suffixes, can binary search, but if we do it naively, it will be O(n log n) 
+because we need to compare individual strings
+
+we can find the range of suffixes with common prefix using binary search
+

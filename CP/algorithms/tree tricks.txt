@@ -1,0 +1,13 @@
+find kth ancestor in O(log k) time
+
+anc[n][log n]: (2 ^ j)th ancestor of ith node
+
+anc[i][j] = anc[anc[i][j - 1]][j - 1]              wow
+
+change k to binary number
+
+https://blog.csdn.net/qq_39553725/article/details/77842230
+
+mind blown
+
+can also use to calcualte path queries

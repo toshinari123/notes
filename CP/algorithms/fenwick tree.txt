@@ -1,0 +1,19 @@
+https://www.hackerearth.com/practice/notes/binary-indexed-tree-or-fenwick-tree/
+
+(1-based)
+
+void update(int pos, int val){
+    for (int i = pos; i <= n; i += i & -i){
+	fen[i] += val;
+    }
+}
+
+(return sum of 1 to p)
+
+int query(int p){
+    int ans = 0;
+    for (int i = p; i > 0; i -= i & -i){
+	ans += fen[i];
+    }
+    return ans;
+}

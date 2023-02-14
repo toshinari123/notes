@@ -1,0 +1,47 @@
+binary search
+
+DONT USE m = (l + r) / 2
+IT MIGHT OVERFLOW!!!
+
+use m = l + (r - l) / 2
+
+find position of target:
+
+int l = 0, r = n - 1;
+while (l <= r){
+    int mid = l + (r - l) / 2;
+    if (a[mid] == target){
+        return mid;
+    }else if (a[mid] < target){
+        l = mid + 1;
+    }else{
+        r = mid - 1;
+    }
+}
+return -1;
+
+find position of smallest value not smaller than target:
+
+int l = 0, r = n - 1, ans = -1;
+while (l <= r){
+    int mid = l + (r - l) / 2;
+    if (a[mid] >= target){
+        ans = mid;
+        r = mid - 1;
+    }else{
+        l = mid + 1;
+    }
+}
+return ans;
+
+rotated array: find the smallest element of a rotated array
+the case that all elements are the same is excluded
+true: a[i] > a[0]
+false: a[i] <= a[0]
+
+1 1 1 1 1 2
+1 1 1 2 1 1
+
+find peak: array strictly increases then strictly decreases. find the maximum.
+true: a[i] > a[i - 1]
+false: a[i] < a[i - 1]

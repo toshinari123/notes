@@ -1,0 +1,10 @@
+bool dfs(int cur, int par, int end){
+    if (cur == end) return true;
+    for (auto e : adj[cur]){
+        if (e != par && dfs(e, cur, end)){
+            //do something with edge
+            return true;
+        }
+    }
+    return false;
+}

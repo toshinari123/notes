@@ -1,0 +1,53 @@
+n booleans, m clauses
+
+find assignment that satisfies (a or b) and (not a or c) and (c or not b) and ...
+
+O(n + m)
+
+a or b -> not a implies b
+          not b implies a
+
+the clauses can be transformed into an implication graph (directed) with 2 * n nodes
+
+property: if a implies b, not a implies not b
+
+if a is reachable from not a or vice versa, no solution because of contradiction
+
+theremore, a and not a needs to be in differenct strongly connected components
+
+*in the code, assignment[2 * i] is a[i] and assignment[2 * i + 1] is not a[i]
+
+
+bool impossible = false;
+vector<bool> visited, assignment;
+vector<int> order, component;
+void dfs1(int cur){
+    //push element into order after traversing children
+}
+void dfs2(int cur, int comp_count){
+    comp[cur] = comp_count;
+    //dfs
+}
+void solve_2sat(){
+    vis.assign(2 * n, false);
+    for (int i = 0; i < 2 * n; i++){
+	if (!vis[i]){
+	    dfs1(i);
+	}
+    }
+    reverse(order.begin(), order.end());
+    comp.assign(2 * n, -1);
+    for (int i = 0, j = 0; i < 2 * n; i++){
+	if (comp[order[i]] == -1){
+	    dfs2(order[i], j);
+	    j++;
+	}
+    }
+    assignment.assign(n, false);
+    for (int i = 0; i < n; i += 2){
+	if (comp[i] == comp[i + 1]){
+	    impossible = true;
+	}
+	assignment[i / 2] = comp[i] > comp[i + 1];
+    }
+}

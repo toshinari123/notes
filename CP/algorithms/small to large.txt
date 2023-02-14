@@ -1,0 +1,90 @@
+Also known as sack or dsu on trees
+
+Can answer queries of this type: how many vertices in the subtree of vertex v has some property?
+
+Example: Given a tree, every vertex has a colour (at most n different colours) How many vertices in subtree of 
+         vertex v are coloured with colour c?
+
+First calculate size of subtree of every vertex.
+
+Naive: O(n^2), dfs once for each colour
+
+Actually need to input all queries first, than use one dfs to answer it all during the process
+
+int count[max_col];
+
+void dfs(int c, int p, bool keep){
+
+    //find biggest child
+
+    //dfs smaller children (keep = false)
+
+    //dfs big child (keep = true)
+
+    //use some methods to add colours of current node and nodes of smaller subtrees into count
+
+    //answer all queries with subtree of node c
+
+    //if keep is false, subtract all colour of current subtree
+
+}
+
+method 1: use array of pointers to vectors that stores all nodes in that subtree
+
+vector<int> *v[n];
+int count[n];
+void dfs(int c, int p, bool keep){
+    int ma = -1, big = -1;
+    for (auto e : a[c]) if (e != p && s[e] > ma) ma = s[e], big = e;
+    for (auto e : a[c]) if (e != p && e != big) dfs(e, c, false);
+    if (big != -1) dfs(big, c, true); v[c] = v[big];
+    else v[c] = new vector<int> ();
+    v[c] -> push_back(v);
+    count[col[c]]++;
+    for (auto e : a[c]){
+        if (e == p || e == big) continue;
+        for (auto f : *v[e]) v[c] -> push_back(f), count[col[f]]++;
+    }
+    //answer queries regarding subtree of c
+    if (!keep) for (auto e : *v[c]) count[col[e]]--;
+}
+
+method 2: dfs light edges everytime to update count[]
+
+int count[n];
+bool beeg[n];
+void add(int c, int p, int x){
+    count[col[c]] += x;
+    for (auto e : a[c]) if (e != p && !beeg[e]) add(e, c, x);
+}
+void dfs(int c, int p, bool keep){
+    int ma = -1, big = -1;
+    for (auto e : a[c]) if (e != p && s[e] > ma) ma = s[e], big = e;
+    for (auto e : a[c]) if (e != p && e != big) dfs(e, c, false);
+    if (big != -1) dfs(big, c, true), beeg[big] = true;
+    add(c, p, 1);
+    //answer queries regarding subtree of c
+    if (big != -1) beeg[big] = false;
+    if (!keep) add(c, p, -1);
+}
+
+method 3: precompute start time in[], end time out[], and ver[time], the vertex with starting time time
+
+int count[n];
+void dfs(int c, int p, bool keep){
+    int ma = -1, big = -1;
+    for (auto e : a[c]) if (e != p && s[e] > ma) ma = s[e], big = e;
+    for (auto e : a[c]) if (e != p && e != big) dfs(e, c, false);
+    if (big != -1) dfs(big, c, true);
+    count[col[c]]++;
+    for (auto e : a[c]){
+        if (e == p || e == big) continue;
+        for (int i = in[e]; i < out[e]; i++) count[col[ver[i]]]++;
+    }
+    //answer queries regarding subtree of c
+    if (!keep) for (int i = in[c]; i < out[c]; i++) count[col[ver[i]]]--;
+}
+
+Why is this n log n?
+
+I currently don't really know either

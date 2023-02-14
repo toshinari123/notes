@@ -1,0 +1,65 @@
+There are n workers. Each is available is some days out of d days. Find 2 workers with maximum intersection of 
+their schedules.
+
+naive: O(n^2 * d)
+
+represent schedule as binary numbers of length d: O(n^2)
+
+__builtin_popcount(x);
+
+__builtin_popcountll(x);
+
+what if d is big? can't store schedule in 1 long long
+
+just divide it into d / 64 chunks!
+
+O(n^2 * (d / 64))
+
+bitset<d> x[n];
+int intersection(int i, int j){
+    return (x[i] & x[j]).count();
+}
+
+can use a container bitset!
+
+-------------------------------------------------------------------------------------------------------------------
+
+given n numbers, each between 0 ~ 10^9, how many different values appear?
+
+map / set: O(n log n)
+
+use bool vis[10^9]?? memory limit exceeded!
+
+note: bool needs a syze of a byte, so bit set is 8 times more space efficient
+
+bitset<10^9> vis;
+
+O(n + 10^9 / 32)
+-------------------------------------------------------------------------------------------------------------------
+
+0-1 knapsack:
+
+given n items with weight w[i], is there a subset with total weight exactly x? (x <= 10^6)
+
+dp: O(n * x)
+
+think of dp[x] as a bitmask!
+
+bitset<x> dp;
+
+recurrence: dp |= (dp << w[i])
+
+O(n * x / 32)
+
+-------------------------------------------------------------------------------------------------------------------
+
+given an undirected graph with n vertices, count the number of loops with 3 distinct vertices.
+
+instead of vector<int> adj[n], use bitset<n> adj[n]!
+
+for (every edge u and v){
+    ans += (adj[u] & adj[v]).count();
+}
+ans /= 3;
+
+O(n ^ 3 / 32)

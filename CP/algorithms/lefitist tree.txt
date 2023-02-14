@@ -1,0 +1,28 @@
+its like heap, but support merging in O(log n)
+
+every node has a key[u] (like a heap) and dist[u]
+
+IMPORTANT!!! dist[u.right] <= dist[u.left]
+
+dist[u] = shortest distance from u to a chid of u with less than 2 children (binary tree)
+
+merge(a, b):
+
+1. if (key[root(a)] > key[root(b)]) swap(a, b)
+2. a.right = merge(a.right, b)
+3. if (dist[a.right] > dist[a.left]) swap(a.right, a.left)
+4. if (a.right == null) dist[a] = 0
+   else dist[a] = dist[a.right] + 1
+
+works cuz the important property
+
+rmb to check if a or b is null
+
+very cool
+
+cool and good
+
+
+also insert and deletemin can be greatly simplified using merge
+
+dk why but dist[a] <= log(n + 1) - 1

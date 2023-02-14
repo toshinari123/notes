@@ -1,0 +1,23 @@
+minimum stack:
+
+stack<pair<int, int> > s;
+
+first: element
+second: min(element to bottom of stack)
+
+find min: s.top().second
+
+adding element: push(make_pair(element, min(element, s.top().second)))
+
+wow
+
+minimum queue:
+
+use 2 minimum stacks to simulate
+
+find min: min(s1.top().second, s2.top().second)
+
+adding element: push to s1
+
+removing element: if (s2.empty()) s1.pop(); s2.push()
+                  s2.pop()

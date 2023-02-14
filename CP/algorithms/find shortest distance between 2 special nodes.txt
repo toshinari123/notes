@@ -1,0 +1,92 @@
+Given an undirected graph with n vertices, m edges and k special nodes, find the shortest distance between 2 
+distinct special nodes.
+
+
+
+
+
+Method 1: randomized
+
+for each special node label as start or end randomly. Connect all start to a source, and all end to a sink, then 
+run djikstra
+
+the probability that optimal pair will be seperated is 1/2
+
+if we do that 2 log n times, chance of fail is 1/n (just do more times if n is small)
+
+time complexity: O(m log^2 n)
+
+
+
+Method 2: clever partitions
+
+How can we ensure all pairs are seperated at least once? Think binary!
+
+Iterate through the bits. label special nodes with 0 in ith bit as start and with 1 in ith bit as end
+
+because all special nodes are distinct, all pairs must differ in at least 1 bit
+
+time complexity: O(m log^2 n)
+
+
+
+Method 3: multi-source djikstra
+
+Run multi-source djikstra from the special nodes, dist[i] = shortest path from i to a special node, head[i] = the 
+special node closest to i
+
+For each edge (u, v), if head[u] is not equal to head[v], consider dist[u] + d(u, v) + dist[v] as answer
+
+time complexity: O(m log n)
+
+
+
+
+
+Harder version: choose 4 distinct special nodes (a, b, c, d) minimize dist(a, b) + dist(c, d)
+
+
+
+
+
+Method 1: randomized
+
+Make sets A B C D, for each special node put it into a set randomly
+
+run djikstra from A to B and from C to D
+
+chance of success is 1/32
+
+repeat process 32 log n times, chance of failure 1/n
+
+time complexity: O(m log^2 n)
+
+
+
+Method 2: smart af
+
+firstly, find the minimum (x, y) using method 3 above
+
+x and y must be part of (a, b, c, d):
+
+	if both don't belong:
+
+		just replace (a, b) with (x, y), will get better answer cuz (x, y) already minimum
+
+	if x is a WLOG:
+
+		replace b with y, will get better answer
+
+2 cases:
+
+	(x, y) is (a, b)
+
+		just repeat method 3 on graph with nodes a and b removed
+
+	(x, y) is (a, c)
+
+		run djikstra from x and y
+
+		obs: must choose node closest to x or second closest to x
+
+		for the 2 options, iterate through special nodes for y

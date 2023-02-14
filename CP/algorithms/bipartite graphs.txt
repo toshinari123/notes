@@ -1,0 +1,26 @@
+Vertices van be divided into 2 disjoint and independant sets U and V such that every edge connects a vertex in U 
+yo one in V.
+
+Does not contain odd cycles.
+
+2-colourable
+
+modelling relations between 2 different classes of objects, affiliation network
+
+trees, even cycles, planar graph whose faces all have even length except grid graphs
+
+Hypercube graphs, partial cubes, and median graphs are bipartite. In these graphs, the vertices may be labeled by 
+bitvectors, in such a way that two vertices are adjacent if and only if the corresponding bitvectors differ in a 
+single position. A bipartition may be formed by separating the vertices whose bitvectors have an even number of 
+ones from the vertices with an odd number of ones. Trees and squaregraphs form examples of median graphs, and every
+median graph is a partial cube.
+
+The median of three bitvectors a, b, and c may be calculated by computing, in each bit position, the majority 
+function of the bits of a, b, and c.
+
+I(a,b) = {v | d(a,b) = d(a,v) + d(v,b)}
+
+A median graph is defined by the property that, for every three vertices a, b, and c, these intervals intersect in 
+a single point:
+
+    For all a, b, and c, |I(a,b) ∩ I(a,c) ∩ I(b,c)| = 1.

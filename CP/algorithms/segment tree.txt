@@ -1,0 +1,61 @@
+lazy propagation
+
+void upd(int id, int l, int r, int x){
+    lazy[id] += x;
+    s[id] += (r - l) * x;
+}
+
+void shift(int id, int l, int r){
+    int mid = (l + r) / 2;
+    upd(id * 2, l, mid, lazy[id]);
+    upd(id * 2, mid + 1, r, lazy[id]);
+    lazy[id] = 0;
+}
+
+void update(int L, int R, int x, int id, int l, int r){
+    if (L >= r || l >= R){
+	return;
+    }
+    if (L <= l && r <= R){
+	upd(id, l, r, x);
+    }
+    shift(id, l, r);
+    int mid = (l + r) / 2;
+    update(L, R, x, id * 2, l, mid);
+    update(L, R, x, id * 2 + 1, mid + 1, r);
+    s[id] = s[id * 2] + s[id * 2 + 1];
+}
+
+int query(int L, int R, int x, int id, int l, int r){
+    if (L >= r || l >= R){
+	return 0;
+    }
+    if (L <= l && r <= R){
+	return s[id];
+    }
+    shift(id, l, r);
+    int mid = (l + r) / 2;
+    return query(L, R, x, id * 2, l, mid) + query(L, R, x, id * 2 + 1, mid + 1, r);
+}
+
+tips:
+
+if about subset of a range, try:
+simplify problem to a pair
+
+if about digits, try:
+every node have an array of max length of number
+
+try every node have a vector of interval size, binary search when query
+memory n log n, time log^2 n
+
+example problems:
+
+1217E
+
+simplify to pair + array
+
+c.best = min(l.best, r.best)
+for i = 0 ~ 8
+    c.a[i] = min(l.a[i], r.a[i])
+    c.best = min(c.best, l.a[i] + r.a[i])

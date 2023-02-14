@@ -1,0 +1,37 @@
+Finally! A method for annoying email-checking problems.
+
+http://www.cplusplus.com/reference/regex/regex_match/
+
+https://regexone.com/
+
+http://www.cplusplus.com/reference/regex/ECMAScript/
+
+regex r(R"[regex]");
+
+letters need to be continuous (substring)
+
+\d any digit \D any non-digit 
+
+. any character
+
+[abc] only a, b, or c
+
+[^abc] not a, b, nor c
+
+[a-z] [0-9]
+
+\w equivalent to [a-zA-Z0-9_]  \W any non-alphanum
+
+a{3} 3 'a's  a{3-4} 3 to 4 'a's
+
+a* 0 or more 'a's  a+ 1 or more 'a's
+
+a? optional
+
+\s any whitespace, \S any non-whitespace \t tab \n new line
+
+^abc$ specify head or tail
+
+\? \. \* \+
+
+abc|def or

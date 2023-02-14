@@ -1,0 +1,16 @@
+largest directed acyclic graph
+
+choose a subset of nodes and all directed edges between them, find largest DAG
+
+can be computed using DP in O(2^n * n)
+
+store adj matrix as bitmask for each node (1 if reachable) 
+
+for mask
+    for u in mask
+        is_dag[mask] |= is_dag[mask excluding u] && (u cant reach other node in mask)
+
+(u cant reach other node in mask) -> (mask & reach[u]) == 0
+
+
+from here: https://codeforces.com/blog/entry/80562 (dont understand other stuff)

@@ -1,0 +1,11 @@
+ap requirement: start[v] <= low[u] && (v is not root || #children of v > 1)             [u is child of v]
+
+br requirement: v is root -> #children of v > 1; v is not root -> start[v] <= low[u]    [u is child of v]
+
+low[v] = min(start[w] where u is in subtree of v and u connect w)
+
+low[u] >= start[v]: there exist a node which connect to subtree of u, but higher than or equal to v!!
+
+very nice
+
+P003
