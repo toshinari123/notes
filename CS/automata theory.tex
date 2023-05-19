@@ -1,0 +1,243 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[a4paper, total={6in, 10in}]{geometry}
+\usepackage{tcolorbox}
+\usepackage{mdframed}
+\usepackage[hidelinks]{hyperref}
+\usepackage{amsfonts}
+\usepackage{mathrsfs}
+\usepackage{centernot}
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+\usepackage[percent]{overpic}
+
+\setlength{\jot}{10pt}
+
+\newmdenv[
+  topline=false,
+  bottomline=false,
+  skipabove=\topsep,
+  skipbelow=\topsep,
+  leftmargin=-10pt,
+  rightmargin=-10pt,
+  innertopmargin=0pt,
+  innerbottommargin=0pt,
+  linecolor=blue
+]{siderules}
+
+\title{Automata theory and its applications\\Notes}
+\author{toshinari tong}
+\begin{document}
+\maketitle
+\section{Finite Automata}
+\subsection{Finite Automata}
+\textbf{omega}: \(\omega=\{0,1,2,...\}\)\\
+\textbf{alphabet}: \(\Sigma=\{a_{1},...,a_{n}\}\)\\
+\textbf{input}: \(u=\sigma_{1}\sigma_{2}...\sigma_{m}\) where \(\sigma_{i}\in\Sigma\)\\
+\textbf{empty input}: \(\lambda\)\\
+\textbf{finite words}: \(\Sigma^{*}=\{\sigma_{1}\sigma_{2}...\sigma_{m}|\sigma_{1},\sigma_{2},...,\sigma_{m}\in\Sigma,m\in\omega\}\)\\
+\textbf{\(\Sigma\)-language}: any subset of \(\Sigma^{*}\)\\
+\textbf{set of states}: \(S=\{s_{0},...,s_{k}\}\)\\
+\textbf{sequentiality}: the next state of the system is one of the states determined by the pair \((s,\sigma)\)\\
+\\
+\textbf{nondeterministic finite automaton}: \(\mathcal{A}=(S,T,I,F)\) where\\
+\null\qquad \(S\) is a finite nonempty set called the set of states\\
+\null\qquad \(T\subseteq S\times\Sigma\times S\) is a nonempty set called the transition table\\
+\null\qquad \(I\subseteq S\) is called the set of initial states\\
+\null\qquad \(F\subseteq S\) is called the set of final states\\
+Finite automata are the simplest mathematical abstractions of \textbf{discrete sequential systems}.\\
+\(T(s,\sigma)=\{s'\in S|(s,\sigma,s')\in T\}\)\\
+\textbf{deterministic automaton}: \(\mathcal{A}\) is deterministic if \(|I|=1\) and \(\forall s\in S,\forall\sigma\in\Sigma,|T(s,\sigma)|=1\).\\
+\\
+\textbf{computation / run}: a sequence of states of length \(m+1\) from given input of length \(m\):\\
+\null\qquad stage 1: \(\mathcal{A}\) choose an initial state \(s_{1}\in I\)\\
+\null\qquad stage \(n\): suppose sequence \(s_{1}s_{2}...s_{n-1}\) is produced. the automaton chooses an \(s_{n}\in S\) s.t. \((s_{n-1},\sigma_{n-1},s_{n})\in T\)\\
+If \(\mathcal{A}\) is deterministic, then it has a computation on any input and this computation is unique.\\
+\textbf{successful computation / \(\mathcal{A}\) accepts an input}: \(s_{m+1}\in F\)\\
+\\
+\textbf{transition diagram}: this automaton accepts words \((ab)^{n}aa\)\\
+\includegraphics{auto1}\\
+\\
+\textbf{accessibility}: \(G_{0}(s)=\{s\}\), \(G_{1}(s)=\{s_{1}|\exists\sigma\in\Sigma, (s,\sigma,s_{1})\in T\}\cup G_{0}(s)\),\(G_{n+1}(s)=G_{n}(s)\cup\bigcup_{s_{1}\in G_{n}(s)}G_{1}(s_{1})\)\\
+\textbf{accessibility operator}: \(G(s)=\bigcup_{n}G_{n}(s)\)\\
+\\
+\textbf{finite automaton (FA) recognizable language}: \(L\subseteq\Sigma^{*}\) s.t. \(\exists\mathcal{A},L=L(\mathcal{A})=\{w\in\Sigma^{*}|\mathcal{A} \text{ accepts }w\}\)\\
+\begin{siderules}\color{blue}\textit{EXERCISE 2.2.7}\color{black}\\\\
+\color{blue}1. Give an example of a nfa with 4 states over the alphabet \(\{a,b\}\) s.t. \(\mathcal{A}\) recognizes language \(L\) containing exactly those \(w\) that have \(a\) at the 3rd position from the right of \(w\).\\\color{black}
+\includegraphics[width=7cm]{auto2}\\
+\color{blue}2. Give an example of a deterministic automaton that recognizes the languatge \(L\) defined in the previous item.\color{black}\\
+\includegraphics[width=7cm]{auto3}
+\end{siderules}
+\subsection{Closure Properties}
+\color{red}Let \(\mathcal{A}_{1}\) and \(\mathcal{A}_{2}\) be automata. Then there exists an automaton \(\mathcal{A}\) s.t. \(L(\mathcal{A})=L(\mathcal{A}_{1})\cup L(\mathcal{A}_{2})\).\color{black}\\
+First suppose \(S_{1}\cap S_{2}=\varnothing\). If they have common states, we can just rename elements of \(S_{2}\) and create a new copy of \(\mathcal{A}_{2}\). Define \(\mathcal{A}=(S,T,I,F)\) as follows:\\
+\null\qquad 1. \(S=S_{1}\cup S_{2}\).\\
+\null\qquad 2. \(T=T_{1}\cup T_{2}\).\\
+\null\qquad 3. \(I=I_{1}\cup I_{2}\).\\
+\null\qquad 4. \(F=F_{1}\cup F_{2}\).\\
+Denote \(\mathcal{A}=\mathcal{A}_{1}\oplus\mathcal{A}_{2}\).\\\\
+\color{red}Let \(\mathcal{A}_{1}\) and \(\mathcal{A}_{2}\) be automata. Then there exists an automaton \(\mathcal{A}\) s.t. \(L(\mathcal{A})=L(\mathcal{A}_{1})\cap L(\mathcal{A}_{2})\).\color{black}\\
+\null\qquad 1. \(S=S_{1}\times S_{2}\).\\
+\null\qquad 2. \(T=\{((s_{1},s_{2}),\sigma,(t_{1},t_{2}))\;|\;(s_{1},\sigma,t_{1})\in T_{1},(s_{2},\sigma,t_{2})\in T_{2}\}\).\\
+\null\qquad 3. \(I=I_{1}\times I_{2}\).\\
+\null\qquad 4. \(F=F_{1}\times F_{2}\).\\
+Denote \(\mathcal{A}=\mathcal{A}_{1}\times\mathcal{A}_{2}\).\\\\
+\begin{siderules}\color{blue}\textit{EXERCISE 2.3.2}\color{black}\\\\
+\color{blue}Let \(\mathcal{A}_{1}\) and \(\mathcal{A}_{2}\) be finite automata. Construct an automaton which
+accepts the union \(L(\mathcal{A}_{1})\cup L(\mathcal{A}_{2})\) and whose set of states is \(S_{1}\times S_{2}\) and the transition table is the one for \(\mathcal{A}_{1}\times\mathcal{A}_{2}\).\color{black}\\\\
+\(F=\{(f_{1},x_{2})\;|\;f_{1}\in F_{1},x_{2}\in S_{2}\}\cup \{(x_{1},f_{2})\;|\;f_{2}\in F_{2},x_{1}\in S_{1}\}\)
+\end{siderules}
+\begin{siderules}\color{blue}\textit{EXERCISE 2.3.3}\color{black}\\\\
+    \color{blue}Consider the 2 automata. Construct the automaton that accepts the intersection.\\\\\color{black}
+\end{siderules}
+\color{red}If \(\mathcal{A}\) is a deterministic automaton, then \(\mathcal{A}^{c}=(S,T,I,S\backslash F)\) accepts the complement of \(L(\mathcal{A})\), that is \(L(\mathcal{A}^{c})=\Sigma^{*}\backslash L(\mathcal{A})\).\color{black}\\\\
+However if the original automaton is not deterministic, then this doesn't work: Even if there is a computation \(s_{1},s_{2},...,s_{m+1}\) s.t. \(s_{m+1}\notin F\),
+this does not guarantee that \(u\) is not accepted by \(\mathcal{A}\). For example, maybe choosing some other initial state or some other path may result in a successful run. 
+In other words, \(u\) is not accepted iff all computations of \(\mathcal{A}\) on \(u\) are unsuccessful.\\\\
+The \textbf{power automaton} \(\mathcal{A}^{d}=(S^{d},T^{d},I^{d},F^{d})\) is defined as follows:\\
+\null\qquad 1. \(S^{d}=\mathcal{P}(S)\)\\
+\null\qquad 2. \(T^{d}=\{(S_{1},\sigma,S_{2})\;|\; S_{2}=\{s'\;|\;\exists s\in S_{1} \text{ s.t. } (s,\sigma,s')\in T\}\}\)\\
+\null\qquad 3. \(I^{d}=\{I\}\)\\
+\null\qquad 4. \(F^{d}=\{G\subseteq S\;|; G\cap F\neq\varnothing\}\) if \(F\neq\varnothing\).\\
+\includegraphics{auto4}
+\includegraphics{auto5}\\
+\color{red}Let \(\mathcal{A}\) be a nfa. Then the power automaton \(\mathcal{A}^{d}\) is deterministic and \(L(\mathcal{A})=L(\mathcal{A}^{d})\).\color{black}\\
+If \(u=\sigma_{1}\sigma_{2}...\sigma_{m}\) is accepted by \(\mathcal{A}\), then by definition of \(F^{d}\) it is accepted by \(\mathcal{A}^{d}\).\\
+If \(u\) is accepted by \(\mathcal{A}^{d}\), let \(S_{1},S_{2},...,S_{m+1}\) be a computation of \(\mathcal{A}^{d}\) on \(u\); then there exists an \(s_{m+1}\in S_{m+1}\cap F\).
+By definition of \(T^{d}\), there exists a sequence \(s_{1},...,s_{m+1}\) which is a succesful computation of \(\mathcal{A}\) on \(u\).\\
+\begin{siderules}\color{blue}\textit{EXERCISE 2.3.5}\color{black}\\\\
+\color{blue} Let \(\mathcal{A}_{1}\) and \(\mathcal{A}_{2}\) be deterministic finite automata. Consider the 
+automata \(\mathcal{B}=\mathcal{A}_{1}\oplus\mathcal{A}_{1}\) and \(\mathcal{C}=\mathcal{A}_{1}\times \mathcal{A}_{1}\). Construct an automaton recognizing the
+complements of \(L(\mathcal{B})\) and \(L(\mathcal{C})\) without using the subset construction.\\\\\color{black}
+\(\mathcal{B}^{c}=\mathcal{A}_{1}^{c}\times\mathcal{A}_{2}^{c},\mathcal{C}=\mathcal{A}_{1}^{c}\oplus\mathcal{A}_{2}^{c}\)
+\end{siderules}
+\color{red}For every finite automaton there exists an automaton such that it accepts the complement of the language.\color{black}
+\begin{siderules}\color{blue}\textit{EXERCISE 2.3.6}\color{black}\\\\
+    \includegraphics{auto6}\\
+\(S\) is finite and \(|S_{n}|\) is always increasing so there must be a point where \(S_{n+1}=S_{n}\).
+\end{siderules}
+\color{red}For every natural number \(n\le 1\) there exists an automaton with exactly \(n+1\)
+states such that no deterministic automaton with less than \(2^{n}\) states recognizes the complement of \(L(\mathcal{A})\).\\\color{black}
+Consider \(\Sigma=\{a,b\}\) and \(L=\{uav\;|\;u,v\in\Sigma^{*},|v|=n-1\}\). Let \(\mathcal{A}=(S,T,I,F)\) be the following:\\
+\null\qquad 1. \(S=\{s_{0},...s_{n}\}\)\\
+\null\qquad 2. \(T=\{(s_{0},\sigma,s_{0}),(s_{0},a,s_{1}),(s_{i},\sigma,s_{i+1})\}\)\\
+\null\qquad 3. \(I=\{s_{0}\}\)\\
+\null\qquad 4. \(F=\{s_{n}\}\)\\
+\(\mathcal{A}\) recognizes \(L\). Now suppose there exists a deterministic automaton \(\mathcal{B}\) with less than \(2^{n}\) states that accept \(\Sigma^{*}\backslash L\).
+Then there must be \(uav_{1}\) and \(ubv_{2}\) of length \(n\) that transforms the initial state to the same state.
+Now \(uav_{1}u\in L\) and \(ubv_{2}u\notin L\). However the 2 words transforms the initial state to the same state. So no \(\mathcal{B}\) exists.\\
+\begin{siderules}\color{blue}\textit{EXERCISE 2.3.7}\color{black}\\\\
+\includegraphics{auto7}\\
+\includegraphics{auto8}\\
+Let \(\mathcal{B}\) be a deterministic automaton with less than \(p_{1}p_{2}...p_{n}\) states that recognizes \(L(\mathcal{A}_{n})\). Then there must be a cycle of length \(P<p_{1}p_{2}...p_{n}\) in \(\mathcal{B}\) if it follows the instruction \(aaa...\).
+Therefore if instruction \(aaa...a\) of length \(x\) is not accepted, then \(x+P\) is also not accepted in \(\mathcal{B}\).
+\(x\not\equiv 0\pmod{p_{i}}\) for all \(i\), and \(x+P\not\equiv 0\pmod{p_{i}}\) for all \(i\). If \(P\) is not divisible by \(p_{i}\), then there must exist a \(y\) where \(x+yP\equiv 0\pmod{p_{i}}\) because 
+the set \(\{x\pmod{p_{i}},x+P\pmod{p_{i}},x+2P\pmod{p_{i}},...\}\) visits all elements. Therefore \(P\) is divisible by all \(p_{i}\), but \(P<p_{1}p_{2}...p_{n}\).
+So no \(\mathcal{B}\) exist.
+\end{siderules}
+Suppose \(L_{1}\) and \(L_{2}\) are languages.
+\[pref(L_{1},L_{2})=\{u\;|\;u\in L_{1} \text{ and for some string }w,uw\in L_{2}\}\]
+\color{red}Let \(L_{1}\) and \(L_{2}\) be FA recognizable languages. Then \(pref(L_{1},L_{2})\) is FA recognizable.\\\color{black}
+\(\mathcal{A}=\mathcal{A}_{1}\times \mathcal{A}_{2}\), except that \(F=\{(f,s)\;|\; f\in F_{1}\text{ and }G(s)\cap F_{2}\neq\varnothing\}\).\\\\
+\[suff(L_{1},L_{2})=\{u\;|\;u\in L_{1} \text{ and for some string }w,wu\in L_{2}\}\]
+\begin{siderules}\color{blue}\textit{EXERCISE 2.3.8}\color{black}\\\\
+\color{red}Let \(L_{1}\) and \(L_{2}\) be FA recognizable languages. Then \(suff(L_{1},L_{2})\) is FA recognizable.\\\color{black}
+\(\mathcal{A}=\mathcal{A}_{1}\times \mathcal{A}_{2}\), except that \(I=\{(i,s)\;|\;i\in I_{1}\text{ and }s\in G(I_{2})\}\).
+\end{siderules}
+\begin{siderules}\color{blue}\textit{EXERCISE 2.3.9}\color{black}\\\\
+\includegraphics{auto9}\\
+If \(L\) is FA recognizable, then it is obviously recognized by an NFA with silent moves because FA is a subset of NFA with silent moves.\\\\
+If \(L\) is recognized by an NFA with silent moves \(\mathcal{A}=(S,T,I,F)\), then it is recognied by FA \(\mathcal{B}=(S,T_{B},I_{B},F)\) where 
+\[T_{B}=\bigcup_{(s,\sigma,s')\in T_{1}}\{(s,\sigma,g)\;|\; g\in G_{T_{2}}(s')\}\text{ and }I_{B}=\bigcup_{i\in I}G_{T_{2}}(i)\]
+\end{siderules}
+Suppose our alphabet is of the form 
+\[\Sigma_{1}\times \Sigma_{2}=\{(a,b)\;|\; a\in\Sigma_{1},b\in\Sigma_{2}\}\]
+Any word of this alphabet is a sequence of pairs, which can be identified with 2 words each from \(\Sigma_{1}^{*}\) and \(\Sigma_{2}^{*}\).
+\[pr_{1}(L)=\{u\in\Sigma_{1}^{*}\;|\;(u,v)\in L\text{ for some }v\in\Sigma_{2}^{*}\}\]
+\[pr_{2}(L)=\{u\in\Sigma_{2}^{*}\;|\;(v,u)\in L\text{ for some }v\in\Sigma_{1}^{*}\}\]
+\color{red}If language \(L\) over \(\Sigma=\Sigma_{1}\times \Sigma_{2}\) is FA recognizable, then so are the projections \(pr_{1}(L)\) and \(pr_{2}(L)\).\color{black}\\
+\(\mathcal{A}_{1}=\mathcal{A}\), except \(S_{1}=\{(s,\sigma_{1},s')\;|\;(s,(\sigma_{1},\sigma_{2}),s')\in T\}\)
+\subsection{The Myhill-Nerode Theorem}
+2 inputs \(u\) and \(v\) are \textbf{in relation} \(\sim\) if for all states \(s\) and \(s'\) from \(S\), \(u\) transforms \(s\) to \(s'\) \(\Longleftrightarrow\) \(v\) transforms \(s\) to \(s'\).\\\\
+\color{red}Let \(\mathcal{A}\) be an automaton. The relation \(\sim\) is an equivalence relation on \(\Sigma^{*}\). Moreover the index of the equivalence relation \(\sim\) is finite.\\\color{black}
+It is reflexive, symmetric and transitive.\\
+Take any input \(u\) and define \(f_{u}:S\to \mathcal{P}(S)\) to be \(f_{u}(s)=\{s'\;|\;\text{input }u\text{ transforms }s\text{ to }s'\}\).\\
+For all \(u\) and \(v\) they are \(\sim\)-equivalent iff \(f_{u}=f_{v}\). Since the number of functions from \(S\) to \(\mathcal{P}(S)\) is finite, the index of \(\sim\) is finite.\\
+\begin{siderules}\color{blue}\textit{EXERCISE 2.4.2}\color{black}\\\\
+\includegraphics{auto10}\\
+\(\{\varnothing\}, \{b, bb, bbb,...\}, \{a, ba, bba, ...\},\{\text{remaining that ends with }b\},\{\text{remaining that ends with }a\}\)
+\end{siderules}
+\textbf{right invariance}: if \(u\) is \(\sim\)-equivalent to \(v\), then \(uw\) is \(\sim\)-equivalent to \(vw\).\\\\
+Therefore, if \(u\sim w\), then \(uw\in L(\mathcal{A})\) iff \(vw\in L(\mathcal{A})\).\\\\
+\textbf{Myhill-Nerode equivalent relations}: Let \(L\) be a language. \(u\) and \(v\) are \(L\)-equivalent (\(u\sim_{L} v\)) if for all \(w\), \(uw\in L\) \(\Longleftrightarrow\) \(vw\in L\).\\\\
+\color{red}Myhill-Nerode Theorem: A language \(L\) is FA recognizable iff \(\sim_{L}\) is of finite index.\color{black}\\
+Suppose \(L=L(\mathcal{A})\). By above, \(\sim\) of \(\mathcal{A}\) is of finite index. And if \(u\sim v\) then \(u\sim_{L} v\). Therefore every \(\sim_{L}\) equivalence class is a union of \(\sim\)-equivalence classes. 
+Hence \(\sim_{L}\) is of finite index. To see that \(L\) is a union of \(\sim_{L}\) equivalence classes note that if \(u\in L\) and \(v\sim_{L} u\), then \(v\in L\) because \(u\lambda, v\lambda\in L\).\\
+Now suppose \(\sim_{L}\) is an equivalence relation of finite index. Let \(\mathcal{A}=(S,T,I,F)\) be the following:\\
+\null\qquad \(S=\{[u]\;|\;u\in\Sigma^{*}\}\)\\
+\null\qquad \(T=\{([u],\sigma,[v])\;|\;u\sigma\sim_{L}v\}\)\\
+\null\qquad \(I=\{[\lambda]\}\)\\
+\null\qquad \(F=\{[u]\;|\;u\in L\}\)\\
+\(\mathcal{A}\) is a deterministic finite automaton. \(u\in L\) \(\Longleftrightarrow\) \([u]\in F\) \(\Longleftrightarrow\) \(u\in L(\mathcal{A})\)\\
+\begin{siderules}\color{blue}\textit{EXERCISE 2.4.5}\color{black}\\\\
+\color{blue}Give an example of an automaton \(\mathcal{A}\) for which \(\sim_{L(\mathcal{A})}\neq\sim\).\\\\
+\includegraphics[width=10cm]{auto11}
+\end{siderules}
+A deterministic finite automaton \(\mathcal{A}\) is \textbf{minimal} if the number of states of every deterministic automaton recognizing \(L(\mathcal{A})\) is greater than or equal to the number of states of \(\mathcal{A}\).\\
+\begin{siderules}\color{blue}\textit{EXERCISE 2.4.7}\color{black}\\\\
+\color{blue}Let \(L\) be a FA recognizable language. Show that \(\mathcal{A}\) constructed in the proof of the Myhill-Nerode theorem is minimal.\\\\\color{black}
+Let \(\mathcal{B}\) be a deterministic automaton with number of states less than number of equivalence classes of \(\sim_{L}\). Then, there must exist \(u,v\) s.t. \([u]\neq [v]\) but the final transformed state is the same.
+This means that \(\exists w\;uw\in L,vw\notin L\) but this is not possible since it is deterministic and transforms to the same final state (either both are accepted or both are not accepted).
+\end{siderules}
+We say that automata \(\mathcal{A},\mathcal{B}\) over \(\Sigma\) are \textbf{isomorphic} if there exists a bijective \(h:S_{A}\to S_{B}\) s.t.:\\
+\null\qquad \((s_{1},\sigma,s_{2})\in T_{A}\) \(\Longleftrightarrow\) \((h(s_{1}),\sigma,h(s_{2}))\in T_{B}\)\\
+\null\qquad \(s\in I_{A}\) \(\Longleftrightarrow\) \(h(s)\in I_{B}\)\\
+\null\qquad \(s\in F_{A}\) \(\Longleftrightarrow\) \(h(s)\in F_{B}\)\\
+\begin{siderules}\color{blue}\textit{EXERCISE 2.4.8}\color{black}\\\\
+\color{blue}Two minimal automata recognizing the same language are isomorphic.\\\\\color{black}
+\(\mathcal{A}\) and \(\mathcal{B}\) are isomorphic \(\Longleftrightarrow\) (\(\forall u,v\;(u,v\text{ go to same state in }\mathcal{A}\Longleftrightarrow u,v\text{ go to same state in }\mathcal{B})\) and \(F_{A}=F_{B}\))\\
+\(\mathcal{A}\) and \(\mathcal{B}\) are not isomorphic \(\Longleftrightarrow\) (\(\exists u,v\;(u,v\text{ go to same state in }\mathcal{A}\Longleftrightarrow u,v\text{ go to diff state in }\mathcal{B})\) or \(F_{A}\neq F_{B}\))\\
+Suppose there exists non-isomorphic minimal automata \(\mathcal{A}\) and \(\mathcal{B}\). Assume first condition is true. Since \(u,v\) go to the same state in \(\mathcal{A}\), they are \(\sim_{L}\)-equivalent. This means 2 \(\sim_{L}\)-equivalent strings go to different states in \(\mathcal{B}\).
+Construct new automata \(\mathcal{B}_{2}=(S,T,I,F)\):\\
+Denote the state \(u\) goes to as \(s_{u}\) and the state \(v\) goes to as \(s_{v}\).\\
+\null\qquad \(S=S_{B}\backslash\{s_{v}\}\)\\
+\null\qquad \(T=T_{B}\) but every arrow that points to \(s_{v}\) now points to \(s_{u}\)\\
+\null\qquad \(I=I_{B}\)\\
+\null\qquad \(F=F_{B}\) without \(s_{v}\) if its in (\(s_{u}\in F_{B}\Longleftrightarrow s_{v}\in F_{B}\))\\
+We have constructed an automaton that recognizes the same language with number of states less than that of the minimal automaton. Therefore first condition cannot hold.
+It is clear that if the first condition does not hold and \(F_{A}\neq F_{B}\) then they dont recognize the same language. Therefore it is impossible that \(\mathcal{A}\) and \(\mathcal{B}\) are not isomorphic.
+\end{siderules}
+\subsection{The Kleene Theorem}
+The \textbf{trivial languages} over \(\Sigma\) are \(\varnothing,\{\lambda\},\{a_{1}\},...,\{a_{n}\}\).\\\\
+The concatenation of \(L_{1}\) and \(L_{2}\) is \(L_{1}\cdot L_{2}=\{uv\;|\;u\in L_{1},v\in L_{2}\}\). The concatenation operation makes the set of all languages a monoid, and is associative:
+\[(L_{1}\cdot L_{2})\cdot L_{3}=L_{1}\cdot (L_{2}\cdot L_{3})\]
+Another operation is union: \(L_{1}+L_{2}=L_{1}\cup L_{2}\)\\\\
+The third operation is the \textbf{Kleene star}: \(L^{*}=\{\lambda\}+L+(L\cdot L)+(L\cdot L\cdot L)+...=L^{0}+L^{1}+L^{2}+L^{3}+...\)\\\\
+That is why the notation \(\Sigma^{*}\) is the way it is.\\\\
+\textit{Stage 0. }\(R_{0}\) is the class of trivial languages.\\
+\textit{Stage \(t+1\). } Suppose \(R_{t}=\{L_{1},L_{2},...,L_{k}\}\) has been defined. Let \(R_{t+1}\) be 
+\[R_{t}\cup\{L_{i}^{*}\;|\;i=1,...,k\}\cup\{L_{i}\cdot L_{j}\;|\;i,j=1,...,k\}\cup\{L_{1}+L_{j}\;|\;i,j=1,...,k\}\]
+Define \(R\):\[R=\bigcup_{t\in\omega}R_{t}\]
+A language \(L\subseteq\Sigma^{*}\) is \textbf{regular} if \(L\) is in \(R\).
+\begin{siderules}\color{blue}\textit{EXERCISE 2.5.2}\color{black}\\\\
+\color{blue}Let \(\Sigma=\{a,b\}\). Show that the following languages are regular.\\
+\(\{ab^{n}\;|\;n\in\omega\}\) \color{black} \(\{a\}\cdot \{b\}^{*}\)\\\color{blue}
+\(\{(ab)^{2n}\;|\;n\in\omega\}\) \color{black} \((\{a\}\cdot\{b\}\cdot\{a\}\cdot\{b\})^{*}\)\\\color{blue}
+any finite language \color{black} Use only \(\cdot\) and \(+\) \\\color{blue}
+any cofinite language \color{black} Use only \(\cdot\) and \(+\), then \(\cdot (\{a\}+\{b\})^{*}\)\\\color{blue}
+\(\{uabv\;|\;u,w\in\Sigma^{*}\}\) \color{black} \((\{a\}+\{b\})^{*}\cdot\{a\}\cdot\{b\}\cdot(\{a\}+\{b\})^{*}\)\\\color{blue}
+\(\{aub\;|\;u\in\Sigma^{*}\}\) \color{black} \(\{a\}\cdot (\{a\}+\{b\})^{*}\cdot \{b\}\)
+\end{siderules}
+Name the regular languages \(\varnothing, \{\lambda\}, \{a_{1}\},...,\{a_{n}\}\) with \textbf{symbols} \(\mathbf{e},\mathbf{0},\mathbf{a_{1}},...,\mathbf{a_{n}}\). 
+\textbf{Regular expressions} represent regular languages and are special type of words over the new alphabet: \(\mathbf{e},\mathbf{0},\mathbf{a_{1}},...,\mathbf{a_{n}},+,*,\cdot,(,)\)\\\\
+The \textbf{atomic regular expressions} are \(\mathbf{e},\mathbf{0},\mathbf{a_{1}},...,\mathbf{a_{n}}\). \(L(\textbf{e})=\varnothing,L(\textbf{0})=\{\lambda\},L(\mathbf{a_{i}})=\{a_{i}\}\)\\
+Suppose regular expressions \(\textbf{r}_{1},\textbf{r}_2\) and \(L(\textbf{r}_{1}),L(\textbf{r}_{2})\) are defined. Then \((\textbf{r}_{1}\cdot \textbf{r}_{2}),(\textbf{r}_{1}+\textbf{r}_{2}),(\textbf{r})^{*}\) are \textbf{regular expressions}. 
+The languages defined by these expressions are obvious. operator precedance: \(*<\cdot<+\); we denote the set of all regular expressions \textbf{RE}.\\\\
+\color{red}A language \(L\) is regular iff \(L=L(\textbf{r})\) for some regular expression \textbf{r}.\color{black}\\
+For forward, show every language in every \(R_{t}\) can be represented by a regular expression by induction; for backward, show \(L\) is regular using the definition of regular expressions.\\\\
+\color{red}Kleene Theorem: A language \(L\) is regular iff \(L\) is FA recognizable.\\\color{black}
+
+\end{document}
